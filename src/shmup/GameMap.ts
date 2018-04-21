@@ -53,6 +53,9 @@ export class GameMap {
     let obstacle: Phaser.Physics.Arcade.Sprite = this.scene.physics.add.sprite(x, y, 'obstacle').setVelocity(0, this.velocity);
     obstacle.scaleY = scale;
     obstacle.scaleX = scale;
+
+    obstacle.setRotation(Math.random()*3.14);
+    obstacle.setAngularVelocity(this.rnd2()*100);
     
     this.obstacles.push(obstacle);
   }
@@ -82,8 +85,8 @@ export class GameMap {
       let scale: number = Phaser.Math.Between(50, 100)/100*this.scaling;
       let size: number = this.obstacleSize*scale;
       if (index === 0) {
-        let xMax = rightBoundary - size;
-        let xMin = xMax - this.playerSize + 5;
+        let xMax = rightBoundary - size/2;
+        let xMin = xMax - this.playerSize;
 
         let yMax = bottomBoundary - size;
         let yMin = topBoundary + size;
@@ -109,7 +112,7 @@ export class GameMap {
         let yPos = Phaser.Math.Between(yMin, yMax);
 
         let xMax: number = 0;
-        let xMin: number = Math.max(oldX - size - this.playerSize, leftBoundary);
+        let xMin: number = Math.max(oldX - size - this.playerSize, leftBoundary + size/2);
 
         if (yPos < oldY + oldHeight && yPos + size > oldY ) {
           //Colliding
@@ -131,7 +134,7 @@ export class GameMap {
 
     }
 
-    if (this.timeSinceLastRequiredShot < 10000) {
+    if (this.timeSinceLastRequiredShot < 7000) {
       // Need to provide escape route which doesn't require shooting.
       // let indx = Phaser.Math.Between(0, rectangles.length-1);
 
