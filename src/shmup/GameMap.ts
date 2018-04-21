@@ -2,9 +2,12 @@ import { Shmup } from './Shmup'
 
 export class GameMap {
 
-  obstacles: Phaser.Physics.Arcade.Group
-  baseinterval: number = 100;
+  private obstacles: Phaser.Physics.Arcade.Group
+  baseinterval: number = 10;
   timer: number = 0;
+  xPos: number[] = new Array();
+  columns: number = 7;
+  obstacleSize:number = 128;
 
   constructor(private shmup: Shmup, private scene: Phaser.Scene, private velocity: number) {
   }
@@ -14,15 +17,17 @@ export class GameMap {
 
   public create(obstacles: Phaser.Physics.Arcade.Group) {
     this.obstacles = obstacles;
-    // this.createObstacle(100,100);
-    // this.createObstacle(200,200);
+    
+    for (let i = 0; i < this.columns; i++) {
+      this.xPos[i] = this.scene.physics.world.bounds.width - this.obstacleSize*(i+1)+this.obstacleSize/2;
+    }
 
   }
 
   public update(time: number, delta: number) {
     
     this.timer += delta;
-    if (this.timer > 3000) {
+    if (this.timer*this.velocity/400 > this.obstacleSize*this.baseinterval) {
       this.timer = 0;
       
       this.newObstacles();
@@ -37,15 +42,14 @@ export class GameMap {
   }
 
   private newObstacles() {
-    this.createObstacle(600, -200);
-    this.createObstacle(700, -200);
-    this.createObstacle(800, -200);
-    this.createObstacle(900, -200);
-    this.createObstacle(700, -200);
+    
+    for (let i = 1; i < (this.columns - 1); i++) {
+      this.createObstacle(this.xPos[i], -200);
+    }
   }
 
   private createObstacle(x: number, y: number) {
-    this.obstacles.create(x, y, 'obstacle');
+    let obstacle = this.obstacles.create(x, y, 'obstacle');
     
   }
   
