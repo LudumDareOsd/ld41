@@ -20,10 +20,11 @@ export class Conductor {
         var jsonFromLevelFileFake = {
             "musicmeta": {
                 "title": "Enter darkness",
-                "path": "../../assets/audio/enter_darkness/helix.mp3",
+                "path": "assets/audio/enter_darkness/track.mp3",
                 "background": "imgbackground.jpg",
                 "offset": "6200",
-                "bpm": "120"
+                "bpm": "120",
+                "duration": "8.5"
             },
             "notes": [
                 {"1.45":[1,0,0,0]},
@@ -33,7 +34,7 @@ export class Conductor {
 
         this.levelmetainfo = jsonFromLevelFileFake;
 
-        this.LoadAudio();
+        //this.LoadAudio();
 
         return this.levelmetainfo.musicmeta;
     }
@@ -41,13 +42,19 @@ export class Conductor {
     public Start() {
         console.log('Conductor starting ' + this.level);
 
-        //this.music.play();
+        this.music = this.scene.sound.add('rythmaudio', { loop: true });
         
         return this.levelmetainfo.notes;
     }
 
+    public Play() {
+        console.log('Conductor Play ' + this.level);
+
+        this.music.play('', 0, 1, true);
+    }
+
     public GetTime() {
-        return this.seektime;
+        return this.music.seek;
     }
 
     private LoadAudio() {
