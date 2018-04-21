@@ -1,6 +1,6 @@
 import { GameMap } from './GameMap';
 import { Player } from './Player';
-import { PowerUp } from './PowerUp'
+import { PowerUp, Power } from './PowerUp'
 
 export class Shmup {
 
@@ -37,15 +37,15 @@ export class Shmup {
     // console.log(p, o);
   }
 
-  public powerCollect(player, powerUp) {
-    // switch (powerUp) {
-    //   case value:
+  public powerCollect(player, powerUp: PowerUp) {
+    switch (powerUp.power) {
+      case Power.Funk:
         
-    //     break;
+        break;
     
-    //   default:
-    //     break;
-    // }
+      default:
+        break;
+    }
     powerUp.destroy();
   }
 
