@@ -15,22 +15,19 @@ export class Shmup {
 
 
   public preload() {
-    this.scene.load.image('player', 'assets/sprites/mushroom.png');
+    this.scene.load.image('player', 'assets/sprites/ship_straight.png');
   }
   
   public create() {
     this.obstacles = this.scene.physics.add.group();
     this.gamemap.create(this.obstacles);
-    this.player = new Player({ scene: this.scene, x: 820, y: 960-50 } );
+    this.player = new Player({ scene: this.scene, x: 820, y: 960-50 });
 
     // this.playergroup = Phaser.Physics.Arcade.Group;
-
-    this.scene.physics.add.existing(this.player as any);
     this.scene.physics.world.setBounds(360, 0, 1280-360, 960);
-    this.player.body.setCollideWorldBounds(true);
     // this.player.
 
-    this.scene.physics.add.collider(this.player, this.obstacles, this.collide, null, this.scene);
+    this.scene.physics.add.collider(this.player.sprite, this.obstacles, this.collide, null, this.scene);
 
   }
 

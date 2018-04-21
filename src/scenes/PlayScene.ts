@@ -5,7 +5,7 @@ class PlayScene extends Phaser.Scene {
   private shmup = new Shmup(this);
   private rythm = new Rythm(this);
   input: Phaser.Input.InputPlugin;
-  cursors: any;
+  particles: any;
 
   constructor() {
     super({
@@ -25,7 +25,7 @@ class PlayScene extends Phaser.Scene {
   }
 
   create() {
-    this.cursors = this.input.keyboard.createCursorKeys()
+    this.particles = this.add.particles('space')
     this.shmup.create();
     this.rythm.create();
   }
