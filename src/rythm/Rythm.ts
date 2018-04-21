@@ -17,10 +17,20 @@ export class Rythm {
     private redPrimed = true;
     private yellowPrimed = true;
 
+    private conductor = new Conductor(this.scene);
+    
     constructor(private scene: Phaser.Scene) {
     }
 
     public preload() {
+        //this.scene.load.audio('rythmaudio', "assets/audio/enter_darkness/track.mp3", null);
+        var infoMetaAboutLevel = this.conductor.Load("level1");
+        // bpm: int 120 ex
+        // title: Music Title
+        // background: img background.jpg
+        // offset: int ms (?kanske inte behövs? hur lång paus innan musik börjar)
+
+        this.scene.load.audio('rythmaudio', infoMetaAboutLevel.path, null);
     }
 
     public create() {
@@ -29,8 +39,17 @@ export class Rythm {
         this.greenKey = this.scene.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.W);
         this.redKey = this.scene.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.E);
         this.yellowKey = this.scene.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.R);
-        
+
         this.scoreText = this.scene.add.text(1090, 8, 'Score: 0', { fontSize: '24px', fill: '#fff' }).setDepth(2);
+
+        var infoAtWhatTimesToDoStuff = this.conductor.Start(); //"level1"
+
+        //console.log('Got notes: ' + JSON.stringify(infoAtWhatTimesToDoStuff));
+        // [{"1.34": 1}, {"4.3": 2}, {"9.0": 0}]
+        // 1.34 ms => 0 || 1 || 2 || 3] ==> vilken tngt som ska visas i GUI
+
+        this.conductor.Play();
+
     }
 
     public update(time: number, delta: number) {
