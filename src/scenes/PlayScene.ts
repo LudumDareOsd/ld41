@@ -22,7 +22,7 @@ class PlayScene extends Phaser.Scene {
     this.load.image('greennote', 'assets/sprites/green_note.png'); 
     this.load.image('rednote', 'assets/sprites/red_note.png');
     this.load.image('yellownote', 'assets/sprites/yellow_note.png');
-    this.load.image('obstacle', 'assets/sprites/mushroom.png');
+    this.load.image('asteroid', 'assets/sprites/mushroom.png');
 
     this.load.image('particle1', 'assets/sprites/particle_1.png');
     this.load.image('particle2', 'assets/sprites/particle_2.png');
