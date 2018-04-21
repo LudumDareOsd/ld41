@@ -103,7 +103,17 @@ export class Rythm {
     private checkHit(children: any, type: NoteType) {
         for (let item of children) {
             if (item.y > 846 && item.y < 876 && item.x == this.xValue(type)) {
-                item.destroy();
+                this.scene.tweens.add({
+                    targets: item,
+                    x: 700,
+                    ease: "elastic",
+                    duration: 1500,
+                    repeat: -1,
+                    repeatDelay: 1000,
+                    hold: 1000
+                });
+
+                //item.destroy();
             }
         }
     }
