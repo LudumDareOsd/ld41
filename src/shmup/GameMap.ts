@@ -53,14 +53,15 @@ export class GameMap {
 
   private createAsteroid(x: number, y: number, scale: number) {
 
-    let obstacle: Phaser.Physics.Arcade.Sprite = this.scene.physics.add.sprite(x, y, 'asteroid').setVelocity(Math.floor(Math.random()*10-5), this.velocity+Math.floor(Math.random()*10-5));
-    obstacle.scaleY = scale;
-    obstacle.scaleX = scale;
+    let asteroid: Phaser.Physics.Arcade.Sprite = this.scene.physics.add.sprite(x, y, 'asteroid').setVelocity(Math.floor(Math.random()*10-5), this.velocity+Math.floor(Math.random()*10-5));
+    asteroid.scaleY = scale;
+    asteroid.scaleX = scale;
 
-    obstacle.setRotation(Math.random()*3.14);
-    obstacle.setAngularVelocity(this.rnd2()*100);
+    asteroid.setRotation(Math.random()*3.14);
+    asteroid.setAngularVelocity(this.rnd2()*100);
+    asteroid.setDepth(1);
     
-    this.asteroids.push(obstacle);
+    this.asteroids.push(asteroid);
   }
   
   private cleanUp(): void {
