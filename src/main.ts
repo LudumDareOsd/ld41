@@ -6,11 +6,14 @@ const config: GameConfig = {
   type: Phaser.AUTO,
   parent: 'content',
   width: 1280,
-  height: 720,
+  height: 960,
   resolution: 1,
   backgroundColor: "#000",
   physics: {
     default: 'arcade',
+    arcade: {
+      debug: true
+    }
   },
   scene: [
     PlayScene

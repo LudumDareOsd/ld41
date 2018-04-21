@@ -17,6 +17,7 @@ dump/
 *.patch
 *.bak*
 *.old*
+*.orig
 higherVolume/
 yarn.lock
 package-lock.json
