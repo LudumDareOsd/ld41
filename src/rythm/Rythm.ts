@@ -1,4 +1,5 @@
 import { NoteType } from './NoteType';
+import { Conductor } from './Conductor';
 
 export class Rythm {
 

@@ -19,7 +19,7 @@ export class Shmup {
   }
   
   public create() {
-    this.obstacles = this.scene.physics.add.group();
+    this.obstacles = [];
     this.gamemap.create(this.obstacles);
     this.player = new Player({ scene: this.scene, x: 820, y: 960-50 } );
 
