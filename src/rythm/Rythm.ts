@@ -120,7 +120,7 @@ export class Rythm {
     }
 
     private xValue(type: NoteType) {
-        return 60 + (type * 69);
+        return 46 + (type * 69);
     }
 
     private getTexture(type: NoteType) {

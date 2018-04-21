@@ -16,7 +16,8 @@ class PlayScene extends Phaser.Scene {
     this.rythm.preload();
     this.shmup.preload();
 
-    this.load.image('background', 'assets/sprites/background.png');
+    this.load.image('background', 'assets/sprites/funk_background_bottom.png');
+    this.load.image('foreground', 'assets/sprites/funk_background_top.png');
     this.load.image('bluenote', 'assets/sprites/blue_note.png');
     this.load.image('greennote', 'assets/sprites/green_note.png'); 
     this.load.image('rednote', 'assets/sprites/red_note.png');
@@ -29,8 +30,12 @@ class PlayScene extends Phaser.Scene {
   }
 
   create() {
-    this.add.image(640, 480, 'background');
+    this.add.image(0, 0, 'background').setOrigin(0, 0);
+    let foreGround = this.add.image(0, 0, 'foreground');
+    foreGround.setOrigin(0, 0);
+    foreGround.setDepth(2)
     
+
     this.shmup.create();
     this.rythm.create();
   }
