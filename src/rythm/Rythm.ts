@@ -55,7 +55,8 @@ export class Rythm {
 
     public update(time: number, delta: number) {
         var infoWhereWeAreNow = this.conductor.GetTime();
-        //console.log('Conductor time ' + infoWhereWeAreNow);
+        console.log('Conductor time ' + infoWhereWeAreNow);
+        console.log('Conductor loop #' + this.conductor.LoopCount());
 
         if (this.timer > 500) {
             this.createNote(Phaser.Math.Between(0, 3));

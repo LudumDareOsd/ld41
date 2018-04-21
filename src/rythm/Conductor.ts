@@ -4,6 +4,7 @@ export class Conductor {
     private seektime : number;
     private levelmetainfo : any;
     private music : any;
+    private loopCount : number;
 
     constructor(private scene: Phaser.Scene) {
            
@@ -14,6 +15,7 @@ export class Conductor {
 
         this.seektime = 0;
         this.level = levelChosen;
+        this.loopCount = 0;
 
         // TODO Read from JSON-file
 
@@ -28,7 +30,8 @@ export class Conductor {
             },
             "notes": [
                 {"1.45":[1,0,0,0]},
-                {"5.67":[0,1,0,0]}
+                {"5.67":[0,1,0,0]},
+                {"8.0":[0,1,0,0]},
             ]
         }
 
@@ -51,10 +54,15 @@ export class Conductor {
         console.log('Conductor Play ' + this.level);
 
         this.music.play('', 0, 1, true);
+        //this.music.onLoop.add(this.hasLooped, this);
     }
 
     public GetTime() {
         return this.music.seek;
+    }
+
+    public LoopCount() {
+        return this.loopCount;
     }
 
     private LoadAudio() {
@@ -62,6 +70,11 @@ export class Conductor {
 
         //this.scene.load.audio('rythmaudio', this.levelmetainfo.musicmeta.path, null);
         //this.music = this.scene.sound.add('rythmaudio');
+    }
+
+    private hasLooped(sound) {
+
+        this.loopCount++;
     }
 
 }
