@@ -15,21 +15,10 @@ export class Rythm {
     private redPrimed = true;
     private yellowPrimed = true;
 
-    private conductor = new Conductor(this.scene);
-
     constructor(private scene: Phaser.Scene) {
     }
 
     public preload() {
-        //this.scene.load.audio('rythmaudio', "assets/audio/enter_darkness/track.mp3", null);
-        var infoMetaAboutLevel = this.conductor.Load("level1");
-        console.log('Got info: ' + infoMetaAboutLevel.title);
-        // bpm: int 120 ex
-        // title: Music Title
-        // background: img background.jpg
-        // offset: int ms (?kanske inte behövs)
-
-        this.scene.load.audio('rythmaudio', infoMetaAboutLevel.path, null);
     }
 
     public create() {
@@ -38,25 +27,9 @@ export class Rythm {
         this.greenKey = this.scene.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.W);
         this.redKey = this.scene.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.E);
         this.yellowKey = this.scene.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.R);
-        
-        var infoAtWhatTimesToDoStuff = this.conductor.Start(); //"level1"
-        console.log('Got notes: ' + JSON.stringify(infoAtWhatTimesToDoStuff));
-        // [{"1.34": [0,1,1,0]}, {"4.3": [0,0,1,0]}, {"9.0": [1,0,0,0]}]
-        // 1.34 ms => [0,1,1,0] ==>
-        //           tangent 1: gör inget   (0)
-        //           tangent 2: ska tryckas (1)
-        //           tangent 3: ska tryckas (1)
-        //           tangent 3: gör inget   (0)
-
-        //var music = this.scene.sound.add('rythmaudio');
-        //music.play();
-        this.conductor.Play();
     }
 
     public update(time: number, delta: number) {
-        var infoWhereWeAreNow = this.conductor.GetTime();
-        //console.log('Conductor time ' + infoWhereWeAreNow);
-
         if (this.timer > 500) {
             this.createNote(Phaser.Math.Between(0, 3));
             this.timer = 0;
@@ -85,37 +58,52 @@ export class Rythm {
             this.checkHit(this.notes.children.entries, NoteType.right);
         }
 
-        if(this.blueKey.isUp) {
+        if (this.blueKey.isUp) {
             this.bluePrimed = true;
         }
-        if(this.greenKey.isUp) {
+        if (this.greenKey.isUp) {
             this.greenPrimed = true;
         }
-        if(this.redKey.isUp) {
+        if (this.redKey.isUp) {
             this.redPrimed = true;
         }
-        if(this.yellowKey.isUp) {
+        if (this.yellowKey.isUp) {
             this.yellowPrimed = true;
         }
     }
 
     private createNote(type: NoteType) {
         let x = this.xValue(type);
-        this.notes.create(x, -100, this.getTexture(type)).setVelocity(0, 100);
-        // var particles = this.scene.add.particles('spark');
+        let sprite = this.notes.create(x, -100, this.getTexture(type)).setVelocity(0, 200);
+        let particles = this.scene.add.particles('particle1');
 
-        // var emitter = particles.createEmitter({
-        //     frame: 'yellow',
-        //     radial: false,
-        //     x: 100,
-        //     y: { min: 0, max: 560, steps: 256 },
-        //     lifespan: 2000,
-        //     speedX: { min: 200, max: 400 },
-        //     quantity: 4,
-        //     gravityY: 50,
-        //     scale: { start: 0.6, end: 0, ease: 'Power3' },
-        //     blendMode: 'ADD'
-        // });
+        let emitter = particles.createEmitter({
+            tint: this.getTint(type),
+            x: { max: 22, min: -22 },
+            y: { max: 22, min: -22 },
+            speed: 100,
+            quantity: 1,
+            lifespan: 300,
+            scale: { start: 0.2, end: 0 },
+            blendMode: 'ADD'
+        });
+
+        emitter.startFollow(sprite, 0, 0, true);
+    }
+
+    private getTint(type: NoteType) {
+        if (type == NoteType.left) {
+            return 0xaa3333;
+        }
+        if (type == NoteType.midleft) {
+            return 0x33aa33;
+        }
+        if (type == NoteType.midright) {
+            return 0x3333aa;
+        }
+        if (type == NoteType.right) {
+            return 0x33aaaa;
+        }
     }
 
     private xValue(type: NoteType) {
@@ -159,5 +147,4 @@ export class Rythm {
             }
         }
     }
-
 }
