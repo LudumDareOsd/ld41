@@ -1,8 +1,8 @@
-class BootScene extends Phaser.Scene {
+class TitleScene extends Phaser.Scene {
 
     constructor() {
       super({
-        key: 'BootScene'
+        key: 'TitleScene'
       });
     }
 
@@ -15,9 +15,9 @@ class BootScene extends Phaser.Scene {
         //this.add.image(400, 300, 'background_boot');
         //this.add.image(0, 0, 'background').setOrigin(0, 0);
 
-        console.log("BOOTED");
-        this.scene.start('TitleScene');
+        console.log("TITLED");
+        this.scene.start('PlayScene');
     }
 }
 
-export default BootScene;
+export default TitleScene;
