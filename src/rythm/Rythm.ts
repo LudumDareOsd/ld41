@@ -4,6 +4,8 @@ import { Conductor } from './Conductor';
 export class Rythm {
 
     private notes: any;
+    private scoreText: any;
+    private score = 0;
     private timer = 0;
     private blueKey: Phaser.Input.Keyboard.Key;
     private greenKey: Phaser.Input.Keyboard.Key;
@@ -27,13 +29,15 @@ export class Rythm {
         this.greenKey = this.scene.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.W);
         this.redKey = this.scene.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.E);
         this.yellowKey = this.scene.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.R);
+        
+        this.scoreText = this.scene.add.text(1090, 8, 'Score: 0', { fontSize: '24px', fill: '#fff' }).setDepth(2);
     }
 
     public update(time: number, delta: number) {
         //var infoWhereWeAreNow = this.conductor.GetTime();
         //console.log('Conductor time ' + infoWhereWeAreNow);
         //console.log('Conductor loop #' + this.conductor.LoopCount());
-
+        this.score += 1;
         if (this.timer > 500) {
             this.createNote(Phaser.Math.Between(0, 3));
             this.timer = 0;
@@ -42,6 +46,11 @@ export class Rythm {
         this.timer += delta;
         this.checkKeys();
         this.checkWorldBound(this.notes.children.entries, this.scene.physics.world);
+        this.updateScore();
+    }
+
+    private updateScore() {
+        this.scoreText.setText('Score: ' + this.score);
     }
 
     private checkKeys() {
@@ -147,7 +156,6 @@ export class Rythm {
                     hold: 1000
                 });
 
-                //item.destroy();
             }
         }
     }

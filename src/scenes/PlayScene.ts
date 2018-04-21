@@ -30,6 +30,7 @@ class PlayScene extends Phaser.Scene {
 
   create() {
     this.add.image(640, 480, 'background');
+    
     this.shmup.create();
     this.rythm.create();
   }
