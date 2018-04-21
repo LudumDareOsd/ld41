@@ -1,23 +1,20 @@
 import 'phaser';
 
-import TestScene from './scenes/PlayScene';
+import PlayScene from './scenes/PlayScene';
 
-const config:GameConfig = {
-    type: Phaser.AUTO,
-    parent: 'content',
-    width: 640,
-    height: 480,
-    resolution: 1, 
-    backgroundColor: "#EDEEC9",
-    physics: {
-      default: 'arcade',
-      arcade: {
-        gravity: { y: 0 }
-      }
-    },
-    scene: [
-      TestScene
-    ]
+const config: GameConfig = {
+  type: Phaser.AUTO,
+  parent: 'content',
+  width: 1280,
+  height: 960,
+  resolution: 1,
+  backgroundColor: "#000",
+  physics: {
+    default: 'arcade',
+  },
+  scene: [
+    PlayScene
+  ]
 };
 
 new Phaser.Game(config);
