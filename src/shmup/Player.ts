@@ -10,7 +10,8 @@ export class Player {
   downKey: Phaser.Input.Keyboard.Key;
   fireKey: Phaser.Input.Keyboard.Key;
 
-  emitter: any;
+  particles: Phaser.GameObjects.Particles.ParticleEmitterManager;
+  emitter: Phaser.GameObjects.Particles.ParticleEmitter;
 
   constructor(config) {
     this.scene = config.scene;
@@ -41,7 +42,7 @@ export class Player {
     this.scene.physics.add.existing(this.sprite as any);
 
     this.sprite.setCollideWorldBounds(true);
-    this.sprite.setOrigin(0.5, 0.5);
+    // this.sprite.setOrigin(0.5, 0.5);
     this.sprite.setDrag(500, 500);
     this.sprite.setMaxVelocity(600, 600);
 
@@ -51,37 +52,28 @@ export class Player {
     this.downKey = this.scene.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.DOWN);
     this.fireKey = this.scene.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.SPACE);
 
-    // this.emitter = this.scene.particles.createEmitter({
-    //   frame: 'player',
-    //   speed: 100,
-    //   lifespan: {
-    //       onEmit(particle, key, t, value)
-    //       {
-    //           return Phaser.Math.Percent(this.sprite.body.speed, 0, 300) * 2000;
-    //       }
-    //   },
-    //   alpha: {
-    //       onEmit(particle, key, t, value)
-    //       {
-    //           return Phaser.Math.Percent(this.sprite.body.speed, 0, 300);
-    //       }
-    //   },
-    //   angle: {
-    //       onEmit(particle, key, t, value)
-    //       {
-    //           var v = Phaser.Math.Between(-10, 10);
-    //           return (this.angle - 180) + v;
-    //       }
-    //   },
-    //   scale: { start: 0.6, end: 0 },
-    //   blendMode: 'ADD'
-    // });
-
-    // this.sprite.anims.play('idle');
+    this.particles = this.scene.add.particles('particle3')
+    this.emitter = this.particles.createEmitter({
+      x: 0,
+      y: 0,
+      tint: 0xffffffff,
+      angle: 0,
+      speed: 100,
+      quantity: 2,
+      alpha: 0.8,
+      // speed: { min: -1100, max: 100 },
+      gravityY: 0,
+      gravityX: 0,
+      scale: { start: 0.3, end: 0.0 },
+      lifespan: 100,
+      blendMode: 'ADD'
+    });
+    this.emitter.startFollow(this.sprite, 0, -30, true);
   }
 
   update() {
     this.sprite.anims.play('idle');
+    this.emitter.setAngle(Phaser.Math.Between(0, 360));
     
     if (this.leftKey.isDown) {
       this.sprite.body.velocity.x += -40;
