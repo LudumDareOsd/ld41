@@ -17,6 +17,9 @@ export class Rythm {
     private yellowPrimed = true;
 
     private infoAtWhatTimesToDoStuff;
+    private createdNotes = 0;
+
+    private lastFrameTime = 0;
 
     private conductor = new Conductor(this.scene);
     
@@ -65,20 +68,25 @@ export class Rythm {
     private checkMusic() {
         let time = this.conductor.GetTime();
         let length = this.infoAtWhatTimesToDoStuff.length;
-        for(let i = 0; i < length; i++) {
+        for(let i = this.createdNotes; i < length; i++) {
             let info = this.infoAtWhatTimesToDoStuff[i];
             let key = Object.keys(info)[0];
             let value = info[key];
 
             if(key < time) {
                 this.createNote(value);
-                let index = this.infoAtWhatTimesToDoStuff.indexOf(info);
-
-                if(index != -1) {
-                    this.infoAtWhatTimesToDoStuff.splice(index, 1);
-                }
+                this.createdNotes++;
                 break;
             }
+        }
+
+        this.checkTime(time);
+        this.lastFrameTime = time;
+    }
+
+    private checkTime(time: number) {
+        if(this.lastFrameTime > time) {
+            this.createdNotes = 0;
         }
     }
 
