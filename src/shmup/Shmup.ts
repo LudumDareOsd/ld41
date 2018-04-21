@@ -7,11 +7,12 @@ export class Shmup {
   player: any;
   velocity: number = 100;
   obstacles: any;
+  bulletgroup: any;
+  // this.notes = this.scene.physics.add.group();
 
   constructor(private scene: any) {
     this.gamemap = new GameMap(this, this.scene, this.velocity);
   }
-
 
   public preload() {
     this.scene.load.spritesheet('player', 'assets/sprites/ship_spritemap.png', { frameWidth: 65, frameHeight: 75 });
@@ -21,10 +22,10 @@ export class Shmup {
     this.obstacles = [];
     this.gamemap.create(this.obstacles);
     this.player = new Player({ scene: this.scene, x: 820, y: 960-50 });
+    this.bulletgroup = this.scene.physics.add.group();
 
     this.scene.physics.world.setBounds(360, 0, 1280-360, 960);
     this.scene.physics.add.collider(this.player.sprite, this.obstacles, this.collide, null, this.scene);
-
   }
 
   public collide(p, o) {
@@ -35,7 +36,6 @@ export class Shmup {
   public update(time: number, delta: number) {
     this.gamemap.update(time, delta);
     this.player.update();
-
   }
     
 }
