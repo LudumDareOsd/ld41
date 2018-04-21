@@ -23,11 +23,10 @@ export class Rythm {
     public preload() {
         //this.scene.load.audio('rythmaudio', "assets/audio/enter_darkness/track.mp3", null);
         var infoMetaAboutLevel = this.conductor.Load("level1");
-        console.log('Got info: ' + infoMetaAboutLevel.title);
         // bpm: int 120 ex
         // title: Music Title
         // background: img background.jpg
-        // offset: int ms (?kanske inte behövs)
+        // offset: int ms (?kanske inte behövs? hur lång paus innan musik börjar)
 
         this.scene.load.audio('rythmaudio', infoMetaAboutLevel.path, null);
     }
@@ -40,16 +39,10 @@ export class Rythm {
         this.yellowKey = this.scene.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.R);
         
         var infoAtWhatTimesToDoStuff = this.conductor.Start(); //"level1"
-        console.log('Got notes: ' + JSON.stringify(infoAtWhatTimesToDoStuff));
-        // [{"1.34": [0,1,1,0]}, {"4.3": [0,0,1,0]}, {"9.0": [1,0,0,0]}]
-        // 1.34 ms => [0,1,1,0] ==>
-        //           tangent 1: gör inget   (0)
-        //           tangent 2: ska tryckas (1)
-        //           tangent 3: ska tryckas (1)
-        //           tangent 3: gör inget   (0)
+        //console.log('Got notes: ' + JSON.stringify(infoAtWhatTimesToDoStuff));
+        // [{"1.34": 1}, {"4.3": 2}, {"9.0": 0}]
+        // 1.34 ms => 0 || 1 || 2 || 3] ==> vilken tngt som ska visas i GUI
 
-        //var music = this.scene.sound.add('rythmaudio');
-        //music.play();
         this.conductor.Play();
     }
 
