@@ -4,10 +4,10 @@ import { Player } from './Player';
 export class Shmup {
 
   gamemap: GameMap;
-  player: Player;
+  player: any;
   playergroup: Phaser.Physics.Arcade.Group;
   velocity: number = 100;
-  obstacles: Phaser.Physics.Arcade.Group;
+  obstacles: any;
 
   constructor(private scene: Phaser.Scene) {
     this.gamemap = new GameMap(this, this.scene, this.velocity);
