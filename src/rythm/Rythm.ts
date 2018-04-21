@@ -1,5 +1,4 @@
 import { Note } from './Note';
-import { Util } from '../utils/Util';
 import { NoteType } from './NoteType';
 
 export class Rythm {
@@ -17,7 +16,7 @@ export class Rythm {
     }
 
     public update(time: number, delta: number) {
-        this.createNote(Util.getRandomInt(0, 3));
+        this.createNote(Phaser.Math.Between(0, 3));
         this.checkWorldBound(this.notes.children.entries, this.scene.physics.world);
     }
 
