@@ -14,6 +14,7 @@ class PlayScene extends Phaser.Scene {
   preload() {
     this.shmup.preload();
     this.rythm.preload();
+    this.load.image('obstacle', 'assets/sprites/mushroom.png');
   }
 
   create() {

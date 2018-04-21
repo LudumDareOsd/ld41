@@ -25,8 +25,8 @@ export class Rythm {
     }
 
     private checkWorldBound(children, world) {
-        for(let item of children) {
-            if(item.y > world.bounds.height) {
+        for (let item of children) {
+            if (item.y > world.bounds.height) {
                 item.destroy();
             }
         }
