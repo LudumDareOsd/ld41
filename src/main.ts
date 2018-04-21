@@ -11,6 +11,9 @@ const config: GameConfig = {
   backgroundColor: "#000",
   physics: {
     default: 'arcade',
+    arcade: {
+      debug: true
+    }
   },
   scene: [
     PlayScene

@@ -4,6 +4,8 @@ import { Rythm } from '../rythm/Rythm';
 class PlayScene extends Phaser.Scene {
   private shmup = new Shmup(this);
   private rythm = new Rythm(this);
+  input: Phaser.Input.InputPlugin;
+  cursors: any;
 
   constructor() {
     super({
@@ -24,6 +26,7 @@ class PlayScene extends Phaser.Scene {
   }
 
   create() {
+    this.cursors = this.input.keyboard.createCursorKeys()
     this.shmup.create();
     this.rythm.create();
     this.add.image(640, 480, 'background');
