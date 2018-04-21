@@ -24,6 +24,8 @@ class PlayScene extends Phaser.Scene {
     this.load.image('obstacle', 'assets/sprites/mushroom.png');
 
     this.load.image('particle1', 'assets/sprites/particle_1.png');
+    this.load.image('particle2', 'assets/sprites/particle_2.png');
+    this.load.image('particle3', 'assets/sprites/particle_3.png');
   }
 
   create() {
