@@ -1,8 +1,7 @@
-import PlayScene from "../scenes/PlayScene";
-import MouseControl from "./MouseControl";
+import { MouseControl } from "./MouseControl";
 
 export class Player {
-  scene: PlayScene;
+  scene: any;
   sprite: any;
 
   leftKey: Phaser.Input.Keyboard.Key;
@@ -75,36 +74,35 @@ export class Player {
   }
 
   update() {
-    this.sprite.anims.play('idle');
     this.emitter.setAngle(Phaser.Math.Between(0, 360));
-    
+    this.mousecontrol.update(this.sprite)
+
+
+    if (this.sprite.body.velocity.x < -1) {
+      this.sprite.anims.play('left');
+    } else if (this.sprite.body.velocity.x > 1) {
+      this.sprite.anims.play('right');
+    } else {
+      this.sprite.anims.play('idle');
+    }
+
+
+    if(this.mousecontrol.vel.x < 0) {
+    }
+    this.sprite.body.velocity.x = this.mousecontrol.vel.x;
+    this.sprite.body.velocity.y = this.mousecontrol.vel.y;
+
     if (this.leftKey.isDown) {
       this.sprite.body.velocity.x -= 50;
-      this.sprite.anims.play('left');
-    } else if(this.mousecontrol.delta.x > 0) {
-      this.sprite.body.velocity.x -= Math.min(this.mousecontrol.delta.x * 5, 50);
-      this.sprite.anims.play('left');
     }
-
     if (this.rightKey.isDown) {
       this.sprite.body.velocity.x += 50;
-      this.sprite.anims.play('right');
-    } else if(this.mousecontrol.delta.x < 0) {
-      this.sprite.anims.play('right');
-      this.sprite.body.velocity.x -= Math.min(this.mousecontrol.delta.x * 5, 50);
     }
-    
-
     if (this.upKey.isDown) {
       this.sprite.body.velocity.y -= 50;
-		} else if(this.mousecontrol.delta.y > 0) {
-      this.sprite.body.velocity.y -= Math.min(this.mousecontrol.delta.y * 5, 50);
-    }
-
+		}
     if (this.downKey.isDown) {
       this.sprite.body.velocity.y += 50;
-    } else if(this.mousecontrol.delta.y < 0) {
-      this.sprite.body.velocity.y -= Math.min(this.mousecontrol.delta.y * 5, 50);
     }
   }
 }
