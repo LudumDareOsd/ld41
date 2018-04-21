@@ -1,4 +1,5 @@
 import PlayScene from "../scenes/PlayScene";
+import MouseControl from "./MouseControl";
 
 export class Player {
   scene: PlayScene;
@@ -9,6 +10,7 @@ export class Player {
   upKey: Phaser.Input.Keyboard.Key;
   downKey: Phaser.Input.Keyboard.Key;
   fireKey: Phaser.Input.Keyboard.Key;
+  mousecontrol: MouseControl;
 
   particles: Phaser.GameObjects.Particles.ParticleEmitterManager;
   emitter: Phaser.GameObjects.Particles.ParticleEmitter;
@@ -16,6 +18,7 @@ export class Player {
   constructor(config) {
     this.scene = config.scene;
     this.sprite = new Phaser.Physics.Arcade.Sprite(config.scene, config.x, config.y, 'player');
+    this.mousecontrol = new MouseControl({ input: this.scene.input });
 
     this.scene.anims.create({
       key: 'idle',
@@ -76,18 +79,32 @@ export class Player {
     this.emitter.setAngle(Phaser.Math.Between(0, 360));
     
     if (this.leftKey.isDown) {
-      this.sprite.body.velocity.x += -40;
+      this.sprite.body.velocity.x -= 50;
+      this.sprite.anims.play('left');
+    } else if(this.mousecontrol.delta.x > 0) {
+      this.sprite.body.velocity.x -= Math.min(this.mousecontrol.delta.x * 5, 50);
       this.sprite.anims.play('left');
     }
+
     if (this.rightKey.isDown) {
-      this.sprite.body.velocity.x += 40;
+      this.sprite.body.velocity.x += 50;
       this.sprite.anims.play('right');
-		}
+    } else if(this.mousecontrol.delta.x < 0) {
+      this.sprite.anims.play('right');
+      this.sprite.body.velocity.x -= Math.min(this.mousecontrol.delta.x * 5, 50);
+    }
+    
+
     if (this.upKey.isDown) {
-      this.sprite.body.velocity.y += -40;
-		}
+      this.sprite.body.velocity.y -= 50;
+		} else if(this.mousecontrol.delta.y > 0) {
+      this.sprite.body.velocity.y -= Math.min(this.mousecontrol.delta.y * 5, 50);
+    }
+
     if (this.downKey.isDown) {
-      this.sprite.body.velocity.y += 40;
+      this.sprite.body.velocity.y += 50;
+    } else if(this.mousecontrol.delta.y < 0) {
+      this.sprite.body.velocity.y -= Math.min(this.mousecontrol.delta.y * 5, 50);
     }
   }
 }
