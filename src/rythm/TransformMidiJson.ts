@@ -54,10 +54,10 @@ export class TransformMidiJson {
             return 1;
         }
         if(midiNote == "G#2") {
-            return 3;
+            return 2;
         }
         if(midiNote == "F2") {
-            return 4;
+            return 3;
         }
         return 0;
     }
