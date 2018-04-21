@@ -16,12 +16,13 @@ class PlayScene extends Phaser.Scene {
     this.rythm.preload();
     this.shmup.preload();
 
-    this.load.image('background', 'assets/sprites/background.png');
+    this.load.image('background', 'assets/sprites/funk_background_bottom.png');
+    this.load.image('foreground', 'assets/sprites/funk_background_top.png');
     this.load.image('bluenote', 'assets/sprites/blue_note.png');
     this.load.image('greennote', 'assets/sprites/green_note.png'); 
     this.load.image('rednote', 'assets/sprites/red_note.png');
     this.load.image('yellownote', 'assets/sprites/yellow_note.png');
-    this.load.image('obstacle', 'assets/sprites/mushroom.png');
+    this.load.image('asteroid', 'assets/sprites/mushroom.png');
 
     this.load.image('particle1', 'assets/sprites/particle_1.png');
     this.load.image('particle2', 'assets/sprites/particle_2.png');
@@ -29,7 +30,14 @@ class PlayScene extends Phaser.Scene {
   }
 
   create() {
-    this.add.image(640, 480, 'background');
+    let background = this.add.image(0, 0, 'background');
+    background.setOrigin(0, 0);
+    background.setDepth(2);
+    let foreGround = this.add.image(0, 0, 'foreground');
+    foreGround.setOrigin(0, 0);
+    foreGround.setDepth(4)
+    
+
     this.shmup.create();
     this.rythm.create();
   }

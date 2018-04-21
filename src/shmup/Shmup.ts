@@ -6,9 +6,9 @@ export class Shmup {
   gamemap: GameMap;
   player: any;
   velocity: number = 100;
+
   obstacles: any;
   bulletgroup: any;
-  // this.notes = this.scene.physics.add.group();
 
   constructor(private scene: any) {
     this.gamemap = new GameMap(this, this.scene, this.velocity);
@@ -20,7 +20,7 @@ export class Shmup {
   
   public create() {
     this.obstacles = [];
-    this.gamemap.create(this.obstacles);
+    this.gamemap.create(this.obstacles, []);
     this.player = new Player({ scene: this.scene, x: 820, y: 960-50 });
     this.bulletgroup = this.scene.physics.add.group();
 
