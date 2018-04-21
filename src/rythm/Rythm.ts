@@ -73,7 +73,22 @@ export class Rythm {
     }
 
     private createNote(type: NoteType) {
-        this.notes.create(this.xValue(type), 20, this.getTexture(type)).setVelocity(0, 100);
+        let x = this.xValue(type);
+        this.notes.create(x, -100, this.getTexture(type)).setVelocity(0, 100);
+        // var particles = this.scene.add.particles('spark');
+
+        // var emitter = particles.createEmitter({
+        //     frame: 'yellow',
+        //     radial: false,
+        //     x: 100,
+        //     y: { min: 0, max: 560, steps: 256 },
+        //     lifespan: 2000,
+        //     speedX: { min: 200, max: 400 },
+        //     quantity: 4,
+        //     gravityY: 50,
+        //     scale: { start: 0.6, end: 0, ease: 'Power3' },
+        //     blendMode: 'ADD'
+        // });
     }
 
     private xValue(type: NoteType) {
@@ -105,7 +120,7 @@ export class Rythm {
             if (item.y > 846 && item.y < 876 && item.x == this.xValue(type)) {
                 this.scene.tweens.add({
                     targets: item,
-                    x: 700,
+                    x: -1400,
                     ease: "elastic",
                     duration: 1500,
                     repeat: -1,
