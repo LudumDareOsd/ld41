@@ -9,6 +9,12 @@ const config:GameConfig = {
     height: 480,
     resolution: 1, 
     backgroundColor: "#EDEEC9",
+    physics: {
+      default: 'arcade',
+      arcade: {
+        gravity: { y: 0 }
+      }
+    },
     scene: [
       TestScene
     ]

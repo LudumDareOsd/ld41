@@ -2,6 +2,8 @@ import { Shmup } from '../shmup/Shmup';
 
 class PlayScene extends Phaser.Scene {
   shmup = new Shmup(this);
+  input: Phaser.Input.InputPlugin;
+  cursors: any;
 
   constructor() {
     super({
@@ -14,6 +16,7 @@ class PlayScene extends Phaser.Scene {
   }
 
   create() {
+    this.cursors = this.input.keyboard.createCursorKeys()
     this.shmup.create();
   }
 
