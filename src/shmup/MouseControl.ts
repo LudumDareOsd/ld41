@@ -32,7 +32,7 @@ export class MouseControl {
     
     this.dist = this.lastpos.distance(pos);
 
-    let scale = Math.min(300, Math.max(this.dist - 20, 0)) * 2;
+    let scale = Math.min(200, Math.max(this.dist - 20, 0)) * 3;
     // let ang = this.delta.angle();
     // console.log(ang);
 

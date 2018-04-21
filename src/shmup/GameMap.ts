@@ -21,7 +21,7 @@ export class GameMap {
   public preload() {
   }
 
-  public create(asteroids: Phaser.Physics.Arcade.Sprite[], powerUps: Phaser.Physics.Arcade.Sprite[]) {
+  public create(asteroids: Phaser.Physics.Arcade.Sprite[], powerUps: PowerUp[]) {
     this.asteroids = asteroids;
     this.powerUps = powerUps;
   }
