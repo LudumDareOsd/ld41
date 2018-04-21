@@ -15,15 +15,34 @@ export class Player {
   constructor(config) {
     this.scene = config.scene;
     this.sprite = new Phaser.Physics.Arcade.Sprite(config.scene, config.x, config.y, 'player');
-    
-    this.scene.physics.add.existing(this.sprite as any);
+
+    this.scene.anims.create({
+      key: 'idle',
+      frames: this.scene.anims.generateFrameNumbers('player', { frames: [0] }),
+      frameRate: 10,
+      repeat: -1
+    });
+
+    this.scene.anims.create({
+      key: 'left',
+      frames: this.scene.anims.generateFrameNumbers('player', { frames: [1] }),
+      frameRate: 10,
+      repeat: -1
+    });
+
+    this.scene.anims.create({
+      key: 'right',
+      frames: this.scene.anims.generateFrameNumbers('player', { frames: [2] }),
+      frameRate: 10,
+      repeat: -1
+    });
+
     this.scene.add.existing(this.sprite as any);
-    // this.sprite
-    // console.log(this.sprite);
+    this.scene.physics.add.existing(this.sprite as any);
+
     this.sprite.setCollideWorldBounds(true);
     this.sprite.setOrigin(0.5, 0.5);
-
-    this.sprite.setDrag(300, 300);
+    this.sprite.setDrag(500, 500);
     this.sprite.setMaxVelocity(600, 600);
 
     this.leftKey = this.scene.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.LEFT);
@@ -57,22 +76,26 @@ export class Player {
     //   scale: { start: 0.6, end: 0 },
     //   blendMode: 'ADD'
     // });
-  
+
+    // this.sprite.anims.play('idle');
   }
 
   update() {
-
+    this.sprite.anims.play('idle');
+    
     if (this.leftKey.isDown) {
-      this.sprite.body.velocity.x += -20;
+      this.sprite.body.velocity.x += -40;
+      this.sprite.anims.play('left');
     }
     if (this.rightKey.isDown) {
-      this.sprite.body.velocity.x += 20;
+      this.sprite.body.velocity.x += 40;
+      this.sprite.anims.play('right');
 		}
     if (this.upKey.isDown) {
-      this.sprite.body.velocity.y += -20;
+      this.sprite.body.velocity.y += -40;
 		}
     if (this.downKey.isDown) {
-      this.sprite.body.velocity.y += 20;
+      this.sprite.body.velocity.y += 40;
     }
   }
 }
