@@ -11,6 +11,7 @@ export class GameMap {
   private playerSize:number = 64;
   private timeSinceLastRequiredShot: number = 0;
   private scaling: number = 1.5;
+  private lastGapRight: boolean = false;
 
   constructor(private shmup: Shmup, private scene: Phaser.Scene, private velocity: number) {
   }
@@ -138,15 +139,14 @@ export class GameMap {
       // Need to provide escape route which doesn't require shooting.
       // let indx = Phaser.Math.Between(0, rectangles.length-1);
 
-      let indx = Math.floor((1 - this.rnd2()*this.rnd2())*rectangles.length-1);
-
-
-
-      if (indx > 0 && Math.random() < 0.5) {
-        rectangles.splice(indx-1, 2);
+      if (this.lastGapRight) {
+        rectangles.splice(Phaser.Math.Between(0,3), 2);
+        this.lastGapRight = false;
       } else {
-        rectangles.splice(indx, 2)
+        rectangles.splice(Phaser.Math.Between(rectangles.length-3,rectangles.length), 2);
+        this.lastGapRight = true;
       }
+
     } else {
       // Generate unsafe route
       this.timeSinceLastRequiredShot = 0;
