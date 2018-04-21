@@ -3,7 +3,8 @@ import { Player } from './Player'
 
 export class GameMap {
 
-  private obstacles: Phaser.Physics.Arcade.Sprite[];
+  private asteroids: Phaser.Physics.Arcade.Sprite[];
+  private powerUps: Phaser.Physics.Arcade.Sprite[];
   private baseinterval: number = 1;
   private timer: number = 10000;
   private columns: number = 7;
@@ -19,8 +20,9 @@ export class GameMap {
   public preload() {
   }
 
-  public create(obstacles: Phaser.Physics.Arcade.Sprite[]) {
-    this.obstacles = obstacles;
+  public create(asteroids: Phaser.Physics.Arcade.Sprite[], powerUps: Phaser.Physics.Arcade.Sprite[]) {
+    this.asteroids = asteroids;
+    this.powerUps = powerUps;
   }
 
   public update(time: number, delta: number) {
@@ -30,40 +32,42 @@ export class GameMap {
     if (this.timer*this.velocity/8000 > this.obstacleSize*this.baseinterval) {
       this.timer = 0;
       
-      this.newObstacles();
+      this.newAsteroids();
+      this.cleanUp();
     }
 
-    this.cleanUp();
   }
 
   public setVelocity(velocity: number) {
     this.velocity = velocity;
   }
 
-  private newObstacles() {
+  private newAsteroids() {
 
     let rectangles: Phaser.Geom.Rectangle[] = this.generate();
 
     for (let rectangle of rectangles) {
-      this.createObstacle(rectangle.x, rectangle.y, rectangle.width/this.obstacleSize);
+      this.createAsteroid(rectangle.x, rectangle.y, rectangle.width/this.obstacleSize);
     }
   }
 
-  private createObstacle(x: number, y: number, scale: number) {
+  private createAsteroid(x: number, y: number, scale: number) {
 
-    let obstacle: Phaser.Physics.Arcade.Sprite = this.scene.physics.add.sprite(x, y, 'obstacle').setVelocity(Math.floor(Math.random()*10-5), this.velocity+Math.floor(Math.random()*10-5));
+    let obstacle: Phaser.Physics.Arcade.Sprite = this.scene.physics.add.sprite(x, y, 'asteroid').setVelocity(Math.floor(Math.random()*10-5), this.velocity+Math.floor(Math.random()*10-5));
     obstacle.scaleY = scale;
     obstacle.scaleX = scale;
 
     obstacle.setRotation(Math.random()*3.14);
     obstacle.setAngularVelocity(this.rnd2()*100);
     
-    this.obstacles.push(obstacle);
+    this.asteroids.push(obstacle);
   }
   
   private cleanUp(): void {
-    for (let obstacle of this.obstacles) {
+    for (let i: number = 0; i < this.asteroids.length; i++) {
+      let obstacle = this.asteroids[i];
       if (obstacle.y > this.scene.physics.world.bounds.height + 100) {
+        this.asteroids.splice(i,1);
         obstacle.destroy();
       }
     }

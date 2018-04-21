@@ -6,7 +6,7 @@ export class Shmup {
   gamemap: GameMap;
   player: any;
   velocity: number = 100;
-  obstacles: any;
+  obstacles: Phaser.Physics.Arcade.Sprite[];
 
   constructor(private scene: any) {
     this.gamemap = new GameMap(this, this.scene, this.velocity);
