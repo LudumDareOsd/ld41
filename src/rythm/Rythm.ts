@@ -9,6 +9,7 @@ export class Rythm {
     }
 
     public preload() {
+
     }
 
     public create() {
@@ -26,7 +27,7 @@ export class Rythm {
     }
 
     private createNote(type: NoteType) {
-        this.notes.create(50 + (type * 80), 20, this.getTexture(type)).setVelocity(0, 100);
+        this.notes.create(60 + (type * 69), 20, this.getTexture(type)).setVelocity(0, 100);
     }
 
     private getTexture(type: NoteType) {
@@ -43,7 +44,7 @@ export class Rythm {
 
     private checkWorldBound(children, world) {
         for (let item of children) {
-            if (item.y > world.bounds.height) {
+            if (item.y > world.bounds.height + 50) {
                 item.destroy();
             }
         }
