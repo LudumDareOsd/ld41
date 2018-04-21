@@ -4,28 +4,25 @@ export class Shmup {
 
   gamemap: GameMap;
   player: Phaser.GameObjects.Sprite;
-  scene: Phaser.Scene;
-  velocity: number = 1.2;
-
-  constructor(scene: Phaser.Scene) {
-    this.scene = scene;
-    this.gamemap = new GameMap(this, this.velocity);
+  velocity: number = 100;
+  obstacles: Phaser.Physics.Arcade.Group;
+  
+  constructor(private scene: Phaser.Scene) {
+    this.gamemap = new GameMap(this, this.scene, this.velocity);
   }
-
-
+  
   public preload() {
-
+    
   }
-
+  
   public create() {
-    // this.player // set player here
-    // [] sprite = this.scene.add.sprite();
+    this.obstacles = this.scene.physics.add.group();
+    this.gamemap.create(this.obstacles);
+
   }
 
   public update(time: number, delta: number) {
-    // this.gamemap();
-    // this.Map.update(time, delta);
-    // map.get
+    this.gamemap.update(time, delta);
   }
     
 }

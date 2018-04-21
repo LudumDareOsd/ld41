@@ -1,21 +1,25 @@
 import { Shmup } from './Shmup'
 
 export class GameMap {
-  shmup: Shmup;
 
-  obstacles: Phaser.Physics.Arcade.Group;
-  velocity: number;
+  obstacles: Phaser.Physics.Arcade.Group
   baseinterval: number = 10;
 
-  constructor(shmup: Shmup, velocity: number) {
-    
-    this.shmup = shmup;
-    this.velocity = velocity;
-    this.obstacles = this.shmup.scene.physics.add.group();
+  constructor(private shmup: Shmup, private scene: Phaser.Scene, private velocity: number) {
+  }
 
+  public preload() {
+  }
+
+  public create(obstacles: Phaser.Physics.Arcade.Group) {
+    this.obstacles = obstacles;
     this.createObstacle(100,100);
     this.createObstacle(200,200);
 
+  }
+
+  public update(time: number, delta: number) {
+    this.obstacles.setVelocity(0, this.velocity, 0);
   }
 
   public setVelocity(velocity: number) {
