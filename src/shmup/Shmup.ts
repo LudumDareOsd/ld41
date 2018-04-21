@@ -7,7 +7,7 @@ export class Shmup {
   player: Player;
   playergroup: Phaser.Physics.Arcade.Group;
   velocity: number = 100;
-  obstacles: Phaser.Physics.Arcade.Group;
+  obstacles: Phaser.Physics.Arcade.Sprite[];
 
   constructor(private scene: Phaser.Scene) {
     this.gamemap = new GameMap(this, this.scene, this.velocity);
@@ -19,7 +19,7 @@ export class Shmup {
   }
   
   public create() {
-    this.obstacles = this.scene.physics.add.group();
+    this.obstacles = [];
     this.gamemap.create(this.obstacles);
     this.player = new Player({ scene: this.scene, x: 820, y: 960-50 } );
 
