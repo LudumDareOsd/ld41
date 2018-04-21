@@ -1,10 +1,11 @@
 import { Shmup } from './Shmup'
 import { Player } from './Player'
+import { PowerUp } from './PowerUp'
 
 export class GameMap {
 
   private asteroids: Phaser.Physics.Arcade.Sprite[];
-  private powerUps: Phaser.Physics.Arcade.Sprite[];
+  private powerUps: PowerUp[];
   private baseinterval: number = 1;
   private timer: number = 10000;
   private columns: number = 7;
@@ -20,7 +21,7 @@ export class GameMap {
   public preload() {
   }
 
-  public create(asteroids: Phaser.Physics.Arcade.Sprite[], powerUps: Phaser.Physics.Arcade.Sprite[]) {
+  public create(asteroids: Phaser.Physics.Arcade.Sprite[], powerUps: PowerUp[]) {
     this.asteroids = asteroids;
     this.powerUps = powerUps;
   }

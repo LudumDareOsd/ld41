@@ -6,7 +6,6 @@ export class Rythm {
     private notes: any;
     private scoreText: any;
     private score = 0;
-    private timer = 0;
     private blueKey: Phaser.Input.Keyboard.Key;
     private greenKey: Phaser.Input.Keyboard.Key;
     private redKey: Phaser.Input.Keyboard.Key;
@@ -16,6 +15,11 @@ export class Rythm {
     private greenPrimed = true;
     private redPrimed = true;
     private yellowPrimed = true;
+
+    private infoAtWhatTimesToDoStuff;
+    private createdNotes = 0;
+
+    private lastFrameTime = 0;
 
     private conductor = new Conductor(this.scene);
     
@@ -41,8 +45,7 @@ export class Rythm {
         this.yellowKey = this.scene.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.R);
 
         this.scoreText = this.scene.add.text(1090, 8, 'Score: 0', { fontSize: '24px', fill: '#fff' }).setDepth(2);
-
-        var infoAtWhatTimesToDoStuff = this.conductor.Start(); //"level1"
+        this.infoAtWhatTimesToDoStuff = this.conductor.Start(); //"level1"
 
         //console.log('Got notes: ' + JSON.stringify(infoAtWhatTimesToDoStuff));
         // [{"1.34": 1}, {"4.3": 2}, {"9.0": 0}]
@@ -53,19 +56,38 @@ export class Rythm {
     }
 
     public update(time: number, delta: number) {
-        //var infoWhereWeAreNow = this.conductor.GetTime();
         //console.log('Conductor time ' + infoWhereWeAreNow);
         //console.log('Conductor loop #' + this.conductor.LoopCount());
+        this.checkMusic();
         this.score += 1;
-        if (this.timer > 500) {
-            this.createNote(Phaser.Math.Between(0, 3));
-            this.timer = 0;
-        }
-
-        this.timer += delta;
         this.checkKeys();
         this.checkWorldBound(this.notes.children.entries, this.scene.physics.world);
         this.updateScore();
+    }
+
+    private checkMusic() {
+        let time = this.conductor.GetTime();
+        let length = this.infoAtWhatTimesToDoStuff.length;
+        for(let i = this.createdNotes; i < length; i++) {
+            let info = this.infoAtWhatTimesToDoStuff[i];
+            let key = Object.keys(info)[0];
+            let value = info[key];
+
+            if(key < time) {
+                this.createNote(value);
+                this.createdNotes++;
+                break;
+            }
+        }
+
+        this.checkTime(time);
+        this.lastFrameTime = time;
+    }
+
+    private checkTime(time: number) {
+        if(this.lastFrameTime > time) {
+            this.createdNotes = 0;
+        }
     }
 
     private updateScore() {
@@ -106,7 +128,9 @@ export class Rythm {
 
     private createNote(type: NoteType) {
         let x = this.xValue(type);
-        let sprite = this.notes.create(x, -100, this.getTexture(type)).setVelocity(0, 200);
+        let sprite = this.notes.create(x, -100, this.getTexture(type))
+        sprite.setVelocity(0, 200);
+        sprite.setDepth(3);
         let particles = this.scene.add.particles('particle1');
 
         let emitter = particles.createEmitter({
