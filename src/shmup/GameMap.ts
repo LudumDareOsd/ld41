@@ -5,7 +5,7 @@ export class GameMap {
 
   private obstacles: Phaser.Physics.Arcade.Sprite[];
   private baseinterval: number = 1;
-  private timer: number = 0;
+  private timer: number = 10000;
   private columns: number = 7;
   private obstacleSize:number = 64;
   private playerSize:number = 64;
@@ -134,11 +134,13 @@ export class GameMap {
 
     }
 
-    if (this.timeSinceLastRequiredShot < 7000) {
+    if (this.timeSinceLastRequiredShot < 12000) {
       // Need to provide escape route which doesn't require shooting.
       // let indx = Phaser.Math.Between(0, rectangles.length-1);
 
-      let indx = Math.floor((1 - this.rnd2())*rectangles.length-1);
+      let indx = Math.floor((1 - this.rnd2()*this.rnd2())*rectangles.length-1);
+
+
 
       if (indx > 0 && Math.random() < 0.5) {
         rectangles.splice(indx-1, 2);
