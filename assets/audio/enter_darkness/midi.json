@@ -1,0 +1,104 @@
+{
+  "header": {
+    "PPQ": 96,
+    "timeSignature": [
+      4,
+      4
+    ],
+    "bpm": 120,
+    "name": ""
+  },
+  "startTime": 0,
+  "duration": 7.125,
+  "tracks": [
+    {
+      "startTime": 0,
+      "duration": 7.125,
+      "length": 11,
+      "notes": [
+        {
+          "name": "D3",
+          "midi": 50,
+          "time": 0,
+          "velocity": 0.7874015748031497,
+          "duration": 0.125
+        },
+        {
+          "name": "A#2",
+          "midi": 46,
+          "time": 0.5,
+          "velocity": 0.7874015748031497,
+          "duration": 0.125
+        },
+        {
+          "name": "D3",
+          "midi": 50,
+          "time":  ,
+          "velocity": 0.7874015748031497,
+          "duration": 0.125
+        },
+        {
+          "name": "A#2",
+          "midi": 46,
+          "time": 2.5,
+          "velocity": 0.7874015748031497,
+          "duration": 0.125
+        },
+        {
+          "name": "A#2",
+          "midi": 46,
+          "time": 2.75,
+          "velocity": 0.7874015748031497,
+          "duration": 0.125
+        },
+        {
+          "name": "G#2",
+          "midi": 44,
+          "time": 3,
+          "velocity": 0.7874015748031497,
+          "duration": 0.125
+        },
+        {
+          "name": "A#2",
+          "midi": 46,
+          "time": 4.484375,
+          "velocity": 1,
+          "duration": 0.13541666666666696
+        },
+        {
+          "name": "D3",
+          "midi": 50,
+          "time": 4.625,
+          "velocity": 0.7874015748031497,
+          "duration": 0.125
+        },
+        {
+          "name": "D3",
+          "midi": 50,
+          "time": 6.5,
+          "velocity": 0.7874015748031497,
+          "duration": 0.125
+        },
+        {
+          "name": "D3",
+          "midi": 50,
+          "time": 6.75,
+          "velocity": 0.7874015748031497,
+          "duration": 0.125
+        },
+        {
+          "name": "F2",
+          "midi": 41,
+          "time": 7,
+          "velocity": 0.7874015748031497,
+          "duration": 0.125
+        }
+      ],
+      "controlChanges": {},
+      "id": 0,
+      "name": "",
+      "channelNumber": 0,
+      "isPercussion": false
+    }
+  ]
+}
