@@ -9,6 +9,7 @@ export class Shmup {
   velocity: number = 100;
   asteroids: Phaser.Physics.Arcade.Sprite[];
   powerUps: PowerUp[];
+  bulletgroup: any;
 
   constructor(private scene: any) {
     this.gamemap = new GameMap(this, this.scene, this.velocity);
@@ -37,14 +38,14 @@ export class Shmup {
   }
 
   public powerCollect(player, powerUp) {
-    switch (powerUp) {
-      case value:
+    // switch (powerUp) {
+    //   case value:
         
-        break;
+    //     break;
     
-      default:
-        break;
-    }
+    //   default:
+    //     break;
+    // }
     powerUp.destroy();
   }
 
