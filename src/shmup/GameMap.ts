@@ -51,7 +51,7 @@ export class GameMap {
 
   private createObstacle(x: number, y: number, scale: number) {
 
-    let obstacle: Phaser.Physics.Arcade.Sprite = this.scene.physics.add.sprite(x, y, 'obstacle').setVelocity(0, this.velocity);
+    let obstacle: Phaser.Physics.Arcade.Sprite = this.scene.physics.add.sprite(x, y, 'obstacle').setVelocity(Math.floor(Math.random()*10-5), this.velocity+Math.floor(Math.random()*10-5));
     obstacle.scaleY = scale;
     obstacle.scaleX = scale;
 
