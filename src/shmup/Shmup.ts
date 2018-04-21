@@ -1,5 +1,4 @@
 import { GameMap } from './GameMap';
-import { Obstacle } from './Obstacle';
 
 export class Shmup {
 
@@ -10,7 +9,7 @@ export class Shmup {
 
   constructor(scene: Phaser.Scene) {
     this.scene = scene;
-    this.gamemap = new GameMap(this.velocity);
+    this.gamemap = new GameMap(this, this.velocity);
   }
 
 
