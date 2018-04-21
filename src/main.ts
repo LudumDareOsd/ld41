@@ -1,6 +1,7 @@
 import 'phaser';
 
 import PlayScene from './scenes/PlayScene';
+import BootScene from './scenes/BootScene';
 
 const config: GameConfig = {
   type: Phaser.AUTO,
@@ -17,6 +18,7 @@ const config: GameConfig = {
     }
   },
   scene: [
+    BootScene,
     PlayScene
   ]
 };
