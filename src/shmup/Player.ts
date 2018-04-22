@@ -63,7 +63,8 @@ export class Player {
     });
     this.emitter.startFollow(this.sprite, 0, -30, true);
 
-    this.pew = this.scene.sound.add('pew');
+    this.pew = this.scene.sound.add('pew', { loop: false });
+    this.pew.volume = 0.4;
   }
 
   public fire() {
@@ -74,7 +75,7 @@ export class Player {
 
   update(delta: number, funk: number) {
     this.emitter.setAngle(Phaser.Math.Between(0, 360));
-    this.emitter.setScale(Math.max(Math.min(funk * 0.01, 1.0), 0.1));
+    this.emitter.setScale(Math.max(Math.min(funk * 0.02, 1.0), 0.1));
     this.mousecontrol.update(this.sprite, delta);
 
     if (this.sprite.body.velocity.x < -30) {

@@ -5,6 +5,7 @@ import BootScene from './scenes/BootScene';
 import TitleScene from './scenes/TitleScene';
 import GameOverScene from './scenes/GameOverScene';
 import WinScene from './scenes/WinScene';
+import InstructionScene from './scenes/InstructionScene';
 
 const config: GameConfig = {
   type: Phaser.AUTO,
@@ -25,7 +26,8 @@ const config: GameConfig = {
     TitleScene,
     PlayScene,
     GameOverScene,
-    WinScene
+    WinScene,
+    InstructionScene
   ]
 };
 
