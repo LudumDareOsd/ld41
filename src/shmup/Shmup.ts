@@ -77,7 +77,8 @@ export class Shmup {
 
     this.bullets.push(this.bulletgroup.create(this.player.sprite.x, this.player.sprite.y, 'bullet'));
     let bullet = this.bullets[this.bullets.length - 1];
-    this.firesnd.play();    
+    this.firesnd.volume = 0.4;
+    this.firesnd.play();
 
     bullet.setVelocity(0, -600);
     bullet.setScale(1.0);
