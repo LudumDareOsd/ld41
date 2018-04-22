@@ -15,8 +15,9 @@ export class GameMap {
   private timeSinceLastRequiredShot: number = 0;
   private scaling: number = 1.5;
   private lastGapRight: boolean = false;
+  private velocity: number = 100;
 
-  constructor(private shmup: Shmup, private scene: Phaser.Scene, private velocity: number) {
+  constructor(private shmup: Shmup, private scene: Phaser.Scene) {
   }
 
   public preload() {
@@ -42,7 +43,7 @@ export class GameMap {
   }
 
   public adjustVelocity(multiplier: number) {
-    this.velocity = this.velocity * multiplier;
+    this.velocity = Math.round(this.velocity * multiplier);
   }
 
   private newPowerUps() {
@@ -85,6 +86,8 @@ export class GameMap {
   private createAsteroid(x: number, y: number, scale: number) {
 
     let asteroid: Phaser.Physics.Arcade.Sprite = this.scene.physics.add.sprite(x, y, 'asteroid').setVelocity(Math.floor(Math.random()*10-5), this.velocity+Math.floor(Math.random()*10-5));
+    
+    asteroid.setCircle(this.obstacleSize/2, 0, 0);
     asteroid.scaleY = scale;
     asteroid.scaleX = scale;
 
@@ -99,7 +102,7 @@ export class GameMap {
     for (let i: number = 0; i < this.asteroids.length; i++) {
       let asteroid = this.asteroids[i];
       if (asteroid.y > this.scene.physics.world.bounds.height + 100) {
-        this.asteroids.splice(i,1);
+        this.asteroids.splice(i--,1);
         asteroid.destroy();
       }
     }
@@ -107,7 +110,7 @@ export class GameMap {
     for (let i: number = 0; i < this.powerUps.length; i++) {
       let powerUp = this.powerUps[i];
       if (powerUp.y > this.scene.physics.world.bounds.height + 100) {
-        this.powerUps.splice(i,1);
+        this.powerUps.splice(i--,1);
         powerUp.destroy();
       }
     }
