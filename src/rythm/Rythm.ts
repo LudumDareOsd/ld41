@@ -271,7 +271,7 @@ export class Rythm {
 
     private checkHit(children: any, type: NoteType) {
         for (let item of children) {
-            if (item.y > 836 && item.y < 886 && item.x == this.xValue(type)) {
+            if (item.y > 826 && item.y < 876 && item.x == this.xValue(type)) {
                 this.scene.tweens.add({
                     targets: item,
                     x: -1400,
