@@ -18,7 +18,7 @@ export class Conductor {
            
     }
 
-    public Load(levelChosen: string) {
+    public Load(levelChosen: string, skip: number) {
 
         this.seektime = 0;
         this.level = levelChosen;
@@ -40,6 +40,18 @@ export class Conductor {
         //this.transformer.Transform(); // Uncomment to get output to log for transform
 
         this.levelmetainfo = this.levels.Level2();
+
+        if(skip > 0) {
+            var originalNoteLength = this.levelmetainfo.notes.length;
+
+            console.log('Skipping every ' + skip + ' origlen ' + originalNoteLength);
+
+            while (originalNoteLength--) {
+                (originalNoteLength + 1) % skip === 0 && this.levelmetainfo.notes.splice(originalNoteLength, 1);
+            }
+
+            console.log('Skipping every ' + skip + ' afterlen ' + this.levelmetainfo.notes.length);
+        }
 
         return this.levelmetainfo.musicmeta;
     }

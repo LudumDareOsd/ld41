@@ -11,6 +11,10 @@ export class Communicator {
 
     }
 
+    public getScore(): number {
+        return this.rythm.getScore();
+    }
+
     public nuke() {
         this.shmup.nuke();
     }

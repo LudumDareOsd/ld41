@@ -21,7 +21,7 @@ export class FunkOMeter {
   }
 
   public getFunkAmount() {
-    return this.sprites.lenght;
+    return this.sprites.length;
   }
 
   private getFunkName(type: NoteType) {

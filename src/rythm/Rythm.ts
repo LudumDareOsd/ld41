@@ -54,11 +54,7 @@ export class Rythm {
 
     public preload() {
         //this.scene.load.audio('rythmaudio', "assets/audio/enter_darkness/track.mp3", null);
-        var infoMetaAboutLevel = this.conductor.Load("level2");
-        // bpm: int 120 ex
-        // title: Music Title
-        // background: img background.jpg
-        // offset: int ms (?kanske inte behövs? hur lång paus innan musik börjar)
+        var infoMetaAboutLevel = this.conductor.Load("level2", 2); // skip ever 2nd
 
         this.scene.load.audio('rythmaudio', infoMetaAboutLevel.path, null);
     }
@@ -72,7 +68,7 @@ export class Rythm {
 
         this.scoreText = this.scene.add.text(1090, 8, 'Score: 0', { fontSize: '24px', fill: '#fff' }).setDepth(3);
         this.multiplierText = this.scene.add.text(300, 845, 'x1', { fontSize: '24px', fill: '#fff' }).setDepth(6);
-        this.infoAtWhatTimesToDoStuff = this.conductor.Start(); //"level1"
+        this.infoAtWhatTimesToDoStuff = this.conductor.Start();
 
         this.particleManager = this.scene.add.particles('particle1') as any;
         this.particleManager.setDepth(4);
@@ -121,12 +117,16 @@ export class Rythm {
 
     }
 
-    public update(time: number, delta: number) {
+    public update(time: number, delta: number, scenePlugin: Phaser.Scenes.ScenePlugin) {
         this.checkMusic(delta);
         this.addScore(1);
         this.checkKeys();
         this.checkWorldBound(this.notes.children.entries, this.scene.physics.world);
         this.updateScore();
+
+        if(this.score > 5000) {
+            scenePlugin.start('WinScene');
+        }
     }
 
     private checkMusic(delta: number) {
@@ -343,4 +343,9 @@ export class Rythm {
     private addScore(score: number) {
         this.score += (score * this.multiplier)
     }
+
+    public getScore(): number {
+        return this.score;
+    }
+
 }
