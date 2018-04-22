@@ -21,6 +21,9 @@ export class Shmup {
   particles: Phaser.GameObjects.Particles.ParticleEmitterManager;
   emitters: any;
 
+  bullets: any;
+  bulletCleanTimer: number = 0;
+
   constructor(private scene: any, private communicator: Communicator) {
     this.gamemap = new GameMap(this, this.scene);
     this.shmup = this;
@@ -34,6 +37,7 @@ export class Shmup {
     this.starfield = [];
     this.powerUps = [];
     this.emitters = [];
+    this.bullets = [];
     this.bulletgroup = this.scene.physics.add.group();
     this.gamemap.create(this.asteroids, this.powerUps);
     this.player = new Player({ scene: this.scene, x: 820, y: 960 - 50, shmup: this });
@@ -67,7 +71,9 @@ export class Shmup {
       return;
     }
 
-    let bullet = this.bulletgroup.create(this.player.sprite.x, this.player.sprite.y, 'bullet');
+    this.bullets.push(this.bulletgroup.create(this.player.sprite.x, this.player.sprite.y, 'bullet'));
+    let bullet = this.bullets[this.bullets.length - 1];
+
     bullet.setVelocity(0, -600);
     bullet.setScale(1.0);
 
@@ -112,7 +118,8 @@ export class Shmup {
   }
 
   public explode(target, shot) {
-    // console.log(shot);
+    this.shmup.emitters.splice(this.shmup.emitters.indexOf(shot.emitterRef), 1);
+    this.shmup.bullets.splice(this.shmup.bullets.indexOf(shot), 1);
     shot.emitterRef.stopFollow();
 
     shot.setVelocity(0, 0);
@@ -122,12 +129,24 @@ export class Shmup {
 
   public powerCollect(player, powerUp: PowerUp) {
     switch (powerUp.power) {
-      case Power.Funk:
+      case Power.left:
+        this.communicator.addFunk(NoteType.left);
+        this.communicator.addFunk(NoteType.left);
+        this.communicator.addFunk(NoteType.left);
+        break;
+      case Power.midLeft:
         this.communicator.addFunk(NoteType.midleft);
         this.communicator.addFunk(NoteType.midleft);
         this.communicator.addFunk(NoteType.midleft);
-        this.communicator.addFunk(NoteType.midleft);
-        this.communicator.addFunk(NoteType.midleft);
+        break; case Power.midRight:
+        this.communicator.addFunk(NoteType.midright);
+        this.communicator.addFunk(NoteType.midright);
+        this.communicator.addFunk(NoteType.midright);
+        break;
+      case Power.right:
+        this.communicator.addFunk(NoteType.right);
+        this.communicator.addFunk(NoteType.right);
+        this.communicator.addFunk(NoteType.right);
         break;
 
       default:
@@ -144,10 +163,28 @@ export class Shmup {
   }
 
   public update(time: number, delta: number) {
+    this.bulletCleanTimer += delta;
     this.gamemap.update(time, delta);
     this.player.update(delta);
     if (Math.random() < 0.05) {
       this.createStar();
+    }
+
+    if (this.bulletCleanTimer > 1000) {
+      console.log(this.bullets);
+      console.log(this.emitters);
+      for (let index in this.bullets) {
+        if (this.bullets.hasOwnProperty(index)) {
+          let bullet = this.bullets[index];
+          if (bullet.y < -1000) {
+            this.emitters.splice(this.emitters.indexOf(bullet.emitterRef), 1);
+            this.bullets.splice(this.bullets.indexOf(bullet), 1);
+            index--;
+            bullet.destroy();
+          }
+        }
+      }
+      this.bulletCleanTimer = 0;
     }
 
     // for (let index = 0; index < this.emitters.length; index++) {
@@ -158,12 +195,11 @@ export class Shmup {
     // }
 
     for (let index = 0; index < this.starfield.length; index++) {
-      const star = this.starfield[index];
+      let star = this.starfield[index];
       star.y += star.scaleX + star.scaleY;
       if (star.y > 1000) {
-        star.destroy();
         this.starfield.splice(index--, 1);
-        // console.log(this.starfield.length);
+        star.destroy();
       }
     }
 

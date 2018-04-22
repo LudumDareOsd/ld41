@@ -124,7 +124,7 @@ export class Rythm {
         this.checkWorldBound(this.notes.children.entries, this.scene.physics.world);
         this.updateScore();
 
-        if(this.score > 5000) {
+        if(this.score > 500000) {
             scenePlugin.start('WinScene');
         }
     }
@@ -346,6 +346,11 @@ export class Rythm {
 
     public getScore(): number {
         return this.score;
+    }
+
+    public KillMe() {
+        this.playing = false;
+        this.conductor.Stop();
     }
 
 }

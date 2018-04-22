@@ -42,6 +42,7 @@ class PlayScene extends Phaser.Scene {
     this.shmup.update(time, delta);
     this.rythm.update(time, delta, this.scene);
     if (this.shmup.gameOver || this.scene.gameOver) {
+      this.rythm.KillMe();
       this.scene.start('GameOverScene');
     }
   }
