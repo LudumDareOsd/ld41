@@ -52,6 +52,7 @@ export class Rythm {
     public preload() {
         //this.scene.load.audio('rythmaudio', "assets/audio/enter_darkness/track.mp3", null);
         var infoMetaAboutLevel = this.conductor.Load("level2");
+        this.musicDuration = infoMetaAboutLevel.duration;
         // bpm: int 120 ex
         // title: Music Title
         // background: img background.jpg
