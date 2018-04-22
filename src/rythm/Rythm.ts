@@ -27,8 +27,18 @@ export class Rythm {
 
     private particleManager;
 
+    private successleft;
+    private successmidleft;
+    private successmidright;
+    private successright;
+
+    private failLeft;
+    private failmidleft;
+    private failmidright;
+    private failright;
+
     private conductor = new Conductor(this.scene);
-    
+
     constructor(private scene: Phaser.Scene) {
     }
 
@@ -55,6 +65,47 @@ export class Rythm {
 
         this.particleManager = this.scene.add.particles('particle1') as any;
         this.particleManager.setDepth(4);
+
+        this.successleft = this.scene.add.sprite(13, 836, 'success');
+        this.successleft.setDepth(4);
+        this.successleft.setOrigin(0, 0);
+        this.successleft.setVisible(false);
+
+        this.successmidleft = this.scene.add.sprite(82, 836, 'success');
+        this.successmidleft.setDepth(4);
+        this.successmidleft.setOrigin(0, 0);
+        this.successmidleft.setVisible(false);
+
+        this.successmidright = this.scene.add.sprite(151, 836, 'success');
+        this.successmidright.setDepth(4);
+        this.successmidright.setOrigin(0, 0);
+        this.successmidright.setVisible(false);
+
+        this.successright = this.scene.add.sprite(220, 836, 'success');
+        this.successright.setDepth(4);
+        this.successright.setOrigin(0, 0);
+        this.successright.setVisible(false);
+
+        this.failLeft = this.scene.add.sprite(13, 836, 'fail');
+        this.failLeft.setDepth(4);
+        this.failLeft.setOrigin(0, 0);
+        this.failLeft.setVisible(false);
+
+        this.failmidleft = this.scene.add.sprite(82, 836, 'fail');
+        this.failmidleft.setDepth(4);
+        this.failmidleft.setOrigin(0, 0);
+        this.failmidleft.setVisible(false);
+
+        this.failmidright = this.scene.add.sprite(151, 836, 'fail');
+        this.failmidright.setDepth(4);
+        this.failmidright.setOrigin(0, 0);
+        this.failmidright.setVisible(false);
+
+        this.failright = this.scene.add.sprite(220, 836, 'fail');
+        this.failright.setDepth(4);
+        this.failright.setOrigin(0, 0);
+        this.failright.setVisible(false);
+
     }
 
     public update(time: number, delta: number) {
@@ -68,24 +119,24 @@ export class Rythm {
     private checkMusic(delta: number) {
 
         let length = this.infoAtWhatTimesToDoStuff.length;
-        for(let i = this.createdNotes; i < length; i++) {
+        for (let i = this.createdNotes; i < length; i++) {
             let info = this.infoAtWhatTimesToDoStuff[i];
             let key = Object.keys(info)[0];
             let value = info[key];
 
-            if(+key < this.blockTimer) {
+            if (+key < this.blockTimer) {
                 this.createNote(value);
                 this.createdNotes++;
                 break;
             }
         }
-        
-        if(this.blockTimer > this.offset && !this.playing) {
+
+        if (this.blockTimer > this.offset && !this.playing) {
             this.conductor.Play();
             this.playing = true;
         }
 
-        if(this.blockTimer > this.musicDuration + this.offset) {
+        if (this.blockTimer > this.musicDuration + this.offset) {
             this.blockTimer = 0;
             this.createdNotes = 0;
             this.playing = false;
@@ -102,32 +153,60 @@ export class Rythm {
     private checkKeys() {
         if (this.blueKey.isDown && this.bluePrimed) {
             this.bluePrimed = false;
-            this.checkHit(this.notes.children.entries, NoteType.left);
+
+            if(this.checkHit(this.notes.children.entries, NoteType.left)) {
+                this.successleft.setVisible(true);
+            } else {
+                this.failLeft.setVisible(true);
+            };
         }
         if (this.greenKey.isDown && this.greenPrimed) {
             this.greenPrimed = false;
-            this.checkHit(this.notes.children.entries, NoteType.midleft);
+
+            if(this.checkHit(this.notes.children.entries, NoteType.midleft)) {
+                this.successmidleft.setVisible(true);
+            } else {
+                this.failmidleft.setVisible(true);
+            };
         }
         if (this.redKey.isDown && this.redPrimed) {
             this.redPrimed = false;
-            this.checkHit(this.notes.children.entries, NoteType.midright);
+
+            if(this.checkHit(this.notes.children.entries, NoteType.midright)) {
+                this.successmidright.setVisible(true);
+            } else {
+                this.failmidright.setVisible(true);
+            };
         }
         if (this.yellowKey.isDown && this.yellowPrimed) {
             this.yellowPrimed = false;
-            this.checkHit(this.notes.children.entries, NoteType.right);
+            
+            if(this.checkHit(this.notes.children.entries, NoteType.right)) {
+                this.successright.setVisible(true);
+            } else {
+                this.failright.setVisible(true);
+            };
         }
 
         if (this.blueKey.isUp) {
             this.bluePrimed = true;
+            this.successleft.setVisible(false);
+            this.failLeft.setVisible(false);
         }
         if (this.greenKey.isUp) {
             this.greenPrimed = true;
+            this.successmidleft.setVisible(false);
+            this.failmidleft.setVisible(false);
         }
         if (this.redKey.isUp) {
             this.redPrimed = true;
+            this.successmidright.setVisible(false);
+            this.failmidright.setVisible(false);
         }
         if (this.yellowKey.isUp) {
             this.yellowPrimed = true;
+            this.successright.setVisible(false);
+            this.failright.setVisible(false);
         }
     }
 
@@ -147,7 +226,7 @@ export class Rythm {
             scale: { start: 0.2, end: 0 },
             blendMode: 'ADD'
         });
-        
+
         emitter.startFollow(sprite, 0, 0, true);
     }
 
@@ -203,7 +282,10 @@ export class Rythm {
                     hold: 1000
                 });
 
+                return true;
             }
         }
+
+        return false;
     }
 }
