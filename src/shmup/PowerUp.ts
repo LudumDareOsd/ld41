@@ -6,9 +6,6 @@ export class PowerUp extends Phaser.Physics.Arcade.Sprite {
         super(scene, x, y, texture);
     }
     
-    // public setPower(power: Power) {
-    //     this.power = power;
-    // }
 }
 
 export enum Power {
