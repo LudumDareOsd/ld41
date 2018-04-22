@@ -12,7 +12,6 @@ export class GameMap {
   private powerUpInterval: number = this.baseInterval;
   private asteroidTimer: number = 10000;
   private powerUpTimer: number = 0;
-  private columns: number = 7;
   private asteroidSize:number = 64;
   private playerSize:number = 64;
   private timeSinceLastRequiredShot: number = 0;
@@ -30,6 +29,13 @@ export class GameMap {
   public create(asteroids: Phaser.Physics.Arcade.Sprite[], powerUps: PowerUp[]) {
     this.asteroids = asteroids;
     this.powerUps = powerUps;
+    this.asteroidTimer = 10000;
+    this.powerUpTimer = 0;
+    this.timeSinceLastRequiredShot = 0;
+    this.lastGapRight = false;
+    this.asteroidInterval = this.baseInterval;
+    this.powerUpInterval = this.baseInterval;
+    this.velocity = this.baseVelocity;
   }
 
   public update(time: number, delta: number) {
@@ -51,7 +57,7 @@ export class GameMap {
   }
 
   public adjustVelocity(multiplier: number) {
-    this.velocity = Math.round(this.velocity * multiplier);
+    this.velocity = this.velocity * multiplier;
   }
 
   public setVelocity(velocity: number) {

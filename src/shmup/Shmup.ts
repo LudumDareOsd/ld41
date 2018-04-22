@@ -36,6 +36,10 @@ export class Shmup {
   }
 
   public create() {
+    this.gameOver = false;
+    this.scoreTimer = 0;
+    this.lastScore = 0;
+    this.bulletCleanTimer = 0;
     this.asteroids = [];
     this.starfield = [];
     this.powerUps = [];
