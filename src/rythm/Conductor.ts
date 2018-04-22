@@ -44,13 +44,9 @@ export class Conductor {
         if(skip > 0) {
             var originalNoteLength = this.levelmetainfo.notes.length;
 
-            console.log('Skipping every ' + skip + ' origlen ' + originalNoteLength);
-
             while (originalNoteLength--) {
                 (originalNoteLength + 1) % skip === 0 && this.levelmetainfo.notes.splice(originalNoteLength, 1);
             }
-
-            console.log('Skipping every ' + skip + ' afterlen ' + this.levelmetainfo.notes.length);
         }
 
         return this.levelmetainfo.musicmeta;
