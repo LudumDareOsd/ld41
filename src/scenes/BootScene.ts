@@ -28,6 +28,7 @@ class BootScene extends Phaser.Scene {
     
         });
 
+        this.load.spritesheet('player', 'assets/sprites/ship_spritemap.png', { frameWidth: 65, frameHeight: 75 });
         this.load.image('background_title', 'assets/sprites/title_screen.png');
         this.load.image('background_gameover', 'assets/sprites/GameoverPH.png');
         this.load.audio('titleaudio', 'assets/audio/Rockit_Maxx_-_01_-_Be_Electric.mp3', null);
@@ -47,6 +48,7 @@ class BootScene extends Phaser.Scene {
         this.load.image('particle1', 'assets/sprites/particle_1.png');
         this.load.image('particle2', 'assets/sprites/particle_2.png');
         this.load.image('particle3', 'assets/sprites/particle_3.png');
+        this.load.image('sparkles', 'assets/sprites/sparkles.png');
         this.load.image('success', 'assets/sprites/success.png');
         this.load.image('fail', 'assets/sprites/fail.png');
     }
