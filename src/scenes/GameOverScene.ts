@@ -42,9 +42,9 @@ class GameOverScene extends Phaser.Scene {
         let percDone = (parseInt(currScore) / parseInt(winScore)) * 100;
         var rounded = Math.round( percDone * 10 ) / 10;
 
-        this.add.text(350, 200, 'Your highscore:' + localStorage.getItem('FunkEscapeScore'), { fontFamily: 'Arial', fontSize: 64, color: '#ff0000' });
-        this.add.text(350, 270, 'Your current score:' + currScore, { fontFamily: 'Arial', fontSize: 64, color: '#ff0000' });
-        this.add.text(270, 850, 'You reached ' + rounded + '% of the level!', { fontFamily: 'Arial', fontSize: 64, color: '#00aaaa' });
+        this.add.text(370, 600, 'Your highscore:' + localStorage.getItem('FunkEscapeScore'), { fontFamily: 'Arial', fontSize: 50, color: '#1177bb' });
+        this.add.text(390, 660, 'Your current score:' + currScore, { fontFamily: 'Arial', fontSize: 40, color: '#1177bb' });
+        this.add.text(230, 870, 'You reached ' + rounded + '% of the level!', { fontFamily: 'Arial', fontSize: 64, color: '#00aaaa' });
 
         this.add.zone(0, 0, 1280, 960).setName('StartGame').setInteractive();
 
