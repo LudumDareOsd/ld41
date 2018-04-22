@@ -56,6 +56,10 @@ export class Conductor {
         //this.music.onLoop.add(this.hasLooped, this);
     }
 
+    public Stop() {
+        this.music.stop();
+    }
+
     public GetTime() {
         return this.music.seek;
     }

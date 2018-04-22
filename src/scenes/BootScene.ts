@@ -15,7 +15,7 @@ class BootScene extends Phaser.Scene {
             if (file.key === 'particle3') {
                 progress.clear();
                 progress.fillStyle(0xffffff, 0.4);
-                let part = 11 / value;
+                let part = 13 / value;
                 let width = 960 * part;
                 progress.fillRect(0, 300, width, 200);
             }
@@ -29,6 +29,8 @@ class BootScene extends Phaser.Scene {
         });
 
         this.load.image('background_title', 'assets/sprites/title_screen.png');
+        this.load.audio('titleaudio', 'assets/audio/Rockit_Maxx_-_01_-_Be_Electric.mp3', null);
+        this.load.image('unicorn', 'assets/sprites/unicorn.jpeg');
         this.load.image('background', 'assets/sprites/funk_background_bottom.png');
         this.load.image('foreground', 'assets/sprites/funk_background_top.png');
         this.load.image('bluenote', 'assets/sprites/blue_note.png');
