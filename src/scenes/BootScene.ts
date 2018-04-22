@@ -28,7 +28,8 @@ class BootScene extends Phaser.Scene {
     
         });
 
-        this.load.spritesheet('player', 'assets/sprites/ship_spritemap.png', { frameWidth: 65, frameHeight: 75 });
+        let load = this.load as any;
+        load.spritesheet('player', 'assets/sprites/ship_spritemap.png', { frameWidth: 65, frameHeight: 75 });
         this.load.image('background_title', 'assets/sprites/title_screen.png');
         this.load.image('background_gameover', 'assets/sprites/GameoverPH.png');
         this.load.audio('titleaudio', 'assets/audio/Rockit_Maxx_-_01_-_Be_Electric.mp3', null);
