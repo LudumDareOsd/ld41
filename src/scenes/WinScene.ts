@@ -20,7 +20,8 @@ class WinScene extends Phaser.Scene {
 
         //----------------------------------------------------------------------
         var source = this.textures.get('unicorn').source[0].image;
-        var canvas = this.textures.createCanvas('pad', 38, 49).source[0].image;
+        var canvas = this.textures.createCanvas('pad', 38, 49).source[0].image as any;
+
         var ctx = canvas.getContext('2d');
     
         ctx.drawImage(source, 0, 0);
@@ -29,7 +30,7 @@ class WinScene extends Phaser.Scene {
     
         var x = 0;
         var y = 0;
-        var color = new Phaser.Display.Color();
+        var color = new Phaser.Display.Color() as any;
     
         for (var i = 0; i < imageData.data.length; i += 4)
         {
@@ -49,7 +50,7 @@ class WinScene extends Phaser.Scene {
                 var dx = 200 + x * 16;
                 var dy = 64 + y * 16;
     
-                var image = this.add.image(startX, startY, 'pixel').setScale(0);
+                var image = this.add.image(startX, startY, 'pixel').setScale(0) as any;
     
                 color.setTo(r, g, b, a);
     
