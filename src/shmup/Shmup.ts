@@ -1,6 +1,7 @@
 import { GameMap } from './GameMap';
 import { Player } from './Player';
-import { PowerUp, Power } from './PowerUp'
+import { Communicator } from './Communicator';
+import { PowerUp, Power } from './PowerUp';
 
 export class Shmup {
 
@@ -11,7 +12,7 @@ export class Shmup {
   bulletgroup: any;
   starfield: Phaser.Physics.Arcade.Sprite[];
 
-  constructor(private scene: any) {
+  constructor(private scene: any, private communicator: Communicator) {
     this.gamemap = new GameMap(this, this.scene);
   }
 
@@ -66,7 +67,7 @@ export class Shmup {
   public powerCollect(player, powerUp: PowerUp) {
     switch (powerUp.power) {
       case Power.Funk:
-        
+        this.communicator.adjustFunk(5);
         break;
     
       default:
@@ -94,8 +95,35 @@ export class Shmup {
     
   }
 
-  public adjustObstacleVelocity(multiplier: number) {
+  public nuke() {
+    for (let asteroid of this.asteroids) {
+      asteroid.destroy();
+    }
+    this.asteroids = [];
+  }
+
+  public adjustVelocity(multiplier: number) {
     this.gamemap.adjustVelocity(multiplier);
+  }
+
+  public setVelocity(velocity: number) {
+    this.gamemap.setVelocity(velocity);
+  }
+
+  public adjustAsteroidInterval(multiplier: number) {
+    this.gamemap.adjustAsteroidInterval(multiplier);
+  }
+
+  public setAsteroidInterval(interval: number) {
+    this.gamemap.setAsteroidInterval(interval);
+  }
+
+  public adjustPowerUpInterval(multiplier: number) {
+    this.gamemap.adjustPowerUpInterval(multiplier);
+  }
+
+  public setPowerUpInterval(interval: number) {
+    this.gamemap.setPowerUpInterval(interval);
   }
     
 }

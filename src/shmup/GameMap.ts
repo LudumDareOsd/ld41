@@ -7,15 +7,19 @@ export class GameMap {
 
   private asteroids: Phaser.Physics.Arcade.Sprite[];
   private powerUps: PowerUp[];
-  private baseinterval: number = 1;
-  private timer: number = 10000;
+  private baseInterval: number = 1;
+  private asteroidInterval: number = this.baseInterval;
+  private powerUpInterval: number = this.baseInterval;
+  private asteroidTimer: number = 10000;
+  private powerUpTimer: number = 0;
   private columns: number = 7;
-  private obstacleSize:number = 64;
+  private asteroidSize:number = 64;
   private playerSize:number = 64;
   private timeSinceLastRequiredShot: number = 0;
   private scaling: number = 1.5;
   private lastGapRight: boolean = false;
-  private velocity: number = 100;
+  private baseVelocity: number = 100;
+  private velocity: number = this.baseVelocity;
 
   constructor(private shmup: Shmup, private scene: Phaser.Scene) {
   }
@@ -30,14 +34,18 @@ export class GameMap {
 
   public update(time: number, delta: number) {
     
-    this.timer += delta;
+    this.asteroidTimer += delta;
+    this.powerUpTimer += delta;
     this.timeSinceLastRequiredShot += delta;
-    if (this.timer*this.velocity/8000 > this.obstacleSize*this.baseinterval) {
-      this.timer = 0;
-      
+    if (this.asteroidTimer*this.velocity/8000 > this.asteroidSize*this.asteroidInterval) {
+      this.asteroidTimer = 0;
       this.newAsteroids();
-      this.newPowerUps();
       this.cleanUp();
+    }
+    
+    if (this.powerUpTimer > this.powerUpInterval / this.velocity * 800000) {
+      this.powerUpTimer = 0;
+      this.newPowerUps();
     }
 
   }
@@ -46,9 +54,29 @@ export class GameMap {
     this.velocity = Math.round(this.velocity * multiplier);
   }
 
+  public setVelocity(velocity: number) {
+    this.velocity = velocity*this.baseVelocity;
+  }
+
+  public adjustAsteroidInterval(multiplier: number) {
+    this.asteroidInterval = this.asteroidInterval * multiplier;
+  }
+
+  public setAsteroidInterval(interval: number) {
+    this.asteroidInterval = interval;
+  }
+
+  public adjustPowerUpInterval(multiplier: number) {
+    this.powerUpInterval = this.powerUpInterval * multiplier;
+  }
+
+  public setPowerUpInterval(interval: number) {
+    this.powerUpInterval = interval;
+  }
+
   private newPowerUps() {
     if (Math.random() > 0.5) {
-      this.createPowerUp(Phaser.Math.Between(500, 1100), -100, Power.Funk);
+      this.createPowerUp(Phaser.Math.Between(500, 1100), -50, Power.Funk);
     }
   }
 
@@ -63,7 +91,7 @@ export class GameMap {
       return;
     }
 
-    let powerUp: PowerUp = this.scene.physics.add.sprite(x, y, texture, power).setVelocity(Math.floor(Math.random()*20-10), this.velocity+Math.floor(Math.random()*20-10));
+    let powerUp: PowerUp = this.scene.physics.add.sprite(x, y, texture, power).setVelocity(Math.floor(Math.random()*20-10), this.velocity + Math.floor(Math.random()*60-10));
     powerUp.power = power;
 
     powerUp.setRotation(Math.random()*6.28);
@@ -79,15 +107,15 @@ export class GameMap {
     let rectangles: Phaser.Geom.Rectangle[] = this.generateAsteroidBelt();
 
     for (let rectangle of rectangles) {
-      this.createAsteroid(rectangle.x, rectangle.y, rectangle.width/this.obstacleSize);
+      this.createAsteroid(rectangle.x, rectangle.y, rectangle.width/this.asteroidSize);
     }
   }
 
   private createAsteroid(x: number, y: number, scale: number) {
 
-    let asteroid: Phaser.Physics.Arcade.Sprite = this.scene.physics.add.sprite(x, y, 'asteroid').setVelocity(Math.floor(Math.random()*10-5), this.velocity+Math.floor(Math.random()*10-5));
+    let asteroid: Phaser.Physics.Arcade.Sprite = this.scene.physics.add.sprite(x, y, 'asteroid').setVelocity(Math.floor(Math.random()*10-5), this.velocity + Math.floor(Math.random()*10-5));
     
-    asteroid.setCircle(this.obstacleSize/2, 0, 0);
+    asteroid.setCircle(this.asteroidSize/2, 0, 0);
     asteroid.scaleY = scale;
     asteroid.scaleX = scale;
 
@@ -126,7 +154,7 @@ export class GameMap {
     let index: number = 0;
     while (true) {
       let scale: number = Phaser.Math.Between(50, 100)/100*this.scaling;
-      let size: number = this.obstacleSize*scale;
+      let size: number = this.asteroidSize*scale;
       if (index === 0) {
         let xMax = rightBoundary - size/2;
         let xMin = xMax - this.playerSize;

@@ -1,5 +1,6 @@
 import { NoteType } from './NoteType';
 import { Conductor } from './Conductor';
+import { Communicator } from '../shmup/Communicator';
 
 export class Rythm {
 
@@ -39,7 +40,7 @@ export class Rythm {
 
     private conductor = new Conductor(this.scene);
 
-    constructor(private scene: Phaser.Scene) {
+    constructor(private scene: Phaser.Scene, private communicator: Communicator) {
     }
 
     public preload() {

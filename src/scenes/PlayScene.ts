@@ -1,9 +1,11 @@
 import { Shmup } from '../shmup/Shmup';
 import { Rythm } from '../rythm/Rythm';
+import { Communicator } from '../shmup/Communicator';
 
 class PlayScene extends Phaser.Scene {
-  private shmup = new Shmup(this);
-  private rythm = new Rythm(this);
+  private communicator = new Communicator();
+  private shmup = new Shmup(this, this.communicator);
+  private rythm = new Rythm(this, this.communicator);
   input: Phaser.Input.InputPlugin;
 
   constructor() {
@@ -18,6 +20,10 @@ class PlayScene extends Phaser.Scene {
   }
 
   create() {
+
+    this.communicator.rythm = this.rythm;
+    this.communicator.shmup = this.shmup;
+
     let background = this.add.image(0, 0, 'background');
     background.setOrigin(0, 0);
     background.setDepth(2);
