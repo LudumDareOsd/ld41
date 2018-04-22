@@ -4,6 +4,7 @@ export class Player {
   scene: any;
   shmup: any;
   sprite: any;
+  pew: any;
 
   // maybe move out keyboard control to a class like mouse? PHASE #3
   leftKey: Phaser.Input.Keyboard.Key;
@@ -13,6 +14,8 @@ export class Player {
   fireKey: Phaser.Input.Keyboard.Key;
   mousecontrol: MouseControl;
 
+  haveFired: boolean = false;
+
   particles: Phaser.GameObjects.Particles.ParticleEmitterManager;
   emitter: Phaser.GameObjects.Particles.ParticleEmitter;
 
@@ -21,27 +24,6 @@ export class Player {
     this.shmup = config.shmup;
     this.sprite = new Phaser.Physics.Arcade.Sprite(config.scene, config.x, config.y, 'player');
     this.mousecontrol = new MouseControl({ input: this.scene.input, onLeft: this.fire.bind(this) });
-
-    this.scene.anims.create({
-      key: 'idle',
-      frames: this.scene.anims.generateFrameNumbers('player', { frames: [0] }),
-      frameRate: 10,
-      repeat: -1
-    });
-
-    this.scene.anims.create({
-      key: 'left',
-      frames: this.scene.anims.generateFrameNumbers('player', { frames: [1] }),
-      frameRate: 10,
-      repeat: -1
-    });
-
-    this.scene.anims.create({
-      key: 'right',
-      frames: this.scene.anims.generateFrameNumbers('player', { frames: [2] }),
-      frameRate: 10,
-      repeat: -1
-    });
 
     this.scene.add.existing(this.sprite as any);
     this.scene.physics.add.existing(this.sprite as any);
@@ -80,15 +62,20 @@ export class Player {
       blendMode: 'ADD'
     });
     this.emitter.startFollow(this.sprite, 0, -30, true);
+
+    this.pew = this.scene.sound.add('pew', { loop: false });
+    this.pew.volume = 0.4;
   }
 
   public fire() {
-    // todo wait for this.fireKey.isDown == false, to fire again
+    // todo: wait for this.fireKey.isDown == false, to fire again
     this.shmup.createBullet();
+    this.pew.play();
   }
 
-  update(delta: number) {
+  update(delta: number, funk: number) {
     this.emitter.setAngle(Phaser.Math.Between(0, 360));
+    this.emitter.setScale(Math.max(Math.min(funk * 0.02, 1.0), 0.1));
     this.mousecontrol.update(this.sprite, delta);
 
     if (this.sprite.body.velocity.x < -30) {
@@ -104,8 +91,11 @@ export class Player {
       this.sprite.body.velocity.y = this.mousecontrol.vel.y;
     }
 
-    if (this.fireKey.isDown) {
+    if (this.fireKey.isDown && !this.haveFired) {
       this.fire();
+      this.haveFired = true;
+    } else if(!this.fireKey.isDown) {
+      this.haveFired = false;
     }
     
     if (this.leftKey.isDown) {

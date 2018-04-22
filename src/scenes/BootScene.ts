@@ -38,6 +38,7 @@ class BootScene extends Phaser.Scene {
         this.load.image('bullet', 'assets/sprites/bullet.png');
         this.load.audio('titleaudio', 'assets/audio/Rockit_Maxx_-_01_-_Be_Electric.mp3', null);
         this.load.audio('gameoveraudio', 'assets/audio/Kosta_T_-_01_-_Genial_Violins.mp3', null);
+        this.load.audio('pew', 'assets/audio/Laser_shoot.wav', null);
         this.load.audio('shipfire', 'assets/audio/Laser_Shoot2.mp3', null);
         this.load.image('unicorn', 'assets/sprites/unicorn.png');
         this.load.image('unicornlarge', 'assets/sprites/unicornlarge.png');
@@ -64,6 +65,28 @@ class BootScene extends Phaser.Scene {
     create() {
         this.add.text(350, 530, 'Loaded! Starting game...', { fontFamily: 'Arial', fontSize: 64, color: '#00ff00' });
 
+        this.anims.create({
+            key: 'idle',
+            frames: this.anims.generateFrameNumbers('player', { frames: [0] }),
+            frameRate: 10,
+            repeat: -1
+          });
+      
+          this.anims.create({
+            key: 'left',
+            frames: this.anims.generateFrameNumbers('player', { frames: [1] }),
+            frameRate: 10,
+            repeat: -1
+          });
+      
+          this.anims.create({
+            key: 'right',
+            frames: this.anims.generateFrameNumbers('player', { frames: [2] }),
+            frameRate: 10,
+            repeat: -1
+          });
+      
+      
         this.scene.start('TitleScene');
     }
 }

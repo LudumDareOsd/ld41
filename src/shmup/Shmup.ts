@@ -11,7 +11,6 @@ export class Shmup {
   asteroids: Phaser.Physics.Arcade.Sprite[];
   powerUps: PowerUp[];
   bulletgroup: any;
-  firesnd : any;
 
   starfield: Phaser.Physics.Arcade.Sprite[];
   private shieldCost: number = 10;
@@ -48,7 +47,6 @@ export class Shmup {
     this.bulletgroup = this.scene.physics.add.group();
     this.gamemap.create(this.asteroids, this.powerUps);
     this.player = new Player({ scene: this.scene, x: 820, y: 960 - 50, shmup: this });
-    this.firesnd = this.scene.sound.add('shipfire', { loop: false });
 
     this.scene.physics.world.setBounds(340, 0, 1280 - 340, 960);
     this.scene.physics.add.collider(this.player.sprite, this.asteroids, this.crash, null, this.scene);
@@ -81,8 +79,6 @@ export class Shmup {
 
     this.bullets.push(this.bulletgroup.create(this.player.sprite.x, this.player.sprite.y, 'bullet'));
     let bullet = this.bullets[this.bullets.length - 1];
-    this.firesnd.volume = 0.4;
-    this.firesnd.play();
 
     bullet.setVelocity(0, -600);
     bullet.setScale(1.0);
@@ -178,14 +174,12 @@ export class Shmup {
     this.bulletCleanTimer += delta;
     this.scoreTimer += delta;
     this.gamemap.update(time, delta);
-    this.player.update(delta);
+    this.player.update(delta, this.communicator.getFunkAmount());
     if (Math.random() < 0.05) {
       this.createStar();
     }
 
     if (this.bulletCleanTimer > 1000) {
-      console.log(this.bullets);
-      console.log(this.emitters);
       for (let index = 0; index < this.bullets.length; index++) {
         if (this.bullets.hasOwnProperty(this.bullets[index])) {
           let bullet = this.bullets[index];
