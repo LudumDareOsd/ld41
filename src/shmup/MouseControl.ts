@@ -6,20 +6,16 @@ export class MouseControl {
   dist: number;
   mouseEnabled: boolean = true;
   mouseTimer: number = 0;
-  buttons: any;
 
   constructor(config) {
     this.input = config.input;
-    this.buttons = {
-      left: false,
-      right: false,
-    };
 
     this.input.on('pointerdown', function (pointer) {
-      // console.log(pointer.buttons);
+      if (pointer.buttons == 1) {
+        config.onLeft();
+      }
     }, this);
     this.input.on('pointerup', function (pointer) {
-      // console.log('up');
     }, this);
 
     this.input.on('pointermove', function (pointer) {
