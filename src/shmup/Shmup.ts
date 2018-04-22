@@ -11,6 +11,8 @@ export class Shmup {
   asteroids: Phaser.Physics.Arcade.Sprite[];
   powerUps: PowerUp[];
   bulletgroup: any;
+  firesnd : any;
+
   starfield: Phaser.Physics.Arcade.Sprite[];
   private shieldCost: number = 10;
   private bulletCost: number = 3;
@@ -22,7 +24,7 @@ export class Shmup {
   particles: Phaser.GameObjects.Particles.ParticleEmitterManager;
   emitters: any;
 
-  bullets: any;
+  bullets: any[];
   bulletCleanTimer: number = 0;
 
   constructor(private scene: any, private communicator: Communicator, private scenePlug: Phaser.Scenes.ScenePlugin) {
@@ -32,7 +34,7 @@ export class Shmup {
 
   public preload() {
   }
-  
+
   public create() {
     this.asteroids = [];
     this.starfield = [];
@@ -41,9 +43,10 @@ export class Shmup {
     this.bullets = [];
     this.bulletgroup = this.scene.physics.add.group();
     this.gamemap.create(this.asteroids, this.powerUps);
-    this.player = new Player({ scene: this.scene, x: 820, y: 960-50, shmup: this });
+    this.player = new Player({ scene: this.scene, x: 820, y: 960 - 50, shmup: this });
+    this.firesnd = this.scene.sound.add('shipfire', { loop: false });
 
-    this.scene.physics.world.setBounds(340, 0, 1280-340, 960);
+    this.scene.physics.world.setBounds(340, 0, 1280 - 340, 960);
     this.scene.physics.add.collider(this.player.sprite, this.asteroids, this.crash, null, this.scene);
     this.scene.physics.add.collider(this.bulletgroup, this.asteroids, this.explode, null, this.scene);
     this.scene.physics.add.collider(this.player.sprite, this.powerUps, this.powerCollect, null, this.scene);
@@ -54,10 +57,10 @@ export class Shmup {
     }
   }
 
-  public createStar(y:number = -50) {
+  public createStar(y: number = -50) {
     this.starfield.push(this.scene.add.sprite(Phaser.Math.Between(340, 1280), y, 'sparkles'));
     let scale = 0.15 + (Math.random() * 0.4);
-    let star = this.starfield[this.starfield.length-1];
+    let star = this.starfield[this.starfield.length - 1];
     star.setScale(scale);
     star.setDepth(0);
     star.setRotation(Phaser.Math.Between(0, 360));
@@ -66,14 +69,15 @@ export class Shmup {
 
   public createBullet() {
     // check funkmeter
-    if (this.communicator.getFunkAmount() >= this.bulletCost){
+    if (this.communicator.getFunkAmount() >= this.bulletCost) {
       this.communicator.removeFunk(this.bulletCost);
     } else {
       return;
     }
 
     this.bullets.push(this.bulletgroup.create(this.player.sprite.x, this.player.sprite.y, 'bullet'));
-    let bullet = this.bullets[this.bullets.length-1];
+    let bullet = this.bullets[this.bullets.length - 1];
+    this.firesnd.play();    
 
     bullet.setVelocity(0, -600);
     bullet.setScale(1.0);
@@ -83,12 +87,12 @@ export class Shmup {
       x: 0,
       y: 0,
       tint: {
-        onEmit: function(p, k, t, v) {
+        onEmit: function (p, k, t, v) {
           return Math.random() * 0xffffffff;
         }
       },
       angle: {
-        onEmit: function(p, k, t, v) {
+        onEmit: function (p, k, t, v) {
           return Phaser.Math.Between(75, 105);
         }
       },
@@ -104,7 +108,7 @@ export class Shmup {
       lifespan: 1000,
       blendMode: 'ADD'
     }));
-    bullet.emitterRef = this.emitters[this.emitters.length-1].startFollow(bullet, 0, 10, true);
+    bullet.emitterRef = this.emitters[this.emitters.length - 1].startFollow(bullet, 0, 10, true);
   }
 
   public crash(player, asteroid) {
@@ -123,7 +127,7 @@ export class Shmup {
     this.shmup.bullets.splice(this.shmup.bullets.indexOf(shot), 1);
     shot.emitterRef.stopFollow();
 
-    shot.setVelocity(0,0);
+    shot.setVelocity(0, 0);
     shot.destroy();
     target.destroy();
   }
@@ -139,8 +143,7 @@ export class Shmup {
         this.communicator.addFunk(NoteType.midleft);
         this.communicator.addFunk(NoteType.midleft);
         this.communicator.addFunk(NoteType.midleft);
-        break;
-      case Power.midRight:
+        break; case Power.midRight:
         this.communicator.addFunk(NoteType.midright);
         this.communicator.addFunk(NoteType.midright);
         this.communicator.addFunk(NoteType.midright);
@@ -150,20 +153,20 @@ export class Shmup {
         this.communicator.addFunk(NoteType.right);
         this.communicator.addFunk(NoteType.right);
         break;
-        
-        default:
+
+      default:
         break;
-      }
-      powerUp.destroy();
     }
-    
-    public nuke() {
-      for (let asteroid of this.asteroids) {
-        asteroid.destroy();
-      }
-      this.asteroids = [];
+    powerUp.destroy();
+  }
+
+  public nuke() {
+    for (let asteroid of this.asteroids) {
+      asteroid.destroy();
     }
-    
+    this.asteroids = [];
+  }
+
   public update(time: number, delta: number) {
     this.bulletCleanTimer += delta;
     this.scoreTimer += delta;
@@ -212,14 +215,6 @@ export class Shmup {
       this.scoreTimer = 0;
     } 
 
-
-    
-    // for (let index = 0; index < this.emitters.length; index++) {
-      // const emitter = this.emitters[index];
-      // emitter.setAngle(Phaser.Math.Between(75, 105));
-      // emitter.tint = (Math.random() * 0xffffff00);
-      // emitter.setTint(Math.random() * 0xffffff00);
-    // }
   }
 
   public adjustVelocity(multiplier: number) {
@@ -245,5 +240,5 @@ export class Shmup {
   public setPowerUpInterval(interval: number) {
     this.gamemap.setPowerUpInterval(interval);
   }
-    
+
 }
