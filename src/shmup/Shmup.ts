@@ -11,6 +11,8 @@ export class Shmup {
   asteroids: Phaser.Physics.Arcade.Sprite[];
   powerUps: PowerUp[];
   bulletgroup: any;
+  firesnd : any;
+
   starfield: Phaser.Physics.Arcade.Sprite[];
   private shieldCost: number = 10;
   private bulletCost: number = 3;
@@ -41,6 +43,7 @@ export class Shmup {
     this.bulletgroup = this.scene.physics.add.group();
     this.gamemap.create(this.asteroids, this.powerUps);
     this.player = new Player({ scene: this.scene, x: 820, y: 960 - 50, shmup: this });
+    this.firesnd = this.scene.sound.add('shipfire', { loop: false });
 
     this.scene.physics.world.setBounds(340, 0, 1280 - 340, 960);
     this.scene.physics.add.collider(this.player.sprite, this.asteroids, this.crash, null, this.scene);
@@ -73,6 +76,7 @@ export class Shmup {
 
     this.bullets.push(this.bulletgroup.create(this.player.sprite.x, this.player.sprite.y, 'bullet'));
     let bullet = this.bullets[this.bullets.length - 1];
+    this.firesnd.play();    
 
     bullet.setVelocity(0, -600);
     bullet.setScale(1.0);
