@@ -9,5 +9,8 @@ export class PowerUp extends Phaser.Physics.Arcade.Sprite {
 }
 
 export enum Power {
-    Funk
+    left,
+    midLeft,
+    midRight,
+    right
 }

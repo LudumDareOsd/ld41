@@ -43,7 +43,7 @@ export class GameMap {
       this.cleanUp();
     }
     
-    if (this.powerUpTimer > this.powerUpInterval / this.velocity * 800000) {
+    if (this.powerUpTimer > this.powerUpInterval / this.velocity * 500000) {
       this.powerUpTimer = 0;
       this.newPowerUps();
     }
@@ -75,16 +75,26 @@ export class GameMap {
   }
 
   private newPowerUps() {
-    if (Math.random() > 0.5) {
-      this.createPowerUp(Phaser.Math.Between(500, 1100), -50, Power.Funk);
+
+    if (Math.random() > 0.3) {
+      this.createPowerUp(Phaser.Math.Between(500, 1100), -50, Phaser.Math.Between(0,3));
     }
   }
 
-  private createPowerUp(x: number, y: number, power: Power) {
+  private createPowerUp(x: number, y: number, power: int) {
     let texture: string = '';
     switch (power) {
-      case Power.Funk:
+      case Power.left:
+        texture = 'bluefunk'
+        break;
+      case Power.midLeft:
         texture = 'greenfunk';
+        break;
+      case Power.midRight:
+        texture = 'redfunk';
+        break;
+      case Power.right:
+        texture = 'yellowfunk';
         break;
     
       default:

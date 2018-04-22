@@ -122,12 +122,25 @@ export class Shmup {
 
   public powerCollect(player, powerUp: PowerUp) {
     switch (powerUp.power) {
-      case Power.Funk:
+      case Power.left:
+        this.communicator.addFunk(NoteType.left);
+        this.communicator.addFunk(NoteType.left);
+        this.communicator.addFunk(NoteType.left);
+        break;
+      case Power.midLeft:
         this.communicator.addFunk(NoteType.midleft);
         this.communicator.addFunk(NoteType.midleft);
         this.communicator.addFunk(NoteType.midleft);
-        this.communicator.addFunk(NoteType.midleft);
-        this.communicator.addFunk(NoteType.midleft);
+        break;
+      case Power.midRight:
+        this.communicator.addFunk(NoteType.midright);
+        this.communicator.addFunk(NoteType.midright);
+        this.communicator.addFunk(NoteType.midright);
+        break;
+      case Power.right:
+        this.communicator.addFunk(NoteType.right);
+        this.communicator.addFunk(NoteType.right);
+        this.communicator.addFunk(NoteType.right);
         break;
         
         default:
