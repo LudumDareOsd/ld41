@@ -14,6 +14,7 @@ export class Shmup {
   private shieldCost: number = 10;
   public gameOver: boolean = false;
   private shmup: Shmup;
+  private cleanTimer: number = 0;
 
   particles: Phaser.GameObjects.Particles.ParticleEmitterManager;
   emitters: any;
@@ -78,7 +79,7 @@ export class Shmup {
       },
       speed: { min: 0, max: 300 },
       quantity: 2,
-      frequency: 2,
+      // frequency: 2,
       // alpha: 0.8,
       alpha: { start: 1.0, end: 0.01 },
       // speed: { min: -1100, max: 100 },
@@ -105,6 +106,7 @@ export class Shmup {
   public explode(target, shot) {
     // console.log(shot);
     shot.emitterRef.stopFollow();
+
     shot.setVelocity(0,0);
     shot.destroy();
     target.destroy();
@@ -152,7 +154,7 @@ export class Shmup {
         // console.log(this.starfield.length);
       }
     }
-    
+
   }
 
   public adjustVelocity(multiplier: number) {
