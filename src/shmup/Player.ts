@@ -29,7 +29,7 @@ export class Player {
     this.scene.physics.add.existing(this.sprite as any);
     this.sprite.body.setSize(50, 70, true);
     this.sprite.body.setOffset(7.5, 5);
-    
+
     this.sprite.setDepth(3);
 
     this.sprite.setCollideWorldBounds(true);
@@ -68,9 +68,9 @@ export class Player {
   }
 
   public fire() {
-    // todo: wait for this.fireKey.isDown == false, to fire again
-    this.shmup.createBullet();
-    this.pew.play();
+    if(this.shmup.createBullet()) {
+        this.pew.play();
+    }
   }
 
   update(delta: number, funk: number) {
@@ -97,7 +97,7 @@ export class Player {
     } else if(!this.fireKey.isDown) {
       this.haveFired = false;
     }
-    
+
     if (this.leftKey.isDown) {
       this.sprite.body.velocity.x -= 40;
     }

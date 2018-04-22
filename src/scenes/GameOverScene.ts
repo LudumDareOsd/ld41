@@ -15,7 +15,7 @@ class GameOverScene extends Phaser.Scene {
 
     create() {
 
-        this.add.image(0, 0, 'background_gameover').setOrigin(0, 0);
+        this.add.image(0, 0, 'background_gameover').setOrigin(0, 0).depth = 1;
         this.music.play('', 0, 1, true);
 
         //-----------------------------------------------------------------------
@@ -28,6 +28,8 @@ class GameOverScene extends Phaser.Scene {
             var image = this.add.image(x, y, 'particleyellow');
 
             image.setBlendMode(Phaser.BlendModes.ADD);
+            image.setAlpha(0.5);
+            image.depth = 0;
 
             this.sprites.push({ s: image, r: 2 + Math.random() * 6 });
         }
@@ -43,7 +45,7 @@ class GameOverScene extends Phaser.Scene {
                 this.music.stop();
                 this.scene.start('PlayScene');
             }
-    
+
         });
 
     }
@@ -56,7 +58,7 @@ class GameOverScene extends Phaser.Scene {
 
             if (sprite.y < -256)
             {
-                sprite.y = 700;
+                sprite.y = 960;
             }
         }
     }

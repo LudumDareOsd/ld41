@@ -19,33 +19,34 @@ class BootScene extends Phaser.Scene {
                 let width = 960 * part;
                 progress.fillRect(0, 300, width, 200);
             }
-    
-        });
-    
-        this.load.on('complete', function () {
-    
-            progress.destroy();
-    
+
         });
 
-        let load = this.load as any;
+        this.load.on('complete', function () {
+            progress.destroy();
+        });
+
+        let load = this.load as any; // lol
         load.spritesheet('player', 'assets/sprites/ship_spritemap.png', { frameWidth: 65, frameHeight: 75 });
-        this.load.image('background_title', 'assets/sprites/title_screen.png');
-        this.load.image('background_gameover', 'assets/sprites/GameoverPH.png');
-        this.load.image('background_instruction', 'assets/sprites/instruction_screen.png');
-        this.load.image('background_win', 'assets/sprites/win_screen.png');
-        this.load.image('pixel', 'assets/sprites/pixel.png');
-        this.load.image('bullet', 'assets/sprites/bullet.png');
+
         this.load.audio('titleaudio', 'assets/audio/Rockit_Maxx_-_01_-_Be_Electric.mp3', null);
         this.load.audio('gameoveraudio', 'assets/audio/Kosta_T_-_01_-_Genial_Violins.mp3', null);
         this.load.audio('pew', 'assets/audio/Laser_shoot.wav', null);
         this.load.audio('shipfire', 'assets/audio/Laser_Shoot2.mp3', null);
+
+        this.load.image('background_title', 'assets/sprites/title_screen.png');
+        this.load.image('background_gameover', 'assets/sprites/gameoverfinaltransp.png');
+        this.load.image('background_instruction', 'assets/sprites/instruction_screen.png');
+        this.load.image('background_win', 'assets/sprites/win_screen.png');
+        this.load.image('you_escaped', 'assets/sprites/youescaped.png');
+        this.load.image('pixel', 'assets/sprites/pixel.png');
+        this.load.image('bullet', 'assets/sprites/bullet.png');
         this.load.image('unicorn', 'assets/sprites/unicorn.png');
         this.load.image('unicornlarge', 'assets/sprites/unicornlarge.png');
         this.load.image('background', 'assets/sprites/funk_background_bottom.png');
         this.load.image('foreground', 'assets/sprites/funk_background_top.png');
         this.load.image('bluenote', 'assets/sprites/blue_note.png');
-        this.load.image('greennote', 'assets/sprites/green_note.png'); 
+        this.load.image('greennote', 'assets/sprites/green_note.png');
         this.load.image('rednote', 'assets/sprites/red_note.png');
         this.load.image('yellownote', 'assets/sprites/yellow_note.png');
         this.load.image('bluefunk', 'assets/sprites/blue_funk.png');
@@ -71,22 +72,22 @@ class BootScene extends Phaser.Scene {
             frameRate: 10,
             repeat: -1
           });
-      
+
           this.anims.create({
             key: 'left',
             frames: this.anims.generateFrameNumbers('player', { frames: [1] }),
             frameRate: 10,
             repeat: -1
           });
-      
+
           this.anims.create({
             key: 'right',
             frames: this.anims.generateFrameNumbers('player', { frames: [2] }),
             frameRate: 10,
             repeat: -1
           });
-      
-      
+
+
         this.scene.start('TitleScene');
     }
 }
