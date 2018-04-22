@@ -15,7 +15,7 @@ class BootScene extends Phaser.Scene {
             if (file.key === 'particle3') {
                 progress.clear();
                 progress.fillStyle(0xffffff, 0.4);
-                let part = 13 / value;
+                let part = 14 / value;
                 let width = 960 * part;
                 progress.fillRect(0, 300, width, 200);
             }
@@ -28,12 +28,17 @@ class BootScene extends Phaser.Scene {
     
         });
 
-        this.load.spritesheet('player', 'assets/sprites/ship_spritemap.png', { frameWidth: 65, frameHeight: 75 });
+        let load = this.load as any;
+        load.spritesheet('player', 'assets/sprites/ship_spritemap.png', { frameWidth: 65, frameHeight: 75 });
         this.load.image('background_title', 'assets/sprites/title_screen.png');
         this.load.image('background_gameover', 'assets/sprites/GameoverPH.png');
+        this.load.image('background_win', 'assets/sprites/win_screen.png');
+        this.load.image('pixel', 'assets/sprites/pixel.png');
+        this.load.image('bullet', 'assets/sprites/bullet.png');
         this.load.audio('titleaudio', 'assets/audio/Rockit_Maxx_-_01_-_Be_Electric.mp3', null);
         this.load.audio('gameoveraudio', 'assets/audio/Kosta_T_-_01_-_Genial_Violins.mp3', null);
-        this.load.image('unicorn', 'assets/sprites/unicorn.jpeg');
+        this.load.image('unicorn', 'assets/sprites/unicorn.png');
+        this.load.image('unicornlarge', 'assets/sprites/unicornlarge.png');
         this.load.image('background', 'assets/sprites/funk_background_bottom.png');
         this.load.image('foreground', 'assets/sprites/funk_background_top.png');
         this.load.image('bluenote', 'assets/sprites/blue_note.png');
@@ -45,6 +50,7 @@ class BootScene extends Phaser.Scene {
         this.load.image('redfunk', 'assets/sprites/red_funk.png');
         this.load.image('yellowfunk', 'assets/sprites/yellow_funk.png');
         this.load.image('asteroid', 'assets/sprites/mushroom.png');
+        this.load.image('particleyellow', 'assets/sprites/yellow.png');
         this.load.image('particle1', 'assets/sprites/particle_1.png');
         this.load.image('particle2', 'assets/sprites/particle_2.png');
         this.load.image('particle3', 'assets/sprites/particle_3.png');
@@ -56,7 +62,6 @@ class BootScene extends Phaser.Scene {
     create() {
         this.add.text(350, 530, 'Loaded! Starting game...', { fontFamily: 'Arial', fontSize: 64, color: '#00ff00' });
 
-        console.log("BOOTED");
         this.scene.start('TitleScene');
     }
 }

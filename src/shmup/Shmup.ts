@@ -1,6 +1,7 @@
 import { GameMap } from './GameMap';
 import { Player } from './Player';
-import { PowerUp, Power } from './PowerUp'
+import { Communicator } from './Communicator';
+import { PowerUp, Power } from './PowerUp';
 
 export class Shmup {
 
@@ -14,8 +15,8 @@ export class Shmup {
   particles: Phaser.GameObjects.Particles.ParticleEmitterManager;
   emitters: any;
 
-  constructor(private scene: any) {
-    this.gamemap = new GameMap(this, this.scene, 100);
+  constructor(private scene: any, private communicator: Communicator) {
+    this.gamemap = new GameMap(this, this.scene);
   }
 
   public preload() {
@@ -53,13 +54,11 @@ export class Shmup {
 
   public createBullet() {
     // check funkmeter
-    let bullet = this.bulletgroup.create(this.player.sprite.x, this.player.sprite.y, 'particle2');
+    let bullet = this.bulletgroup.create(this.player.sprite.x, this.player.sprite.y, 'bullet');
     bullet.setVelocity(0, -600);
-    bullet.setScale(0.6);
-    bullet.setTint(Phaser.Math.Between(0, 16777215));
+    bullet.setScale(1.0);
 
-    console.log(this.emitters);
-
+    // console.log(this.emitters);
     this.emitters.push(this.particles.createEmitter({
       x: 0,
       y: 0,
@@ -81,7 +80,7 @@ export class Shmup {
       // speed: { min: -1100, max: 100 },
       gravityY: 10,
       gravityX: 0,
-      scale: { start: 0.5, end: 1.0 },
+      scale: { start: 0.2, end: 1.0 },
       lifespan: 1000,
       blendMode: 'ADD'
     }));
@@ -93,7 +92,7 @@ export class Shmup {
   }
 
   public explode(target, shot) {
-    console.log(shot);
+    // console.log(shot);
     shot.emitterRef.stopFollow();
     shot.setVelocity(0,0);
     shot.destroy();
@@ -103,7 +102,7 @@ export class Shmup {
   public powerCollect(player, powerUp: PowerUp) {
     switch (powerUp.power) {
       case Power.Funk:
-        
+        this.communicator.adjustFunk(5);
         break;
     
       default:
@@ -136,6 +135,37 @@ export class Shmup {
       }
     }
     
+  }
+
+  public nuke() {
+    for (let asteroid of this.asteroids) {
+      asteroid.destroy();
+    }
+    this.asteroids = [];
+  }
+
+  public adjustVelocity(multiplier: number) {
+    this.gamemap.adjustVelocity(multiplier);
+  }
+
+  public setVelocity(velocity: number) {
+    this.gamemap.setVelocity(velocity);
+  }
+
+  public adjustAsteroidInterval(multiplier: number) {
+    this.gamemap.adjustAsteroidInterval(multiplier);
+  }
+
+  public setAsteroidInterval(interval: number) {
+    this.gamemap.setAsteroidInterval(interval);
+  }
+
+  public adjustPowerUpInterval(multiplier: number) {
+    this.gamemap.adjustPowerUpInterval(multiplier);
+  }
+
+  public setPowerUpInterval(interval: number) {
+    this.gamemap.setPowerUpInterval(interval);
   }
     
 }
