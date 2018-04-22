@@ -14,6 +14,7 @@ class InstructionScene extends Phaser.Scene {
 
     create() {
 
+        this.add.image(0, 0, 'background_title').setOrigin(0, 0);
         this.add.image(0, 0, 'background_instruction').setOrigin(0, 0);
         this.add.zone(0, 0, 1280, 960).setName('ToTitle').setInteractive();
 
@@ -22,7 +23,7 @@ class InstructionScene extends Phaser.Scene {
             if(gameObject.name == 'ToTitle') {
                 this.scene.start('TitleScene');
             }
-    
+
         });
 
     }

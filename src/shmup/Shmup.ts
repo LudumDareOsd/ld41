@@ -23,7 +23,7 @@ export class Shmup {
   particles: Phaser.GameObjects.Particles.ParticleEmitterManager;
   emitters: any;
 
-  bullets: any[];
+  bullets: any;
   bulletCleanTimer: number = 0;
 
   constructor(private scene: any, private communicator: Communicator, private scenePlug: Phaser.Scenes.ScenePlugin) {
@@ -74,7 +74,7 @@ export class Shmup {
     if (this.communicator.getFunkAmount() >= this.bulletCost) {
       this.communicator.removeFunk(this.bulletCost);
     } else {
-      return;
+      return false;
     }
 
     this.bullets.push(this.bulletgroup.create(this.player.sprite.x, this.player.sprite.y, 'bullet'));
@@ -83,22 +83,23 @@ export class Shmup {
     bullet.setVelocity(0, -600);
     bullet.setScale(1.0);
 
-    // console.log(this.emitters);
     // this.emitters.push(this.particles.createEmitter({
     //   x: 0,
     //   y: 0,
+    //   // tint: 0xffffffff,
     //   tint: {
     //     onEmit: function (p, k, t, v) {
     //       return Math.random() * 0xffffffff;
     //     }
     //   },
+    //   // angle: 90,
     //   angle: {
     //     onEmit: function (p, k, t, v) {
     //       return Phaser.Math.Between(75, 105);
     //     }
     //   },
     //   speed: { min: 0, max: 300 },
-    //   quantity: 2,
+    //   quantity: 1,
     //   // frequency: 2,
     //   // alpha: 0.8,
     //   alpha: { start: 1.0, end: 0.01 },
@@ -109,7 +110,10 @@ export class Shmup {
     //   lifespan: 1000,
     //   blendMode: 'ADD'
     // }));
-    // bullet.emitterRef = this.emitters[this.emitters.length - 1].startFollow(bullet, 0, 10, true);
+    // bullet.emitterRef = this.emitters[this.emitters.length - 1];
+    // bullet.emitterRef.startFollow(bullet, 0, 10, true);
+
+    return true;
   }
 
   public crash(player, asteroid) {
@@ -124,13 +128,8 @@ export class Shmup {
   }
 
   public explode(target, shot) {
-    //this.shmup.emitters.splice(this.shmup.emitters.indexOf(shot.emitterRef), 1);
+    // this.shmup.emitters.splice(this.shmup.emitters.indexOf(shot.emitterRef), 1);
     this.shmup.bullets.splice(this.shmup.bullets.indexOf(shot), 1);
-
-    //shot.setVelocity(0, 0);
-    //shot.active = false;
-
-
     shot.destroy();
     target.destroy();
   }
@@ -204,7 +203,7 @@ export class Shmup {
     }
 
     if (this.scoreTimer > 5000) {
-  
+
       let funk: number = this.communicator.getScore();
       let diff: number = funk - this.lastScore;
       if (diff > 10000) {
@@ -212,9 +211,9 @@ export class Shmup {
         this.adjustAsteroidInterval(Math.pow(0.97, Math.floor(diff/10000)));
         this.lastScore = funk;
       }
-      
+
       this.scoreTimer = 0;
-    } 
+    }
 
   }
 
