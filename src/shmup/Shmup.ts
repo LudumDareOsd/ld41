@@ -71,7 +71,7 @@ export class Shmup {
     if (this.communicator.getFunkAmount() >= this.bulletCost) {
       this.communicator.removeFunk(this.bulletCost);
     } else {
-      //return;
+      return;
     }
 
     this.bullets.push(this.bulletgroup.create(this.player.sprite.x, this.player.sprite.y, 'bullet'));
@@ -82,32 +82,32 @@ export class Shmup {
     bullet.setScale(1.0);
 
     // console.log(this.emitters);
-    this.emitters.push(this.particles.createEmitter({
-      x: 0,
-      y: 0,
-      tint: {
-        onEmit: function (p, k, t, v) {
-          return Math.random() * 0xffffffff;
-        }
-      },
-      angle: {
-        onEmit: function (p, k, t, v) {
-          return Phaser.Math.Between(75, 105);
-        }
-      },
-      speed: { min: 0, max: 300 },
-      quantity: 2,
-      // frequency: 2,
-      // alpha: 0.8,
-      alpha: { start: 1.0, end: 0.01 },
-      // speed: { min: -1100, max: 100 },
-      gravityY: 10,
-      gravityX: 0,
-      scale: { start: 0.2, end: 1.0 },
-      lifespan: 1000,
-      blendMode: 'ADD'
-    }));
-    bullet.emitterRef = this.emitters[this.emitters.length - 1].startFollow(bullet, 0, 10, true);
+    // this.emitters.push(this.particles.createEmitter({
+    //   x: 0,
+    //   y: 0,
+    //   tint: {
+    //     onEmit: function (p, k, t, v) {
+    //       return Math.random() * 0xffffffff;
+    //     }
+    //   },
+    //   angle: {
+    //     onEmit: function (p, k, t, v) {
+    //       return Phaser.Math.Between(75, 105);
+    //     }
+    //   },
+    //   speed: { min: 0, max: 300 },
+    //   quantity: 2,
+    //   // frequency: 2,
+    //   // alpha: 0.8,
+    //   alpha: { start: 1.0, end: 0.01 },
+    //   // speed: { min: -1100, max: 100 },
+    //   gravityY: 10,
+    //   gravityX: 0,
+    //   scale: { start: 0.2, end: 1.0 },
+    //   lifespan: 1000,
+    //   blendMode: 'ADD'
+    // }));
+    // bullet.emitterRef = this.emitters[this.emitters.length - 1].startFollow(bullet, 0, 10, true);
   }
 
   public crash(player, asteroid) {
@@ -126,14 +126,10 @@ export class Shmup {
     this.shmup.bullets.splice(this.shmup.bullets.indexOf(shot), 1);
 
     //shot.setVelocity(0, 0);
-    //shot.destroy();
     //shot.active = false;
 
-    window.setTimeout(() => {
-      shot.destroy();
-    });
 
-
+    shot.destroy();
     target.destroy();
   }
 
