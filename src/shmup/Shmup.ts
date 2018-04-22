@@ -54,5 +54,9 @@ export class Shmup {
     this.player.update();
 
   }
+
+  public setObstacleVelocityMultiplier(multiplier: number) {
+    this.gamemap.adjustVelocity(multiplier);
+  }
     
 }

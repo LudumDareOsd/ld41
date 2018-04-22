@@ -41,8 +41,8 @@ export class GameMap {
 
   }
 
-  public setVelocity(velocity: number) {
-    this.velocity = velocity;
+  public adjustVelocity(multiplier: number) {
+    this.velocity = this.velocity * multiplier;
   }
 
   private newPowerUps() {
