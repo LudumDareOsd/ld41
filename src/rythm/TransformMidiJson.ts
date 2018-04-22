@@ -2,7 +2,7 @@ export class TransformMidiJson {
 
     public Transform() {
         // Change to midi-file that should be transformed... :-)
-        this.loadJSON("assets/audio/enter_darkness/track2.json", (response) => {
+        this.loadJSON("assets/audio/enter_darkness/track3.json", (response) => {
         
             var midijson = JSON.parse(response);
             //console.log('JSON Level load:' + response);
@@ -47,16 +47,16 @@ export class TransformMidiJson {
     }
 
     private GameNote(midiNote) {
-        if(midiNote == "F#2") {
+        if(midiNote == "C2") {
             return 0; // blue
         }
-        if(midiNote == "C2") {
+        if(midiNote == "D2") {
             return 1; // green 
         }
-        if(midiNote == "C#3") {
+        if(midiNote == "D#2") {
             return 2; // red
         }
-        if(midiNote == "C#2") {
+        if(midiNote == "F#2") {
             return 3; // yellow
         }
         return 0;

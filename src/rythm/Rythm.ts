@@ -54,7 +54,7 @@ export class Rythm {
 
     public preload() {
         //this.scene.load.audio('rythmaudio', "assets/audio/enter_darkness/track.mp3", null);
-        var infoMetaAboutLevel = this.conductor.Load("level2", 2); // skip ever 2nd
+        var infoMetaAboutLevel = this.conductor.Load("level3", 2); // skip ever 2nd
 
         this.scene.load.audio('rythmaudio', infoMetaAboutLevel.path, null);
     }
