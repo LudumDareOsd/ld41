@@ -2,6 +2,7 @@ import { MouseControl } from "./MouseControl";
 
 export class Player {
   scene: any;
+  shmup: any;
   sprite: any;
 
   // maybe move out keyboard control to a class like mouse? PHASE #3
@@ -17,9 +18,9 @@ export class Player {
 
   constructor(config) {
     this.scene = config.scene;
+    this.shmup = config.shmup;
     this.sprite = new Phaser.Physics.Arcade.Sprite(config.scene, config.x, config.y, 'player');
-
-    this.mousecontrol = new MouseControl({ input: this.scene.input });
+    this.mousecontrol = new MouseControl({ input: this.scene.input, onLeft: this.fire.bind(this) });
 
     this.scene.anims.create({
       key: 'idle',
@@ -44,8 +45,9 @@ export class Player {
 
     this.scene.add.existing(this.sprite as any);
     this.scene.physics.add.existing(this.sprite as any);
-    // this.sprite.body.transform.scaleX = 0.8;
-    // this.sprite.body.transform.scaleY = 0.8;
+    this.sprite.body.setSize(50, 70, true);
+    this.sprite.body.setOffset(7.5, 5);
+    
     this.sprite.setDepth(3);
 
     this.sprite.setCollideWorldBounds(true);
@@ -63,7 +65,9 @@ export class Player {
     this.emitter = this.particles.createEmitter({
       x: 0,
       y: 0,
-      tint: 0xffffffff,
+      // tint: 0xffffffff,
+      tint: { start: 0xffffffff, end: 0x00000000 },
+      // tint: { start: 0xff000000, end: 0xff00ff00 },
       angle: 0,
       speed: 100,
       quantity: 2,
@@ -76,6 +80,11 @@ export class Player {
       blendMode: 'ADD'
     });
     this.emitter.startFollow(this.sprite, 0, -30, true);
+  }
+
+  public fire() {
+    // todo wait for this.fireKey.isDown == false, to fire again
+    this.shmup.createBullet();
   }
 
   update(delta: number) {
@@ -95,21 +104,21 @@ export class Player {
       this.sprite.body.velocity.y = this.mousecontrol.vel.y;
     }
 
-    if (this.fireKey.isDown || this.mousecontrol.buttons.left) {
-      console.log('FIRE');
+    if (this.fireKey.isDown) {
+      this.fire();
     }
     
     if (this.leftKey.isDown) {
-      this.sprite.body.velocity.x -= 50;
+      this.sprite.body.velocity.x -= 40;
     }
     if (this.rightKey.isDown) {
-      this.sprite.body.velocity.x += 50;
+      this.sprite.body.velocity.x += 40;
     }
     if (this.upKey.isDown) {
-      this.sprite.body.velocity.y -= 50;
+      this.sprite.body.velocity.y -= 40;
 		}
     if (this.downKey.isDown) {
-      this.sprite.body.velocity.y += 50;
+      this.sprite.body.velocity.y += 40;
     }
   }
 }

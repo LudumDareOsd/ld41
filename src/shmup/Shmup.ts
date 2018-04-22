@@ -25,11 +25,11 @@ export class Shmup {
     this.powerUps = [];
     this.bulletgroup = this.scene.physics.add.group();
     this.gamemap.create(this.asteroids, this.powerUps);
-    this.player = new Player({ scene: this.scene, x: 820, y: 960-50 });
+    this.player = new Player({ scene: this.scene, x: 820, y: 960-50, shmup: this });
 
     this.scene.physics.world.setBounds(340, 0, 1280-340, 960);
     this.scene.physics.add.collider(this.player.sprite, this.asteroids, this.crash, null, this.scene);
-    this.scene.physics.add.collider(this.bulletgroup, this.asteroids, this.crash, null, this.scene);
+    this.scene.physics.add.collider(this.bulletgroup, this.asteroids, this.explode, null, this.scene);
     this.scene.physics.add.collider(this.player.sprite, this.powerUps, this.powerCollect, null, this.scene);
 
     for (let i = 0; i < 75; i++) {
@@ -47,12 +47,20 @@ export class Shmup {
   }
 
   public createBullet() {
-    this.scene.add.sprite(this.player.x, this.player.y, 'particle2');
+    // check funkmeter
+    let bullet = this.bulletgroup.create(this.player.sprite.x, this.player.sprite.y, 'particle2');
+    bullet.setVelocity(0, -500);
+    bullet.setScale(0.6);
+    bullet.setTint(Phaser.Math.Between(0, 16777215));
   }
 
   public crash(player, asteroid) {
     asteroid.destroy();
-    // console.log(p, o);
+  }
+
+  public explode(shot, target) {
+    shot.destroy();
+    target.destroy();
   }
 
   public powerCollect(player, powerUp: PowerUp) {
