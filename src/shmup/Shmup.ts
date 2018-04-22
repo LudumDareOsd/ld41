@@ -12,7 +12,7 @@ export class Shmup {
   starfield: Phaser.Physics.Arcade.Sprite[];
 
   constructor(private scene: any) {
-    this.gamemap = new GameMap(this, this.scene, 100);
+    this.gamemap = new GameMap(this, this.scene);
   }
 
   public preload() {

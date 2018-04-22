@@ -18,6 +18,7 @@ export class Player {
   constructor(config) {
     this.scene = config.scene;
     this.sprite = new Phaser.Physics.Arcade.Sprite(config.scene, config.x, config.y, 'player');
+
     this.mousecontrol = new MouseControl({ input: this.scene.input });
 
     this.scene.anims.create({
@@ -43,6 +44,8 @@ export class Player {
 
     this.scene.add.existing(this.sprite as any);
     this.scene.physics.add.existing(this.sprite as any);
+    // this.sprite.body.transform.scaleX = 0.8;
+    // this.sprite.body.transform.scaleY = 0.8;
     this.sprite.setDepth(3);
 
     this.sprite.setCollideWorldBounds(true);
