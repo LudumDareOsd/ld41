@@ -90,7 +90,6 @@ export class GameMap {
 
     asteroid.setRotation(Math.random()*6.28);
     asteroid.setAngularVelocity(this.rnd2()*100);
-    asteroid.setDepth(2);
     
     this.asteroids.push(asteroid);
   }

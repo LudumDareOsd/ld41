@@ -1,5 +1,6 @@
 import { NoteType } from './NoteType';
 import { Conductor } from './Conductor';
+import { FunkOMeter } from './FunkOMeter';
 
 export class Rythm {
 
@@ -42,6 +43,8 @@ export class Rythm {
     private failmidleft;
     private failmidright;
     private failright;
+
+    private funkOMeter: FunkOMeter;
 
     private conductor = new Conductor(this.scene);
 
@@ -112,6 +115,8 @@ export class Rythm {
         this.failright.setDepth(4);
         this.failright.setOrigin(0, 0);
         this.failright.setVisible(false);
+
+        this.funkOMeter = new FunkOMeter(this.scene);
 
     }
 
@@ -317,7 +322,8 @@ export class Rythm {
                     repeatDelay: 1000,
                     hold: 1000
                 });
-
+                
+                this.funkOMeter.addFunk(type);
                 this.addScore(1000);
                 this.streak++;
                 this.calcMultiplier()
