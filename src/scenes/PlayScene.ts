@@ -15,18 +15,6 @@ class PlayScene extends Phaser.Scene {
   preload() {
     this.rythm.preload();
     this.shmup.preload();
-
-    this.load.image('background', 'assets/sprites/funk_background_bottom.png');
-    this.load.image('foreground', 'assets/sprites/funk_background_top.png');
-    this.load.image('bluenote', 'assets/sprites/blue_note.png');
-    this.load.image('greennote', 'assets/sprites/green_note.png'); 
-    this.load.image('rednote', 'assets/sprites/red_note.png');
-    this.load.image('yellownote', 'assets/sprites/yellow_note.png');
-    this.load.image('asteroid', 'assets/sprites/mushroom.png');
-
-    this.load.image('particle1', 'assets/sprites/particle_1.png');
-    this.load.image('particle2', 'assets/sprites/particle_2.png');
-    this.load.image('particle3', 'assets/sprites/particle_3.png');
   }
 
   create() {
