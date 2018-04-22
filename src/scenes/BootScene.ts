@@ -87,7 +87,7 @@ class BootScene extends Phaser.Scene {
           });
       
       
-        this.scene.start('TitleScene');
+        this.scene.start('WinScene'); //TitleScene
     }
 }
 
