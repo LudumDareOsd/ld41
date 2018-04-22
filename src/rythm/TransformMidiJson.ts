@@ -2,7 +2,7 @@ export class TransformMidiJson {
 
     public Transform() {
         // Change to midi-file that should be transformed... :-)
-        this.loadJSON("assets/audio/enter_darkness/midi.json", (response) => {
+        this.loadJSON("assets/audio/enter_darkness/track2.json", (response) => {
         
             var midijson = JSON.parse(response);
             //console.log('JSON Level load:' + response);
@@ -34,7 +34,7 @@ export class TransformMidiJson {
         for(var i = 0; i < midijson.tracks[0].notes.length; i++) {
             var midiobjnote = midijson.tracks[0].notes[i];
             var gameNote = this.GameNote(midiobjnote.name);
-            var gameTime = midiobjnote.time;
+            var gameTime = this.ToMilliSeconds(midiobjnote.time);
 
             var currnote = {[gameTime]: gameNote};
 
@@ -47,19 +47,27 @@ export class TransformMidiJson {
     }
 
     private GameNote(midiNote) {
-        if(midiNote == "D3") {
-            return 0;
+        if(midiNote == "D3" || midiNote == "F#2") {
+            return 0; // blue
         }
-        if(midiNote == "A#2") {
-            return 1;
+        if(midiNote == "A#2" || midiNote == "C2") {
+            return 1; // green 
         }
-        if(midiNote == "G#2") {
-            return 2;
+        if(midiNote == "G#2" || midiNote == "C#3") {
+            return 2; // red
         }
-        if(midiNote == "F2") {
-            return 3;
+        if(midiNote == "F2" || midiNote == "C#2") {
+            return 3; // yellow
         }
         return 0;
+    }
+
+    private ToMilliSeconds(secondswhole) {
+        let secondsAsFloat = parseFloat(secondswhole);
+        let secondsWhole = Math.floor(secondsAsFloat);
+        let secondsDecimalPart = secondsAsFloat-secondsWhole;
+
+        return secondsWhole * 1000 + secondsDecimalPart * 1000;
     }
 
     private loadJSON(file, callback) {   

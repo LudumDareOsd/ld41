@@ -1,6 +1,7 @@
 import { NoteType } from './NoteType';
 import { Conductor } from './Conductor';
 import { FunkOMeter } from './FunkOMeter';
+import { Communicator } from '../shmup/Communicator';
 
 export class Rythm {
 
@@ -48,12 +49,13 @@ export class Rythm {
 
     private conductor = new Conductor(this.scene);
 
-    constructor(private scene: Phaser.Scene) {
+    constructor(private scene: Phaser.Scene, private communicator: Communicator) {
     }
 
     public preload() {
         //this.scene.load.audio('rythmaudio', "assets/audio/enter_darkness/track.mp3", null);
-        var infoMetaAboutLevel = this.conductor.Load("level1");
+        var infoMetaAboutLevel = this.conductor.Load("level2");
+        this.musicDuration = infoMetaAboutLevel.duration;
         // bpm: int 120 ex
         // title: Music Title
         // background: img background.jpg

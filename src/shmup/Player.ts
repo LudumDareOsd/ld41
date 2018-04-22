@@ -45,6 +45,9 @@ export class Player {
 
     this.scene.add.existing(this.sprite as any);
     this.scene.physics.add.existing(this.sprite as any);
+    this.sprite.body.setSize(50, 70, true);
+    this.sprite.body.setOffset(7.5, 5);
+    
     this.sprite.setDepth(3);
 
     this.sprite.setCollideWorldBounds(true);
