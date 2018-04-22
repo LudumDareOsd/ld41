@@ -340,4 +340,9 @@ export class Rythm {
         return this.score;
     }
 
+    public KillMe() {
+        this.playing = false;
+        this.conductor.Stop();
+    }
+
 }
