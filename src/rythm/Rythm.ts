@@ -340,7 +340,7 @@ export class Rythm {
     }
 
     public getFunk(): number {
-        return 11;
+        return 9;
         //return this.funk;
     }
 
