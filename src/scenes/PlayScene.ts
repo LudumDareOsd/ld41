@@ -44,10 +44,27 @@ class PlayScene extends Phaser.Scene {
     this.shmup.update(time, delta);
     this.rythm.update(time, delta, this.scene);
     if (this.shmup.gameOver || scene.gameOver) {
-      console.log('GameOver going to GameOverScene...');
+
+      this.SaveScore(this.communicator.getScore());
+
       this.rythm.KillMe();
       this.scene.start('GameOverScene');
     }
+  }
+
+  private SaveScore(score) {
+    var savedScore = localStorage.getItem('FunkEscapeScore');
+
+    window.localStorage.setItem('FunkEscapeCurrentScore', score);
+
+    if(savedScore === null) {
+      window.localStorage.setItem('FunkEscapeScore', score);
+    } else {
+      if(savedScore < score) {
+        window.localStorage.setItem('FunkEscapeScore', score);
+      }
+    }
+    
   }
 }
 

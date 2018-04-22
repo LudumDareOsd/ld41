@@ -84,6 +84,9 @@ class WinScene extends Phaser.Scene {
         }
         //----------------------------------------------------------------------
 
+        this.add.text(350, 200, 'Your highscore:' + localStorage.getItem('FunkEscapeScore'), { fontFamily: 'Arial', fontSize: 64, color: '#ff0000' });
+        this.add.text(350, 270, 'Your current score:' + localStorage.getItem('FunkEscapeCurrentScore'), { fontFamily: 'Arial', fontSize: 64, color: '#ff0000' });
+
         this.add.zone(0, 0, 1280, 960).setName('StartGame').setInteractive();
 
         this.input.on('gameobjectdown', (pointer, gameObject) => {
