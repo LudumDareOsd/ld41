@@ -7,6 +7,12 @@ export class Rythm {
     private notes: any;
     private scoreText: any;
     private score = 0;
+
+    private multiplier = 1;
+    private multiplierText: any;
+
+    private streak = 0;
+
     private blueKey: Phaser.Input.Keyboard.Key;
     private greenKey: Phaser.Input.Keyboard.Key;
     private redKey: Phaser.Input.Keyboard.Key;
@@ -62,6 +68,7 @@ export class Rythm {
         this.yellowKey = this.scene.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.R);
 
         this.scoreText = this.scene.add.text(1090, 8, 'Score: 0', { fontSize: '24px', fill: '#fff' }).setDepth(3);
+        this.multiplierText = this.scene.add.text(300, 845, 'x1', { fontSize: '24px', fill: '#fff' }).setDepth(6);
         this.infoAtWhatTimesToDoStuff = this.conductor.Start(); //"level1"
 
         this.particleManager = this.scene.add.particles('particle1') as any;
@@ -111,7 +118,7 @@ export class Rythm {
 
     public update(time: number, delta: number) {
         this.checkMusic(delta);
-        this.score += 1;
+        this.addScore(1);
         this.checkKeys();
         this.checkWorldBound(this.notes.children.entries, this.scene.physics.world);
         this.updateScore();
@@ -159,6 +166,7 @@ export class Rythm {
                 this.successleft.setVisible(true);
             } else {
                 this.failLeft.setVisible(true);
+                this.miss();
             };
         }
         if (this.greenKey.isDown && this.greenPrimed) {
@@ -168,6 +176,7 @@ export class Rythm {
                 this.successmidleft.setVisible(true);
             } else {
                 this.failmidleft.setVisible(true);
+                this.miss();
             };
         }
         if (this.redKey.isDown && this.redPrimed) {
@@ -177,6 +186,7 @@ export class Rythm {
                 this.successmidright.setVisible(true);
             } else {
                 this.failmidright.setVisible(true);
+                this.miss();
             };
         }
         if (this.yellowKey.isDown && this.yellowPrimed) {
@@ -186,6 +196,7 @@ export class Rythm {
                 this.successright.setVisible(true);
             } else {
                 this.failright.setVisible(true);
+                this.miss()
             };
         }
 
@@ -209,6 +220,27 @@ export class Rythm {
             this.successright.setVisible(false);
             this.failright.setVisible(false);
         }
+    }
+
+    private miss() {
+        this.streak = 0;
+        this.calcMultiplier();
+    }
+
+    private calcMultiplier() {
+        if(this.streak > 5 && this.streak <= 15) {
+            this.multiplier = 2;
+        } else if(this.streak > 15) {
+            this.multiplier = 4;
+        } else {
+            this.multiplier = 1;
+        }
+
+        this.updateMultiplierText();
+    }
+
+    private updateMultiplierText() {
+        this.multiplierText.setText('x' + this.multiplier);
     }
 
     private createNote(type: NoteType) {
@@ -265,6 +297,10 @@ export class Rythm {
     private checkWorldBound(children, world) {
         for (let item of children) {
             if (item.y > world.bounds.height + 50) {
+                if(item.x > 0) {
+                    this.miss();
+                }
+                
                 item.destroy();
             }
         }
@@ -272,7 +308,7 @@ export class Rythm {
 
     private checkHit(children: any, type: NoteType) {
         for (let item of children) {
-            if (item.y > 836 && item.y < 886 && item.x == this.xValue(type)) {
+            if (item.y > 826 && item.y < 876 && item.x == this.xValue(type)) {
                 this.scene.tweens.add({
                     targets: item,
                     x: -1400,
@@ -283,10 +319,18 @@ export class Rythm {
                     hold: 1000
                 });
 
+                this.addScore(1000);
+                this.streak++;
+                this.calcMultiplier()
+
                 return true;
             }
         }
 
         return false;
+    }
+
+    private addScore(score: number) {
+        this.score += (score * this.multiplier)
     }
 }

@@ -17,7 +17,6 @@ export class Shmup {
   }
 
   public preload() {
-    this.scene.load.spritesheet('player', 'assets/sprites/ship_spritemap.png', { frameWidth: 65, frameHeight: 75 });
   }
   
   public create() {
@@ -39,12 +38,13 @@ export class Shmup {
   }
 
   public createStar(y:number = -50) {
-    this.starfield.push(this.scene.add.sprite(Phaser.Math.Between(340, 1280), y, 'particle1'));
-    let scale = 0.05 + (Math.random() * 0.2);
+    this.starfield.push(this.scene.add.sprite(Phaser.Math.Between(340, 1280), y, 'sparkles'));
+    let scale = 0.15 + (Math.random() * 0.4);
     let star = this.starfield[this.starfield.length-1];
     star.setScale(scale);
     star.setDepth(0);
-    
+    star.setRotation(Phaser.Math.Between(0, 360));
+    star.tint = Math.random() * 0xffffff;
   }
 
   public createBullet() {

@@ -1,6 +1,7 @@
 class GameOverScene extends Phaser.Scene {
 
     private music : any;
+    private sprites = [];
 
     constructor() {
       super({
@@ -17,6 +18,23 @@ class GameOverScene extends Phaser.Scene {
         this.add.image(0, 0, 'background_gameover').setOrigin(0, 0);
         this.music.play('', 0, 1, true);
 
+        //-----------------------------------------------------------------------
+        //  Create the particles
+        for (var i = 0; i < 300; i++)
+        {
+            var x = Phaser.Math.Between(-64, 1300);
+            var y = Phaser.Math.Between(-64, 1000);
+
+            var image = this.add.image(x, y, 'particleyellow');
+
+            image.setBlendMode(Phaser.BlendModes.ADD);
+
+            this.sprites.push({ s: image, r: 2 + Math.random() * 6 });
+        }
+
+        //this.add.image(400, 300, 'unicorn').setBlendMode(Phaser.BlendModes.SCREEN);
+        //-----------------------------------------------------------------------
+
         this.add.zone(0, 0, 1280, 960).setName('StartGame').setInteractive();
 
         this.input.on('gameobjectdown', (pointer, gameObject) => {
@@ -28,6 +46,19 @@ class GameOverScene extends Phaser.Scene {
     
         });
 
+    }
+
+    public update(time: number, delta: number) {
+        for (var i = 0; i < this.sprites.length; i++)
+        {
+            var sprite = this.sprites[i].s;
+            sprite.y -= this.sprites[i].r;
+
+            if (sprite.y < -256)
+            {
+                sprite.y = 700;
+            }
+        }
     }
 }
 
