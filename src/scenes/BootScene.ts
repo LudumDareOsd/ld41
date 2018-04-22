@@ -90,7 +90,7 @@ class BootScene extends Phaser.Scene {
           });
 
 
-        this.scene.start('GameOverScene'); //TitleScene
+        this.scene.start('TitleScene');
     }
 }
 
