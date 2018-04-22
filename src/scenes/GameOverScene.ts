@@ -35,8 +35,14 @@ class GameOverScene extends Phaser.Scene {
         //this.add.image(400, 300, 'unicorn').setBlendMode(Phaser.BlendModes.SCREEN);
         //-----------------------------------------------------------------------
 
+        let winScore = localStorage.getItem('FunkEscapeWinScore');
+        let currScore = localStorage.getItem('FunkEscapeCurrentScore');
+        let percDone = (parseInt(currScore) / parseInt(winScore)) * 100;
+        var rounded = Math.round( percDone * 10 ) / 10;
+
         this.add.text(350, 200, 'Your highscore:' + localStorage.getItem('FunkEscapeScore'), { fontFamily: 'Arial', fontSize: 64, color: '#ff0000' });
-        this.add.text(350, 270, 'Your current score:' + localStorage.getItem('FunkEscapeCurrentScore'), { fontFamily: 'Arial', fontSize: 64, color: '#ff0000' });
+        this.add.text(350, 270, 'Your current score:' + currScore, { fontFamily: 'Arial', fontSize: 64, color: '#ff0000' });
+        this.add.text(270, 850, 'You reached ' + rounded + '% of the level!', { fontFamily: 'Arial', fontSize: 64, color: '#00aaaa' });
 
         this.add.zone(0, 0, 1280, 960).setName('StartGame').setInteractive();
 

@@ -56,6 +56,7 @@ class PlayScene extends Phaser.Scene {
     var savedScore = localStorage.getItem('FunkEscapeScore');
 
     window.localStorage.setItem('FunkEscapeCurrentScore', score);
+    window.localStorage.setItem('FunkEscapeWinScore', this.rythm.GetWinScore().toString());
 
     if(savedScore === null) {
       window.localStorage.setItem('FunkEscapeScore', score);

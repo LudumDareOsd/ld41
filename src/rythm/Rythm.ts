@@ -8,6 +8,7 @@ export class Rythm {
     private notes: any;
     private scoreText: any;
     private score = 0;
+    private winScore = 400000;
 
     private multiplier = 1;
     private multiplierText: any;
@@ -129,7 +130,7 @@ export class Rythm {
         this.checkWorldBound(this.notes.children.entries, this.scene.physics.world);
         this.updateScore();
 
-        if(this.score > 400000) {
+        if(this.score > this.winScore) {
             this.conductor.Stop();
             scenePlugin.start('WinScene');
         }
@@ -357,6 +358,10 @@ export class Rythm {
     public KillMe() {
         this.playing = false;
         this.conductor.Stop();
+    }
+
+    public GetWinScore() {
+        return this.winScore;
     }
 
 }
