@@ -20,6 +20,10 @@ export class FunkOMeter {
     }
   }
 
+  public getFunkAmount() {
+    return this.sprites.lenght;
+  }
+
   private getFunkName(type: NoteType) {
       if(type == NoteType.left) {
         return 'bluefunk';
