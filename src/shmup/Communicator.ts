@@ -11,6 +11,10 @@ export class Communicator {
 
     }
 
+    public getScore(): number {
+        return this.rythm.getScore();
+    }
+
     public nuke() {
         this.shmup.nuke();
     }
@@ -37,9 +41,6 @@ export class Communicator {
 
     public setPowerUpInterval(interval: number) {
         this.shmup.setPowerUpInterval(interval);
-    }
-
-    public adjustFunk(amount: number) {
     }
 
     public getFunkAmount() {

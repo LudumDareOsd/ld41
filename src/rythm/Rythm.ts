@@ -335,4 +335,9 @@ export class Rythm {
     private addScore(score: number) {
         this.score += (score * this.multiplier)
     }
+
+    public getScore(): number {
+        return this.score;
+    }
+
 }
