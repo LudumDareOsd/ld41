@@ -30,7 +30,7 @@ export class Rythm {
     private musicTimer = 0;
     private blockTimer = 0;
     private offset = 4600;
-    private musicDuration = 8500;
+    private musicDuration = 107750;
     private playing = false;
 
     private particleManager;
@@ -45,7 +45,7 @@ export class Rythm {
     private failmidright;
     private failright;
 
-    private funkOMeter: FunkOMeter;
+    public funkOMeter: FunkOMeter;
 
     private conductor = new Conductor(this.scene);
 
@@ -55,7 +55,6 @@ export class Rythm {
     public preload() {
         //this.scene.load.audio('rythmaudio', "assets/audio/enter_darkness/track.mp3", null);
         var infoMetaAboutLevel = this.conductor.Load("level2");
-        this.musicDuration = infoMetaAboutLevel.duration;
         // bpm: int 120 ex
         // title: Music Title
         // background: img background.jpg
