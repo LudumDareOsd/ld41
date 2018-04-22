@@ -205,7 +205,7 @@ export class Rythm {
         }
         if (this.yellowKey.isDown && this.yellowPrimed) {
             this.yellowPrimed = false;
-            
+
             if(this.checkHit(this.notes.children.entries, NoteType.right)) {
                 this.successright.setVisible(true);
             } else {
@@ -315,7 +315,7 @@ export class Rythm {
                 if(item.x > 0) {
                     this.miss();
                 }
-                
+
                 item.destroy();
             }
         }
@@ -333,7 +333,7 @@ export class Rythm {
                     repeatDelay: 1000,
                     hold: 1000
                 });
-                
+
                 this.funkOMeter.addFunk(type);
                 this.addScore(1000);
                 this.streak++;

@@ -30,7 +30,7 @@ class PlayScene extends Phaser.Scene {
     let foreGround = this.add.image(0, 0, 'foreground');
     foreGround.setOrigin(0, 0);
     foreGround.setDepth(5);
-    
+
     this.shmup.create();
     this.rythm.create();
 

@@ -75,7 +75,7 @@ export class Player {
 
   update(delta: number, funk: number) {
     this.emitter.setAngle(Phaser.Math.Between(0, 360));
-    this.emitter.setScale(Math.max(Math.min(funk * 0.02, 1.0), 0.1));
+    this.emitter.setScale(Math.max(Math.min(funk * 0.02, 0.8), 0.1));
     this.mousecontrol.update(this.sprite, delta);
 
     if (this.sprite.body.velocity.x < -30) {

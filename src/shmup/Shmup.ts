@@ -86,11 +86,13 @@ export class Shmup {
     // this.emitters.push(this.particles.createEmitter({
     //   x: 0,
     //   y: 0,
+    //   // tint: 0xffffffff,
     //   tint: {
     //     onEmit: function (p, k, t, v) {
     //       return Math.random() * 0xffffffff;
     //     }
     //   },
+    //   // angle: 90,
     //   angle: {
     //     onEmit: function (p, k, t, v) {
     //       return Phaser.Math.Between(75, 105);

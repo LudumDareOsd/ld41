@@ -38,6 +38,8 @@ class BootScene extends Phaser.Scene {
         this.load.image('background_gameover', 'assets/sprites/gameoverfinaltransp.png');
         this.load.image('background_instruction', 'assets/sprites/instruction_screen.png');
         this.load.image('background_win', 'assets/sprites/win_screen.png');
+        this.load.image('startguld', 'assets/sprites/startguld.png');
+        this.load.image('instructionguld', 'assets/sprites/instructionguld.png');
         this.load.image('you_escaped', 'assets/sprites/youescaped.png');
         this.load.image('pixel', 'assets/sprites/pixel.png');
         this.load.image('bullet', 'assets/sprites/bullet.png');
