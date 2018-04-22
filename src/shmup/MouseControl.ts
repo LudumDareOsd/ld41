@@ -15,8 +15,8 @@ export class MouseControl {
         config.onLeft();
       }
     }, this);
-    this.input.on('pointerup', function (pointer) {
-    }, this);
+    // this.input.on('pointerup', function (pointer) {
+    // }, this);
 
     this.input.on('pointermove', function (pointer) {
       this.lastpos.x = pointer.x;
