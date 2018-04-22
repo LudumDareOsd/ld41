@@ -3,18 +3,30 @@ export class MouseControl {
   lastpos: Phaser.Math.Vector2 = new Phaser.Math.Vector2(0, 0);
   delta: Phaser.Math.Vector2 = new Phaser.Math.Vector2(0, 0);
   vel: Phaser.Math.Vector2 = new Phaser.Math.Vector2(0, 0);
-  dist: number; 
+  dist: number;
+  mouseEnabled: boolean = true;
+  mouseTimer: number = 0;
+  buttons: any;
 
   constructor(config) {
-    this.input = config.input
+    this.input = config.input;
+    this.buttons = {
+      left: false,
+      right: false,
+    };
 
     this.input.on('pointerdown', function (pointer) {
-      console.log(this.lastpos);
+      // console.log(pointer.buttons);
+    }, this);
+    this.input.on('pointerup', function (pointer) {
+      // console.log('up');
     }, this);
 
     this.input.on('pointermove', function (pointer) {
       this.lastpos.x = pointer.x;
       this.lastpos.y = pointer.y;
+      this.mouseEnabled = true;
+      this.mouseTimer = 0;
     }, this);
   }
 
@@ -22,20 +34,18 @@ export class MouseControl {
     this.input = input;
   }
 
-  update(player) {
+  update(player, delta: number) {
+    if (this.mouseTimer > 1000) {
+      this.mouseEnabled = false;
+    } else {
+      this.mouseTimer += delta;
+    }
     let pos = new Phaser.Math.Vector2(player.x, player.y);
-    
     this.delta.x = this.lastpos.x - pos.x;
     this.delta.y = this.lastpos.y - pos.y;
-
     this.delta.normalize()
-    
     this.dist = this.lastpos.distance(pos);
-
     let scale = Math.min(200, Math.max(this.dist - 20, 0)) * 3;
-    // let ang = this.delta.angle();
-    // console.log(ang);
-
     this.vel = new Phaser.Math.Vector2(this.delta.x * scale, this.delta.y * scale);
   }
 

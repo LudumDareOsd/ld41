@@ -4,6 +4,7 @@ export class Player {
   scene: any;
   sprite: any;
 
+  // maybe move out keyboard control to a class like mouse? PHASE #3
   leftKey: Phaser.Input.Keyboard.Key;
   rightKey: Phaser.Input.Keyboard.Key;
   upKey: Phaser.Input.Keyboard.Key;
@@ -42,6 +43,7 @@ export class Player {
 
     this.scene.add.existing(this.sprite as any);
     this.scene.physics.add.existing(this.sprite as any);
+    this.sprite.setDepth(3);
 
     this.sprite.setCollideWorldBounds(true);
     // this.sprite.setOrigin(0.5, 0.5);
@@ -73,25 +75,27 @@ export class Player {
     this.emitter.startFollow(this.sprite, 0, -30, true);
   }
 
-  update() {
+  update(delta: number) {
     this.emitter.setAngle(Phaser.Math.Between(0, 360));
-    this.mousecontrol.update(this.sprite)
+    this.mousecontrol.update(this.sprite, delta);
 
-
-    if (this.sprite.body.velocity.x < -1) {
+    if (this.sprite.body.velocity.x < -30) {
       this.sprite.anims.play('left');
-    } else if (this.sprite.body.velocity.x > 1) {
+    } else if (this.sprite.body.velocity.x > 30) {
       this.sprite.anims.play('right');
     } else {
       this.sprite.anims.play('idle');
     }
 
-
-    if(this.mousecontrol.vel.x < 0) {
+    if (this.mousecontrol.mouseEnabled) {
+      this.sprite.body.velocity.x = this.mousecontrol.vel.x;
+      this.sprite.body.velocity.y = this.mousecontrol.vel.y;
     }
-    this.sprite.body.velocity.x = this.mousecontrol.vel.x;
-    this.sprite.body.velocity.y = this.mousecontrol.vel.y;
 
+    if (this.fireKey.isDown || this.mousecontrol.buttons.left) {
+      console.log('FIRE');
+    }
+    
     if (this.leftKey.isDown) {
       this.sprite.body.velocity.x -= 50;
     }
