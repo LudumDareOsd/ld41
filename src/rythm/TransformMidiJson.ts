@@ -47,16 +47,16 @@ export class TransformMidiJson {
     }
 
     private GameNote(midiNote) {
-        if(midiNote == "D3" || midiNote == "F#2") {
+        if(midiNote == "F#2") {
             return 0; // blue
         }
-        if(midiNote == "A#2" || midiNote == "C2") {
+        if(midiNote == "C2") {
             return 1; // green 
         }
-        if(midiNote == "G#2" || midiNote == "C#3") {
+        if(midiNote == "C#3") {
             return 2; // red
         }
-        if(midiNote == "F2" || midiNote == "C#2") {
+        if(midiNote == "C#2") {
             return 3; // yellow
         }
         return 0;

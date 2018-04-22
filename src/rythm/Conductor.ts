@@ -36,8 +36,8 @@ export class Conductor {
             this.LoadAudio();
         });*/
 
-        //console.log('Transform it');
-        //this.transformer.Transform(); // Uncomment to get output to log for transform
+        console.log('Transform it');
+        this.transformer.Transform(); // Uncomment to get output to log for transform
 
         this.levelmetainfo = this.levels.Level2();
 
