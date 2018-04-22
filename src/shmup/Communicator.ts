@@ -1,5 +1,6 @@
 import { Shmup } from './Shmup'
 import { Rythm } from '../rythm/Rythm'
+import { NoteType } from '../rythm/NoteType';
 
 export class Communicator {
 
@@ -10,16 +11,8 @@ export class Communicator {
 
     }
 
-    public getFunk() {
-        return this.rythm.getFunk();
-    }
-
     public getScore(): number {
         return this.rythm.getScore();
-    }
-
-    public adjustFunk(amount: number) {
-        this.rythm.adjustFunk(amount);
     }
 
     public nuke() {
@@ -50,7 +43,15 @@ export class Communicator {
         this.shmup.setPowerUpInterval(interval);
     }
 
-    
+    public getFunkAmount() {
+        return this.rythm.funkOMeter.getFunkAmount();
+    }
 
+    public addFunk(type: NoteType) {
+        this.rythm.funkOMeter.addFunk(type);
+    }
 
+    public removeFunk(amount: number) {
+        this.rythm.funkOMeter.removeFunk(amount);
+    }
 }

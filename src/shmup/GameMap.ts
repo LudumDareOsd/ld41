@@ -118,11 +118,10 @@ export class GameMap {
     asteroid.setCircle(this.asteroidSize/2, 0, 0);
     asteroid.scaleY = scale;
     asteroid.scaleX = scale;
-
+    
     asteroid.setRotation(Math.random()*6.28);
     asteroid.setAngularVelocity(this.rnd2()*100);
-    asteroid.setDepth(2);
-    
+    asteroid.setDepth(1);
     this.asteroids.push(asteroid);
   }
   
