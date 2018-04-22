@@ -32,6 +32,7 @@ class BootScene extends Phaser.Scene {
         load.spritesheet('player', 'assets/sprites/ship_spritemap.png', { frameWidth: 65, frameHeight: 75 });
         this.load.image('background_title', 'assets/sprites/title_screen.png');
         this.load.image('background_gameover', 'assets/sprites/GameoverPH.png');
+        this.load.image('background_instruction', 'assets/sprites/instruction_screen.png');
         this.load.image('background_win', 'assets/sprites/win_screen.png');
         this.load.image('pixel', 'assets/sprites/pixel.png');
         this.load.image('bullet', 'assets/sprites/bullet.png');
