@@ -9,25 +9,24 @@ class GameOverScene extends Phaser.Scene {
     }
 
     preload() {
-        //this.music = this.sound.add('titleaudio', { loop: true });
+        this.music = this.sound.add('gameoveraudio', { loop: true });
     }
 
     create() {
-        console.log("TITLED");
 
         this.add.image(0, 0, 'background_gameover').setOrigin(0, 0);
-        //this.music.play('', 0, 1, true);
+        this.music.play('', 0, 1, true);
 
-        //this.add.zone(65, 612, 225, 60).setName('StartGame').setInteractive();
+        this.add.zone(0, 0, 1280, 960).setName('StartGame').setInteractive();
 
-        /*this.input.on('gameobjectdown', (pointer, gameObject) => {
+        this.input.on('gameobjectdown', (pointer, gameObject) => {
 
             if(gameObject.name == 'StartGame') {
                 this.music.stop();
                 this.scene.start('PlayScene');
             }
     
-        });*/
+        });
 
     }
 }

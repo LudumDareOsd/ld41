@@ -29,7 +29,9 @@ class BootScene extends Phaser.Scene {
         });
 
         this.load.image('background_title', 'assets/sprites/title_screen.png');
+        this.load.image('background_gameover', 'assets/sprites/GameoverPH.png');
         this.load.audio('titleaudio', 'assets/audio/Rockit_Maxx_-_01_-_Be_Electric.mp3', null);
+        this.load.audio('gameoveraudio', 'assets/audio/Kosta_T_-_01_-_Genial_Violins.mp3', null);
         this.load.image('unicorn', 'assets/sprites/unicorn.jpeg');
         this.load.image('background', 'assets/sprites/funk_background_bottom.png');
         this.load.image('foreground', 'assets/sprites/funk_background_top.png');
