@@ -2,6 +2,7 @@ import { GameMap } from './GameMap';
 import { Player } from './Player';
 import { Communicator } from './Communicator';
 import { PowerUp, Power } from './PowerUp';
+import { NoteType } from '../rythm/NoteType';
 
 export class Shmup {
 
@@ -11,6 +12,11 @@ export class Shmup {
   powerUps: PowerUp[];
   bulletgroup: any;
   starfield: Phaser.Physics.Arcade.Sprite[];
+  private shieldCost: number = 10;
+  private bulletCost: number = 3;
+  public gameOver: boolean = false;
+  private shmup: Shmup;
+  private cleanTimer: number = 0;
 
   particles: Phaser.GameObjects.Particles.ParticleEmitterManager;
   emitters: any;
@@ -20,6 +26,7 @@ export class Shmup {
 
   constructor(private scene: any, private communicator: Communicator) {
     this.gamemap = new GameMap(this, this.scene);
+    this.shmup = this;
   }
 
   public preload() {
@@ -58,9 +65,15 @@ export class Shmup {
 
   public createBullet() {
     // check funkmeter
-    console.log(this.bullets);
+    if (this.communicator.getFunkAmount() >= this.bulletCost){
+      this.communicator.removeFunk(this.bulletCost);
+    } else {
+      return;
+    }
+
     this.bullets.push(this.bulletgroup.create(this.player.sprite.x, this.player.sprite.y, 'bullet'));
     let bullet = this.bullets[this.bullets.length-1];
+
     bullet.setVelocity(0, -600);
     bullet.setScale(1.0);
 
@@ -94,13 +107,21 @@ export class Shmup {
   }
 
   public crash(player, asteroid) {
-    asteroid.destroy();
+
+    if (this.communicator.getFunkAmount() >= this.shmup.shieldCost) {
+      this.communicator.removeFunk(this.shmup.shieldCost);
+      asteroid.destroy();
+    } else {
+      this.scene.gameOver = true;
+    }
+
   }
 
   public explode(target, shot) {
     this.shmup.emitters.splice(this.shmup.emitters.indexOf(shot.emitterRef), 1);
     this.shmup.bullets.splice(this.shmup.bullets.indexOf(shot), 1);
     shot.emitterRef.stopFollow();
+
     shot.setVelocity(0,0);
     shot.destroy();
     target.destroy();
@@ -108,16 +129,40 @@ export class Shmup {
 
   public powerCollect(player, powerUp: PowerUp) {
     switch (powerUp.power) {
-      case Power.Funk:
-        this.communicator.adjustFunk(5);
+      case Power.left:
+        this.communicator.addFunk(NoteType.left);
+        this.communicator.addFunk(NoteType.left);
+        this.communicator.addFunk(NoteType.left);
         break;
-    
-      default:
+      case Power.midLeft:
+        this.communicator.addFunk(NoteType.midleft);
+        this.communicator.addFunk(NoteType.midleft);
+        this.communicator.addFunk(NoteType.midleft);
         break;
+      case Power.midRight:
+        this.communicator.addFunk(NoteType.midright);
+        this.communicator.addFunk(NoteType.midright);
+        this.communicator.addFunk(NoteType.midright);
+        break;
+      case Power.right:
+        this.communicator.addFunk(NoteType.right);
+        this.communicator.addFunk(NoteType.right);
+        this.communicator.addFunk(NoteType.right);
+        break;
+        
+        default:
+        break;
+      }
+      powerUp.destroy();
     }
-    powerUp.destroy();
-  }
-
+    
+    public nuke() {
+      for (let asteroid of this.asteroids) {
+        asteroid.destroy();
+      }
+      this.asteroids = [];
+    }
+    
   public update(time: number, delta: number) {
     this.bulletCleanTimer += delta;
     this.gamemap.update(time, delta);
@@ -158,14 +203,7 @@ export class Shmup {
         star.destroy();
       }
     }
-    
-  }
 
-  public nuke() {
-    for (let asteroid of this.asteroids) {
-      asteroid.destroy();
-    }
-    this.asteroids = [];
   }
 
   public adjustVelocity(multiplier: number) {

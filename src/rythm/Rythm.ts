@@ -1,5 +1,6 @@
 import { NoteType } from './NoteType';
 import { Conductor } from './Conductor';
+import { FunkOMeter } from './FunkOMeter';
 import { Communicator } from '../shmup/Communicator';
 
 export class Rythm {
@@ -29,7 +30,7 @@ export class Rythm {
     private musicTimer = 0;
     private blockTimer = 0;
     private offset = 4600;
-    private musicDuration = 8500;
+    private musicDuration = 107750;
     private playing = false;
 
     private particleManager;
@@ -44,6 +45,8 @@ export class Rythm {
     private failmidright;
     private failright;
 
+    public funkOMeter: FunkOMeter;
+
     private conductor = new Conductor(this.scene);
 
     constructor(private scene: Phaser.Scene, private communicator: Communicator) {
@@ -51,12 +54,7 @@ export class Rythm {
 
     public preload() {
         //this.scene.load.audio('rythmaudio', "assets/audio/enter_darkness/track.mp3", null);
-        var infoMetaAboutLevel = this.conductor.Load("level2");
-        this.musicDuration = infoMetaAboutLevel.duration;
-        // bpm: int 120 ex
-        // title: Music Title
-        // background: img background.jpg
-        // offset: int ms (?kanske inte behövs? hur lång paus innan musik börjar)
+        var infoMetaAboutLevel = this.conductor.Load("level2", 2); // skip ever 2nd
 
         this.scene.load.audio('rythmaudio', infoMetaAboutLevel.path, null);
     }
@@ -70,7 +68,7 @@ export class Rythm {
 
         this.scoreText = this.scene.add.text(1090, 8, 'Score: 0', { fontSize: '24px', fill: '#fff' }).setDepth(3);
         this.multiplierText = this.scene.add.text(300, 845, 'x1', { fontSize: '24px', fill: '#fff' }).setDepth(6);
-        this.infoAtWhatTimesToDoStuff = this.conductor.Start(); //"level1"
+        this.infoAtWhatTimesToDoStuff = this.conductor.Start();
 
         this.particleManager = this.scene.add.particles('particle1') as any;
         this.particleManager.setDepth(4);
@@ -114,6 +112,8 @@ export class Rythm {
         this.failright.setDepth(4);
         this.failright.setOrigin(0, 0);
         this.failright.setVisible(false);
+
+        this.funkOMeter = new FunkOMeter(this.scene);
 
     }
 
@@ -319,7 +319,8 @@ export class Rythm {
                     repeatDelay: 1000,
                     hold: 1000
                 });
-
+                
+                this.funkOMeter.addFunk(type);
                 this.addScore(1000);
                 this.streak++;
                 this.calcMultiplier()
@@ -334,4 +335,14 @@ export class Rythm {
     private addScore(score: number) {
         this.score += (score * this.multiplier)
     }
+
+    public getScore(): number {
+        return this.score;
+    }
+
+    public KillMe() {
+        this.playing = false;
+        this.conductor.Stop();
+    }
+
 }

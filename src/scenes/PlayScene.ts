@@ -29,7 +29,7 @@ class PlayScene extends Phaser.Scene {
     background.setDepth(2);
     let foreGround = this.add.image(0, 0, 'foreground');
     foreGround.setOrigin(0, 0);
-    foreGround.setDepth(5)
+    foreGround.setDepth(5);
     
     this.shmup.create();
     this.rythm.create();
@@ -38,6 +38,10 @@ class PlayScene extends Phaser.Scene {
   update(time: number, delta: number) {
     this.shmup.update(time, delta);
     this.rythm.update(time, delta);
+    if (this.shmup.gameOver || this.scene.gameOver) {
+      this.rythm.KillMe();
+      this.scene.start('GameOverScene');
+    }
   }
 }
 
