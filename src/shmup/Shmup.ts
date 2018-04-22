@@ -11,9 +11,13 @@ export class Shmup {
   powerUps: PowerUp[];
   bulletgroup: any;
   starfield: Phaser.Physics.Arcade.Sprite[];
+  private shieldCost: number = 10;
+  public gameOver: boolean = false;
+  private shmup: Shmup;
 
   constructor(private scene: any, private communicator: Communicator) {
     this.gamemap = new GameMap(this, this.scene);
+    this.shmup = this;
   }
 
   public preload() {
@@ -56,7 +60,14 @@ export class Shmup {
   }
 
   public crash(player, asteroid) {
-    asteroid.destroy();
+
+    if (this.communicator.getFunk() >= this.shmup.shieldCost) {
+      this.communicator.adjustFunk(-this.shmup.shieldCost);
+      asteroid.destroy();
+    } else {
+      this.scene.gameOver = true;
+    }
+
   }
 
   public explode(shot, target) {
@@ -69,13 +80,20 @@ export class Shmup {
       case Power.Funk:
         this.communicator.adjustFunk(5);
         break;
-    
-      default:
+        
+        default:
         break;
+      }
+      powerUp.destroy();
     }
-    powerUp.destroy();
-  }
-
+    
+    public nuke() {
+      for (let asteroid of this.asteroids) {
+        asteroid.destroy();
+      }
+      this.asteroids = [];
+    }
+    
   public update(time: number, delta: number) {
     this.gamemap.update(time, delta);
     this.player.update(delta);
@@ -93,13 +111,6 @@ export class Shmup {
       }
     }
     
-  }
-
-  public nuke() {
-    for (let asteroid of this.asteroids) {
-      asteroid.destroy();
-    }
-    this.asteroids = [];
   }
 
   public adjustVelocity(multiplier: number) {

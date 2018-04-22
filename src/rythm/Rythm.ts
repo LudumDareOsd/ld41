@@ -333,4 +333,17 @@ export class Rythm {
     private addScore(score: number) {
         this.score += (score * this.multiplier)
     }
+
+    public getScore(): number {
+        return this.score;
+    }
+
+    public getFunk(): number {
+        return 11;
+        //return this.funk;
+    }
+
+    public adjustFunk(amount: number) {
+        //this.funk += amount;
+    }
 }
