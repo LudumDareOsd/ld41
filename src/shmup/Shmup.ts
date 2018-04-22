@@ -71,7 +71,7 @@ export class Shmup {
     if (this.communicator.getFunkAmount() >= this.bulletCost) {
       this.communicator.removeFunk(this.bulletCost);
     } else {
-      return;
+      //return;
     }
 
     this.bullets.push(this.bulletgroup.create(this.player.sprite.x, this.player.sprite.y, 'bullet'));
@@ -122,12 +122,18 @@ export class Shmup {
   }
 
   public explode(target, shot) {
-    this.shmup.emitters.splice(this.shmup.emitters.indexOf(shot.emitterRef), 1);
+    //this.shmup.emitters.splice(this.shmup.emitters.indexOf(shot.emitterRef), 1);
     this.shmup.bullets.splice(this.shmup.bullets.indexOf(shot), 1);
-    shot.emitterRef.stopFollow();
 
-    shot.setVelocity(0, 0);
-    shot.destroy();
+    //shot.setVelocity(0, 0);
+    //shot.destroy();
+    //shot.active = false;
+
+    window.setTimeout(() => {
+      shot.destroy();
+    });
+
+
     target.destroy();
   }
 
@@ -176,12 +182,12 @@ export class Shmup {
 
     if (this.bulletCleanTimer > 1000) {
       console.log(this.bullets);
-      console.log(this.emitters);
+      //console.log(this.emitters);
       for (let index in this.bullets) {
         if (this.bullets.hasOwnProperty(index)) {
           let bullet = this.bullets[index];
           if (bullet.y < -1000) {
-            this.emitters.splice(this.emitters.indexOf(bullet.emitterRef), 1);
+            //this.emitters.splice(this.emitters.indexOf(bullet.emitterRef), 1);
             this.bullets.splice(this.bullets.indexOf(bullet), 1);
             index--;
             bullet.destroy();

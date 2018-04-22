@@ -119,7 +119,7 @@ export class Rythm {
         this.musicTimer = 0;
         this.createdNotes = 0;
         this.playing = false;
-
+        this.conductor.Stop();
     }
 
     public update(time: number, delta: number, scenePlugin: Phaser.Scenes.ScenePlugin) {
@@ -129,7 +129,8 @@ export class Rythm {
         this.checkWorldBound(this.notes.children.entries, this.scene.physics.world);
         this.updateScore();
 
-        if(this.score > 300000) {
+        if(this.score > 400000) {
+            this.conductor.Stop();
             scenePlugin.start('WinScene');
         }
     }
