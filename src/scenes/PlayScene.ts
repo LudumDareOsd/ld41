@@ -4,7 +4,7 @@ import { Communicator } from '../shmup/Communicator';
 
 class PlayScene extends Phaser.Scene {
   private communicator = new Communicator();
-  private shmup = new Shmup(this, this.communicator);
+  private shmup = new Shmup(this, this.communicator, this.scene);
   private rythm = new Rythm(this, this.communicator);
   input: Phaser.Input.InputPlugin;
 
@@ -38,7 +38,7 @@ class PlayScene extends Phaser.Scene {
   update(time: number, delta: number) {
     this.shmup.update(time, delta);
     this.rythm.update(time, delta);
-    if (this.shmup.gameOver || this.scene.gameOver) {
+    if (this.scene.gameOver) {
       this.rythm.KillMe();
       this.scene.start('GameOverScene');
     }

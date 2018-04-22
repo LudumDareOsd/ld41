@@ -16,7 +16,8 @@ export class Shmup {
   private bulletCost: number = 3;
   public gameOver: boolean = false;
   private shmup: Shmup;
-  private cleanTimer: number = 0;
+  private scoreTimer: number = 0;
+  private lastScore: number = 0;
 
   particles: Phaser.GameObjects.Particles.ParticleEmitterManager;
   emitters: any;
@@ -24,7 +25,7 @@ export class Shmup {
   bullets: any;
   bulletCleanTimer: number = 0;
 
-  constructor(private scene: any, private communicator: Communicator) {
+  constructor(private scene: any, private communicator: Communicator, private scenePlug: Phaser.Scenes.ScenePlugin) {
     this.gamemap = new GameMap(this, this.scene);
     this.shmup = this;
   }
@@ -165,6 +166,7 @@ export class Shmup {
     
   public update(time: number, delta: number) {
     this.bulletCleanTimer += delta;
+    this.scoreTimer += delta;
     this.gamemap.update(time, delta);
     this.player.update(delta);
     if (Math.random() < 0.05) {
@@ -174,8 +176,8 @@ export class Shmup {
     if (this.bulletCleanTimer > 1000) {
       console.log(this.bullets);
       console.log(this.emitters);
-      for (let index in this.bullets) {
-        if (this.bullets.hasOwnProperty(index)) {
+      for (let index = 0; index < this.bullets.length; index++) {
+        if (this.bullets.hasOwnProperty(this.bullets[index])) {
           let bullet = this.bullets[index];
           if (bullet.y < -1000) {
             this.emitters.splice(this.emitters.indexOf(bullet.emitterRef), 1);
@@ -187,14 +189,7 @@ export class Shmup {
       }
       this.bulletCleanTimer = 0;
     }
-    
-    // for (let index = 0; index < this.emitters.length; index++) {
-      // const emitter = this.emitters[index];
-      // emitter.setAngle(Phaser.Math.Between(75, 105));
-      // emitter.tint = (Math.random() * 0xffffff00);
-      // emitter.setTint(Math.random() * 0xffffff00);
-    // }
-    
+
     for (let index = 0; index < this.starfield.length; index++) {
       let star = this.starfield[index];
       star.y += star.scaleX + star.scaleY;
@@ -204,6 +199,27 @@ export class Shmup {
       }
     }
 
+    if (this.scoreTimer > 5000) {
+  
+      let funk: number = this.communicator.getScore();
+      let diff: number = funk - this.lastScore;
+      if (diff > 10000) {
+
+        this.adjustAsteroidInterval(Math.pow(0.97, Math.floor(diff/10000)));
+        this.lastScore = funk;
+      }
+      
+      this.scoreTimer = 0;
+    } 
+
+
+    
+    // for (let index = 0; index < this.emitters.length; index++) {
+      // const emitter = this.emitters[index];
+      // emitter.setAngle(Phaser.Math.Between(75, 105));
+      // emitter.tint = (Math.random() * 0xffffff00);
+      // emitter.setTint(Math.random() * 0xffffff00);
+    // }
   }
 
   public adjustVelocity(multiplier: number) {
