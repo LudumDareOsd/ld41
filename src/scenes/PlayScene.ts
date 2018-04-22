@@ -4,7 +4,7 @@ import { Communicator } from '../shmup/Communicator';
 
 class PlayScene extends Phaser.Scene {
   private communicator = new Communicator();
-  private shmup = new Shmup(this, this.communicator);
+  private shmup = new Shmup(this, this.communicator, this.scene);
   private rythm = new Rythm(this, this.communicator);
   input: Phaser.Input.InputPlugin;
 
