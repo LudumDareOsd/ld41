@@ -39,7 +39,7 @@ export class Conductor {
         //console.log('Transform it');
         //this.transformer.Transform(); // Uncomment to get output to log for transform
 
-        this.levelmetainfo = this.levels.Level2();
+        this.levelmetainfo = this.levels.Level3();
 
         if(skip > 0) {
             var originalNoteLength = this.levelmetainfo.notes.length;
