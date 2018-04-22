@@ -2,6 +2,7 @@ import { GameMap } from './GameMap';
 import { Player } from './Player';
 import { Communicator } from './Communicator';
 import { PowerUp, Power } from './PowerUp';
+import { NoteType } from '../rythm/NoteType';
 
 export class Shmup {
 
@@ -102,7 +103,7 @@ export class Shmup {
   public powerCollect(player, powerUp: PowerUp) {
     switch (powerUp.power) {
       case Power.Funk:
-        this.communicator.adjustFunk(5);
+        this.communicator.addFunk(NoteType.left);
         break;
     
       default:

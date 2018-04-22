@@ -172,6 +172,7 @@ export class Rythm {
             } else {
                 this.failLeft.setVisible(true);
                 this.miss();
+                this.funkOMeter.removeFunk(1);
             };
         }
         if (this.greenKey.isDown && this.greenPrimed) {
@@ -182,6 +183,7 @@ export class Rythm {
             } else {
                 this.failmidleft.setVisible(true);
                 this.miss();
+                this.funkOMeter.removeFunk(1);
             };
         }
         if (this.redKey.isDown && this.redPrimed) {
@@ -192,6 +194,7 @@ export class Rythm {
             } else {
                 this.failmidright.setVisible(true);
                 this.miss();
+                this.funkOMeter.removeFunk(1);
             };
         }
         if (this.yellowKey.isDown && this.yellowPrimed) {
@@ -201,7 +204,8 @@ export class Rythm {
                 this.successright.setVisible(true);
             } else {
                 this.failright.setVisible(true);
-                this.miss()
+                this.miss();
+                this.funkOMeter.removeFunk(1);
             };
         }
 

@@ -39,9 +39,6 @@ export class Communicator {
         this.shmup.setPowerUpInterval(interval);
     }
 
-    public adjustFunk(amount: number) {
-    }
-
     public getFunkAmount() {
         return this.rythm.funkOMeter.getFunkAmount();
     }
