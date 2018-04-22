@@ -16,7 +16,6 @@ export class Shmup {
   private bulletCost: number = 3;
   public gameOver: boolean = false;
   private shmup: Shmup;
-  private cleanTimer: number = 0;
 
   particles: Phaser.GameObjects.Particles.ParticleEmitterManager;
   emitters: any;
@@ -68,7 +67,7 @@ export class Shmup {
     if (this.communicator.getFunkAmount() >= this.bulletCost){
       this.communicator.removeFunk(this.bulletCost);
     } else {
-      return;
+      // return;
     }
 
     this.bullets.push(this.bulletgroup.create(this.player.sprite.x, this.player.sprite.y, 'bullet'));
@@ -166,14 +165,14 @@ export class Shmup {
   public update(time: number, delta: number) {
     this.bulletCleanTimer += delta;
     this.gamemap.update(time, delta);
-    this.player.update(delta);
+    this.player.update(delta, this.communicator.getFunkAmount());
     if (Math.random() < 0.05) {
       this.createStar();
     }
 
     if (this.bulletCleanTimer > 1000) {
-      console.log(this.bullets);
-      console.log(this.emitters);
+      // console.log(this.bullets);
+      // console.log(this.emitters);
       for (let index in this.bullets) {
         if (this.bullets.hasOwnProperty(index)) {
           let bullet = this.bullets[index];
