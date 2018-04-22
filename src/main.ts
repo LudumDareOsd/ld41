@@ -3,6 +3,8 @@ import 'phaser';
 import PlayScene from './scenes/PlayScene';
 import BootScene from './scenes/BootScene';
 import TitleScene from './scenes/TitleScene';
+import GameOverScene from './scenes/GameOverScene';
+import WinScene from './scenes/WinScene';
 
 const config: GameConfig = {
   type: Phaser.AUTO,
@@ -21,7 +23,9 @@ const config: GameConfig = {
   scene: [
     BootScene,
     TitleScene,
-    PlayScene
+    PlayScene,
+    GameOverScene,
+    WinScene
   ]
 };
 
