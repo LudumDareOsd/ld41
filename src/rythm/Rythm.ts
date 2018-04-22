@@ -29,8 +29,8 @@ export class Rythm {
 
     private musicTimer = 0;
     private blockTimer = 0;
-    private offset = 4600;
-    private musicDuration = 107750;
+    private offset = 4650;
+    private musicDuration = 192000;
     private playing = false;
 
     private particleManager;
@@ -54,7 +54,7 @@ export class Rythm {
 
     public preload() {
         //this.scene.load.audio('rythmaudio', "assets/audio/enter_darkness/track.mp3", null);
-        var infoMetaAboutLevel = this.conductor.Load("level3", 2); // skip ever 2nd
+        var infoMetaAboutLevel = this.conductor.Load("level3", 0); // skip ever 2nd
 
         this.scene.load.audio('rythmaudio', infoMetaAboutLevel.path, null);
     }
@@ -114,6 +114,11 @@ export class Rythm {
         this.failright.setVisible(false);
 
         this.funkOMeter = new FunkOMeter(this.scene);
+        this.score = 0;
+        this.blockTimer = 0;
+        this.musicTimer = 0;
+        this.createdNotes = 0;
+        this.playing = false;
 
     }
 
@@ -124,7 +129,7 @@ export class Rythm {
         this.checkWorldBound(this.notes.children.entries, this.scene.physics.world);
         this.updateScore();
 
-        if(this.score > 500000) {
+        if(this.score > 300000) {
             scenePlugin.start('WinScene');
         }
     }

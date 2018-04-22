@@ -21,7 +21,7 @@ export class Shmup {
   particles: Phaser.GameObjects.Particles.ParticleEmitterManager;
   emitters: any;
 
-  bullets: any;
+  bullets: any[];
   bulletCleanTimer: number = 0;
 
   constructor(private scene: any, private communicator: Communicator) {
