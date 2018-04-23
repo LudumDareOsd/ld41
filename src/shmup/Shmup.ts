@@ -205,7 +205,8 @@ export class Shmup {
     if (this.scoreTimer > 5000) {
 
       let funk: number = this.communicator.getScore();
-      let diff: number = funk - this.lastScore;
+      //let diff: number = funk - (400000 - this.lastScore);
+      let diff: number =  this.lastScore - funk;
       if (diff > 10000) {
 
         this.adjustAsteroidInterval(Math.pow(0.97, Math.floor(diff/10000)));
