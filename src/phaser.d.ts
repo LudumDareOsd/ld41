@@ -39264,7 +39264,7 @@ declare namespace Phaser {
         /**
         * Should be overridden by your own Scenes.
         */
-        create(): void;
+        create(config: any): void;
 
         /**
         * Should be overridden by your own Scenes.

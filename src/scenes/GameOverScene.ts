@@ -13,9 +13,11 @@ class GameOverScene extends Phaser.Scene {
         this.music = this.sound.add('gameoveraudio', { loop: true });
     }
 
-    create() {
+    create(data: any) {
+        let background = this.add.image(0, 0, 'background_gameover')
+        background.setOrigin(0, 0);
+        background.setDepth(1);
 
-        this.add.image(0, 0, 'background_gameover').setOrigin(0, 0).depth = 1;
         this.music.play('', 0, 1, true);
 
         //-----------------------------------------------------------------------
@@ -37,13 +39,18 @@ class GameOverScene extends Phaser.Scene {
         //this.add.image(400, 300, 'unicorn').setBlendMode(Phaser.BlendModes.SCREEN);
         //-----------------------------------------------------------------------
 
-        let winScore = localStorage.getItem('FunkEscapeWinScore');
-        let currScore = localStorage.getItem('FunkEscapeCurrentScore');
-        let percDone = (parseInt(currScore) / parseInt(winScore)) * 100;
+        let winScore = 0;
+        let maxScore = 400000;
+        let currScore = data.distance;
+        let percDone = (( maxScore - parseInt(currScore)) / maxScore) * 100;
         var rounded = Math.round( percDone * 10 ) / 10;
 
-        this.add.text(370, 600, 'Your highscore:' + localStorage.getItem('FunkEscapeScore'), { fontFamily: 'Arial', fontSize: 50, color: '#1177bb' });
-        this.add.text(390, 660, 'Your current score:' + currScore, { fontFamily: 'Arial', fontSize: 40, color: '#1177bb' });
+        let hightscore = localStorage.getItem('FunkEscapeScore');
+        if(!hightscore) {
+          hightscore = currScore;
+        }
+        this.add.text(370, 600, 'Best: ' + hightscore + 'km from escaping!', { fontFamily: 'Arial', fontSize: 50, color: '#1177bb' });
+        this.add.text(390, 660, 'Current: ' + currScore + 'km from escaping!', { fontFamily: 'Arial', fontSize: 40, color: '#1177bb' });
         this.add.text(230, 870, 'You reached ' + rounded + '% of the level!', { fontFamily: 'Arial', fontSize: 64, color: '#00aaaa' });
 
         this.add.zone(0, 0, 1280, 960).setName('StartGame').setInteractive();

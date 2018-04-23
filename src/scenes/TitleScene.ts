@@ -19,8 +19,12 @@ class TitleScene extends Phaser.Scene {
         }
 
         this.add.image(0, 0, 'background_title').setOrigin(0, 0);
-        let start = this.add.sprite(448, 583, 'startguld').setOrigin(0, 0); start.alpha = 0;
-        let instructions = this.add.sprite(386, 448, 'instructionguld').setOrigin(0, 0); instructions.alpha = 0;
+        let start = this.add.sprite(448, 583, 'startguld');
+        start.setOrigin(0, 0);
+        start.setAlpha(0);
+        let instructions = this.add.sprite(386, 448, 'instructionguld');
+        instructions.setOrigin(0, 0);
+        instructions.setAlpha(0);
 
         this.add.zone(444, 555, 435, 153).setName('StartGame').setInteractive();
         this.add.zone(380, 445, 550, 103).setName('Instructions').setInteractive();
@@ -53,7 +57,7 @@ class TitleScene extends Phaser.Scene {
             }
 
             if(gameObject.name == 'Instructions') {
-                this.scene.start('InstructionScene', { musicRef: this.music });
+                this.scene.start('InstructionScene', { musicRef: data.musicRef || this.music });
             }
         });
 

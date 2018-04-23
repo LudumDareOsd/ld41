@@ -12,7 +12,7 @@ export class Communicator {
     }
 
     public getScore(): number {
-        return this.rythm.getScore();
+        return this.rythm.getDistance();
     }
 
     public nuke() {
