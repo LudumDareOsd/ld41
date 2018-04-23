@@ -46,29 +46,10 @@ class PlayScene extends Phaser.Scene {
     if (this.shmup.gameOver || scene.gameOver) {
 
       this.SaveScore(this.communicator.getScore());
-      this.SaveTime(time);
 
       this.rythm.KillMe();
-      this.scene.start('GameOverScene', { distance: this.rythm.getDistance() });
+      this.scene.start('GameOverScene', { distance: this.rythm.getDistance(), gametime: time });
     }
-  }
-
-  private SaveTime(time) {
-
-    var savedTime = localStorage.getItem('FunkEscapeTime');
-    let currentTime = Math.round(time/1000);
-
-    window.localStorage.setItem('FunkEscapeCurrentTime', currentTime.toString());
-
-    if (savedTime === null) {
-      window.localStorage.setItem('FunkEscapeBestTime', currentTime.toString());
-    } else{
-      if (+savedTime > currentTime) {
-        window.localStorage.setItem('FunkEscapeBestTime', currentTime.toString());
-      }
-    }
-
-
   }
 
   private SaveScore(score) {

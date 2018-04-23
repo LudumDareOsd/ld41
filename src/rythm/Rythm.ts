@@ -7,6 +7,7 @@ export class Rythm {
 
     private notes: any;
     private scoreText: any;
+    
     private distance = 400000;
     private winScore = 400000;
 
@@ -28,6 +29,7 @@ export class Rythm {
     private infoAtWhatTimesToDoStuff;
     private createdNotes = 0;
 
+    private gameTimer = 0;
     private musicTimer = 0;
     private blockTimer = 0;
     private offset = 4650;
@@ -116,6 +118,7 @@ export class Rythm {
 
         this.funkOMeter = new FunkOMeter(this.scene);
         this.distance = this.winScore;
+        this.gameTimer = 0;
         this.blockTimer = 0;
         this.musicTimer = 0;
         this.createdNotes = 0;
@@ -124,6 +127,7 @@ export class Rythm {
     }
 
     public update(time: number, delta: number, scenePlugin: Phaser.Scenes.ScenePlugin) {
+        this.gameTimer += delta;
         this.checkMusic(delta);
         this.retractDistance(1);
         this.checkKeys();
@@ -132,7 +136,7 @@ export class Rythm {
 
         if(this.distance < 0) {
             this.conductor.Stop();
-            scenePlugin.start('WinScene');
+            scenePlugin.start('WinScene', {gametime: this.gameTimer});
         }
     }
 

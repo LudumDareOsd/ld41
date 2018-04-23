@@ -12,7 +12,7 @@ class WinScene extends Phaser.Scene {
         this.music = this.sound.add('titleaudio', { loop: true });
     }
 
-    create() {
+    create(data: any) {
 
         this.add.image(0, 0, 'background_win').setOrigin(0, 0);
         this.music.stop();
@@ -85,10 +85,16 @@ class WinScene extends Phaser.Scene {
         //----------------------------------------------------------------------
 
         let bestTime = +localStorage.getItem('FunkEscapeBestTime');
-        let currentTime = +localStorage.getItem('FunkEscapeCurrentTime');
+        let currentTime = Math.round(data.gametime/1000);
+
+        if (bestTime === null || bestTime === 0 || bestTime > currentTime) {
+            bestTime = currentTime;
+            localStorage.setItem('FunkEscapeBestTime', bestTime.toString());
+        }
+        
 
         this.add.text(350, 700, 'Your best time:' + Math.floor(bestTime/60).toString() + ' m, ' + (bestTime % 60).toString() + ' s', { fontFamily: 'Arial', fontSize: 64, color: '#ff0000' });
-        this.add.text(350, 770, 'Your current time:' + Math.floor(+currentTime/60).toString() + ' m, ' + (+currentTime % 60).toString() + ' s', { fontFamily: 'Arial', fontSize: 64, color: '#ff0000' });
+        this.add.text(350, 770, 'Your current time:' + Math.floor(currentTime/60).toString() + ' m, ' + (currentTime % 60).toString() + ' s', { fontFamily: 'Arial', fontSize: 64, color: '#ff0000' });
 
         this.add.zone(0, 0, 1280, 960).setName('StartGame').setInteractive();
 
