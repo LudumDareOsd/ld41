@@ -7,7 +7,7 @@ export class Rythm {
 
     private notes: any;
     private scoreText: any;
-    
+
     private distance = 400000;
     private winScore = 400000;
 

@@ -30,10 +30,10 @@ class GameOverScene extends Phaser.Scene {
             var image = this.add.image(x, y, 'particleyellow');
 
             image.setBlendMode(Phaser.BlendModes.ADD);
-            image.setAlpha(0.5);
+            image.setAlpha(0.3);
             image.depth = 0;
 
-            this.sprites.push({ s: image, r: 2 + Math.random() * 6 });
+            this.sprites.push({ s: image, r: 2 + Math.random() * 4 });
         }
 
         //this.add.image(400, 300, 'unicorn').setBlendMode(Phaser.BlendModes.SCREEN);
@@ -49,9 +49,9 @@ class GameOverScene extends Phaser.Scene {
         if(!hightscore) {
           hightscore = currScore;
         }
-        this.add.text(370, 600, 'Best: ' + hightscore + 'km from escaping!', { fontFamily: 'Arial', fontSize: 50, color: '#1177bb' });
-        this.add.text(390, 660, 'Current: ' + currScore + 'km from escaping!', { fontFamily: 'Arial', fontSize: 40, color: '#1177bb' });
-        this.add.text(230, 870, 'You reached ' + rounded + '% of the level!', { fontFamily: 'Arial', fontSize: 64, color: '#00aaaa' });
+        this.add.text(100, 600, 'Best: ' + hightscore + 'km from escaping!', { fontFamily: 'Arial', fontSize: 50, color: '#1177bb' });
+        this.add.text(100, 660, 'Current: ' + currScore + 'km from escaping!', { fontFamily: 'Arial', fontSize: 40, color: '#1177bb' });
+        this.add.text(100, 850, 'You reached ' + rounded + '% of the level!', { fontFamily: 'Arial', fontSize: 50, color: '#00aaaa' });
 
         this.add.zone(0, 0, 1280, 960).setName('StartGame').setInteractive();
 
@@ -59,7 +59,7 @@ class GameOverScene extends Phaser.Scene {
 
             if(gameObject.name == 'StartGame') {
                 this.music.stop();
-                this.scene.start('PlayScene');
+                this.scene.start('TitleScene');
             }
 
         });

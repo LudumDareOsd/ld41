@@ -19,7 +19,7 @@ class WinScene extends Phaser.Scene {
         this.music.play('', 0, 1, true);
 
         //----------------------------------------------------------------------
-        var source = this.textures.get('unicorn').source[0].image;
+        var source = this.textures.get('unicornlarge').source[0].image;
         var canvas = this.textures.createCanvas('pad', 38, 49).source[0].image as any;
 
         var ctx = canvas.getContext('2d');
@@ -47,8 +47,8 @@ class WinScene extends Phaser.Scene {
                 var startX = Phaser.Math.Between(0, 1024);
                 var startY = Phaser.Math.Between(0, 768);
 
-                var dx = 200 + x * 16;
-                var dy = 64 + y * 16;
+                var dx = 0 + x * 4;
+                var dy = 300 + y * 4;
 
                 var image = this.add.image(startX, startY, 'pixel').setScale(0) as any;
 
@@ -91,10 +91,9 @@ class WinScene extends Phaser.Scene {
             bestTime = currentTime;
             localStorage.setItem('FunkEscapeBestTime', bestTime.toString());
         }
-        
 
-        this.add.text(350, 700, 'Your best time:' + Math.floor(bestTime/60).toString() + ' m, ' + (bestTime % 60).toString() + ' s', { fontFamily: 'Arial', fontSize: 64, color: '#ff0000' });
-        this.add.text(350, 770, 'Your current time:' + Math.floor(currentTime/60).toString() + ' m, ' + (currentTime % 60).toString() + ' s', { fontFamily: 'Arial', fontSize: 64, color: '#ff0000' });
+        this.add.text(90, 580, 'Your best time: ' + Math.floor(bestTime/60).toString() + 'm, ' + (bestTime % 60).toString() + 's', { fontFamily: 'Arial', fontSize: 36, color: '#FFFFFF' });
+        this.add.text(90, 620, 'Your current time: ' + Math.floor(currentTime/60).toString() + 'm, ' + (currentTime % 60).toString() + 's', { fontFamily: 'Arial', fontSize: 36, color: '#FFFFFF' });
 
         this.add.zone(0, 0, 1280, 960).setName('StartGame').setInteractive();
 
@@ -102,7 +101,7 @@ class WinScene extends Phaser.Scene {
 
             if(gameObject.name == 'StartGame') {
                 this.music.stop();
-                this.scene.start('PlayScene');
+                this.scene.start('TitleScene');
             }
 
         });

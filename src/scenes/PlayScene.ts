@@ -65,7 +65,7 @@ class PlayScene extends Phaser.Scene {
         window.localStorage.setItem('FunkEscapeScore', score);
       }
     }
-    
+
   }
 }
 
