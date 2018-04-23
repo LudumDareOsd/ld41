@@ -7,6 +7,20 @@ import GameOverScene from './scenes/GameOverScene';
 import WinScene from './scenes/WinScene';
 import InstructionScene from './scenes/InstructionScene';
 
+class PrePreload extends Phaser.Scene { // haHAA
+  constructor() {
+    super({
+      key: 'PrePreload'
+    });
+  }
+  preload() {
+    this.load.image('loading_screen', 'assets/sprites/loading_screen.png');
+  }
+  create() {
+    this.scene.start('BootScene');
+  }
+}
+
 const config: GameConfig = {
   type: Phaser.AUTO,
   parent: 'content',
@@ -22,6 +36,7 @@ const config: GameConfig = {
     }
   },
   scene: [
+    PrePreload,
     BootScene,
     TitleScene,
     PlayScene,
