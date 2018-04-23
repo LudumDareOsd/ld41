@@ -7,7 +7,7 @@ export class Rythm {
 
     private notes: any;
     private scoreText: any;
-    private score = 0;
+    private distance = 400000;
     private winScore = 400000;
 
     private multiplier = 1;
@@ -67,7 +67,7 @@ export class Rythm {
         this.redKey = this.scene.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.E);
         this.yellowKey = this.scene.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.R);
 
-        this.scoreText = this.scene.add.text(1090, 8, 'Score: 0', { fontSize: '24px', fill: '#fff' }).setDepth(3);
+        this.scoreText = this.scene.add.text(1010, 8, 'Distance: 400000km', { fontSize: '24px', fill: '#fff' }).setDepth(3);
         this.multiplierText = this.scene.add.text(300, 845, 'x1', { fontSize: '24px', fill: '#fff' }).setDepth(6);
         this.infoAtWhatTimesToDoStuff = this.conductor.Start();
 
@@ -115,7 +115,7 @@ export class Rythm {
         this.failright.setVisible(false);
 
         this.funkOMeter = new FunkOMeter(this.scene);
-        this.score = 0;
+        this.distance = this.winScore;
         this.blockTimer = 0;
         this.musicTimer = 0;
         this.createdNotes = 0;
@@ -125,12 +125,12 @@ export class Rythm {
 
     public update(time: number, delta: number, scenePlugin: Phaser.Scenes.ScenePlugin) {
         this.checkMusic(delta);
-        this.addScore(1);
+        this.retractDistance(1);
         this.checkKeys();
         this.checkWorldBound(this.notes.children.entries, this.scene.physics.world);
         this.updateScore();
 
-        if(this.score > this.winScore) {
+        if(this.distance < 0) {
             this.conductor.Stop();
             scenePlugin.start('WinScene');
         }
@@ -167,7 +167,7 @@ export class Rythm {
     }
 
     private updateScore() {
-        this.scoreText.setText('Score: ' + this.score);
+        this.scoreText.setText('Distance: ' + this.distance + 'km');
     }
 
     private checkKeys() {
@@ -336,7 +336,7 @@ export class Rythm {
                 });
 
                 this.funkOMeter.addFunk(type);
-                this.addScore(1000);
+                this.retractDistance(1000);
                 this.streak++;
                 this.calcMultiplier()
 
@@ -347,12 +347,12 @@ export class Rythm {
         return false;
     }
 
-    private addScore(score: number) {
-        this.score += (score * this.multiplier)
+    private retractDistance(score: number) {
+        this.distance -= (score * this.multiplier)
     }
 
-    public getScore(): number {
-        return this.score;
+    public getDistance(): number {
+        return this.distance;
     }
 
     public KillMe() {

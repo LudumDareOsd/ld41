@@ -15,8 +15,12 @@ class TitleScene extends Phaser.Scene {
     create() {
 
         this.add.image(0, 0, 'background_title').setOrigin(0, 0);
-        let start = this.add.sprite(448, 583, 'startguld').setOrigin(0, 0); start.alpha = 0;
-        let instructions = this.add.sprite(386, 448, 'instructionguld').setOrigin(0, 0); instructions.alpha = 0;
+        let start = this.add.sprite(448, 583, 'startguld')
+        start.setOrigin(0, 0);
+        start.setAlpha(0);
+        let instructions = this.add.sprite(386, 448, 'instructionguld')
+        instructions.setOrigin(0, 0);
+        instructions.setAlpha(0);
         this.music.play('', 0, 1, true);
 
         this.add.zone(444, 523, 516, 173).setName('StartGame').setInteractive();

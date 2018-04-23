@@ -48,7 +48,7 @@ class PlayScene extends Phaser.Scene {
       this.SaveScore(this.communicator.getScore());
 
       this.rythm.KillMe();
-      this.scene.start('GameOverScene');
+      this.scene.start('GameOverScene', { distance: this.rythm.getDistance() });
     }
   }
 
@@ -61,7 +61,7 @@ class PlayScene extends Phaser.Scene {
     if(savedScore === null) {
       window.localStorage.setItem('FunkEscapeScore', score);
     } else {
-      if(savedScore < score) {
+      if(savedScore > score) {
         window.localStorage.setItem('FunkEscapeScore', score);
       }
     }
