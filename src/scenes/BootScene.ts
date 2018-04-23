@@ -12,8 +12,8 @@ class BootScene extends Phaser.Scene {
         let load = this.load as any; // lol
         load.spritesheet('player', 'assets/sprites/ship_spritemap.png', { frameWidth: 65, frameHeight: 75 });
 
-        this.load.audio('titleaudio', 'assets/audio/Rockit_Maxx_-_01_-_Be_Electric.mp3', null);
-        this.load.audio('gameoveraudio', 'assets/audio/Kosta_T_-_01_-_Genial_Violins.mp3', null);
+        this.load.audio('titleaudio', 'assets/audio/titlemusic.mp3', null);
+        this.load.audio('gameoveraudio', 'assets/audio/gameover.mp3', null);
         this.load.audio('pew', 'assets/audio/Laser_shoot.wav', null);
         this.load.audio('shipfire', 'assets/audio/Laser_Shoot2.mp3', null);
         this.load.image('particle1', 'assets/sprites/particle_1.png');
